@@ -41,7 +41,9 @@ function create(profile) {
 function findByEmail(email) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.findByEmail, [email]);
+      const { rows, rowCount } = await pool.query(QUERIES.findByEmail, [
+        encrypt(email),
+      ]);
       return resolve(rows[0]);
     } catch (error) {
       console.error(error);

@@ -1,9 +1,8 @@
 const crypto = require("crypto");
 const algorithm = "AES-256-ECB";
-const { db } = require("../configs/config");
 const key = crypto
   .createHash("sha256")
-  .update(String(db.CRYPTO_KEY))
+  .update(String(process.env.CRYPTO_KEY))
   .digest("base64")
   .substr(0, 32);
 

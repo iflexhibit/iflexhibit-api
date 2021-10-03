@@ -1,16 +1,16 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const { decrypt } = require("../utils/encrypt");
 
 module.exports = {
   db: {
-    CONNECTION_STRING: process.env.CONNECTION_STRING,
-    SESSION_SECRET: process.env.SESSION_SECRET,
+    CONNECTION_STRING: decrypt(process.env.CONNECTION_STRING),
+    SESSION_SECRET: decrypt(process.env.SESSION_SECRET),
     COOKIE_MAXAGE: 60 * 1000,
-    CRYPTO_KEY: process.env.CRYPTO_KEY,
   },
   google: {
-    CLIENT_ID: process.env.CLIENT_ID,
-    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    CLIENT_ID: decrypt(process.env.CLIENT_ID),
+    CLIENT_SECRET: decrypt(process.env.CLIENT_SECRET),
     SCOPE: ["profile", "email"],
   },
 };
