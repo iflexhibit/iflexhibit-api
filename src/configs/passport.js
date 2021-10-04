@@ -1,6 +1,6 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const { google } = require("./config");
-const { create, findByEmail } = require("../controllers/UserController");
+const { create, findByEmail } = require("../repositories/UserRepository");
 
 module.exports = (passport) => {
   passport.use(
