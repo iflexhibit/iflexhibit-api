@@ -27,7 +27,6 @@ function create(profile) {
       ]);
       return resolve(rows[0]);
     } catch (error) {
-      console.error(error);
       return reject(error);
     }
   });
@@ -46,7 +45,6 @@ function findByEmail(email) {
       ]);
       return resolve(rows[0]);
     } catch (error) {
-      console.error(error);
       return reject(error);
     }
   });
