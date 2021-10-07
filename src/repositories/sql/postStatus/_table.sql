@@ -1,5 +1,6 @@
-CREATE TABLE postStatus (
+CREATE TABLE poststatus (
     "status_id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "status_title" VARCHAR(10) NOT NULL "Pending",
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
+    "status_title" VARCHAR(10) NOT NULL DEFAULT "Pending",
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "updated_at" TIMESTAMPTZ DEFAULT NOW()
 )

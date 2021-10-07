@@ -3,7 +3,8 @@ CREATE TABLE comments (
     "user_id" INT NOT NULL FOREIGN KEY REFERENCES users(user_id),
     "post_id"INT NOT NULL FOREIGN KEY REFERENCES posts(post_id),
     "comment_body" TEXT NOT NULL,
-    "is_disabled" BOOLEAN NOT NULL FALSE,
-    "is_deleted" BOOLEAN NOT NOT NULL FALSE,
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
+    "is_disabled" BOOLEAN NOT NULL DEFAULT FALSE,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT FALSE,
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "updated_at" TIMESTAMPTZ DEFAULT NOW()
 )
