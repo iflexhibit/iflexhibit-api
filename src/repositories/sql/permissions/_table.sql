@@ -6,4 +6,4 @@ CREATE TABLE permissions (
     "admin_access" BOOLEAN NOT NULL DEFAULT FALSE,
     "created_at" TIMESTAMPTZ DEFAULT NOW(),
     "updated_at" TIMESTAMPTZ DEFAULT NOW()
-)
+);
