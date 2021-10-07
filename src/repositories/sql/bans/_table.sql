@@ -7,4 +7,4 @@ CREATE TABLE bans(
     "ban_note" TEXT NOT NULL,
     "expires_at" TIMESTAMPTZ NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
-)
+);
