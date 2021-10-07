@@ -5,7 +5,8 @@ CREATE TABLE reports (
     "target_comment_id" INT NULL NULL,
     "user_id" INT NOT NULL FOREIGN KEY REFERENCES users(user_id),
     "offense_id" SMALLINT NOT NULL FOREIGN KEY REFERENCES offenses(offense_id),
-    "report_note" TEXT NULL null,
-    "is_deleted" BOOLEAN NOT NULL FALSE,
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
+    "report_note" TEXT NULL ,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT FALSE,
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "updated_at" TIMESTAMPTZ DEFAULT NOW()
 )
