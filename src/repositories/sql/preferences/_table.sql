@@ -1,7 +1,0 @@
-CREATE TABLE preferences(
-    "pref_id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "hide_name" BOOLEAN NOT NULL DEFAULT TRUE,
-    "hide_contact" BOOLEAN NOT NULL DEFAULT TRUE,
-    "hide_email" BOOLEAN NOT NULL DEFAULT TRUE,
-    "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
