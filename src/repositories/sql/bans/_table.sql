@@ -6,5 +6,6 @@ CREATE TABLE bans(
     "offense_id" INT NOT NULL REFERENCES offenses(offense_id),
     "ban_note" TEXT NOT NULL,
     "expires_at" TIMESTAMPTZ NOT NULL,
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "updated_at" TIMESTAMPTZ DEFAULT NOW()
 );
