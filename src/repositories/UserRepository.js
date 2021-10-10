@@ -3,7 +3,7 @@ const { encrypt } = require("../utils/encrypt");
 
 const QUERIES = {
   create:
-    "INSERT INTO users (username, given_name, family_name, email, avatar_image) VALUES ($1,$2,$3,$4,$5) RETURNING user_id",
+    "INSERT INTO users (username, given_name, family_name, email) VALUES ($1,$2,$3,$4) RETURNING user_id",
   findByEmail: "SELECT user_id FROM users WHERE email LIKE $1",
 };
 
@@ -18,7 +18,6 @@ function create(profile) {
     given_name: encrypt(profile._json.given_name),
     family_name: encrypt(profile._json.family_name),
     email: encrypt(profile._json.email),
-    avatar_image: profile._json.picture,
   };
   return new Promise(async (resolve, reject) => {
     try {
