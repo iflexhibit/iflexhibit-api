@@ -1,16 +1,21 @@
 ---
 name: Update Issue Template
 about: I'm gonna make him an update he can't refuse.
-title: ''
+title: ""
 labels: update
-assignees: ''
-
+assignees: ""
 ---
 
 ### Header
 
 Base: `main`
 New branch: `update-`
+
+---
+
+**Prerequisites**:
+
+-
 
 ---
 
