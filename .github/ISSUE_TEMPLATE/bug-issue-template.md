@@ -1,16 +1,21 @@
 ---
 name: Bug Issue Template
 about: I'm gonna make him a bug fix he can't refuse.
-title: ''
+title: ""
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 ### Header
 
 Base: `main`
 New branch: `fix-`
+
+---
+
+**Prerequisites**:
+
+-
 
 ---
 
