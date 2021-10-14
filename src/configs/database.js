@@ -3,7 +3,7 @@ const { db } = require("./config");
 
 const pool = new pg.Pool({
   connectionString: db.CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
+  ssl: false,
 });
 
 module.exports = { pool };
