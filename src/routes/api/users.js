@@ -8,11 +8,11 @@ router.get("/", async (req, res) => {
     return res.sendStatus(401);
   }
   try {
-    const user = await UserRepository.fetchUserBasic(req.user.user_id);
+    const user = await UserRepository.fetchUserBasic(req.user.userId);
     if (!user) return res.sendStatus(404);
     return res.status(200).json({ user });
   } catch (error) {
-    return res.sendStatus(404);
+    return res.sendStatus(500);
   }
 });
 
