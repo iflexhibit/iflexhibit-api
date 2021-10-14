@@ -1,10 +1,12 @@
 const { pool } = require("../configs/database");
-const { encrypt } = require("../utils/encrypt");
+const { encrypt, decrypt } = require("../utils/encrypt");
 
 const QUERIES = {
   create:
     "INSERT INTO users (username, given_name, family_name, email) VALUES ($1,$2,$3,$4) RETURNING user_id",
-  findByEmail: "SELECT user_id FROM users WHERE email LIKE $1",
+  fetchEmailOne: "SELECT user_id FROM users WHERE email LIKE $1",
+  fetchBasic:
+    "SELECT user_id, B.usertype_title, username, A.avatar_image, A.created_at FROM users A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;",
 };
 
 /**
@@ -39,10 +41,36 @@ function create(profile) {
 function findByEmail(email) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.findByEmail, [
+      const { rows, rowCount } = await pool.query(QUERIES.fetchEmailOne, [
         encrypt(email),
       ]);
-      return resolve(rows[0]);
+      if (!rows[0]) return resolve(null);
+      const user = {
+        userId: rows[0].user_id,
+      };
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function fetchUserBasic(userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(QUERIES.fetchBasic, [userId]);
+
+      if (!rows[0]) return resolve(null);
+
+      const user = {
+        userId: rows[0].user_id,
+        usertype: rows[0].usertype_title,
+        username: decrypt(rows[0].username),
+        avatarImage: rows[0].avatar_image,
+        createdAt: rows[0].created_at,
+      };
+
+      return resolve(user);
     } catch (error) {
       return reject(error);
     }
@@ -62,4 +90,4 @@ function generateUsername(fullname) {
   return [initials, rng].join("");
 }
 
-module.exports = { create, findByEmail };
+module.exports = { create, findByEmail, fetchUserBasic };
