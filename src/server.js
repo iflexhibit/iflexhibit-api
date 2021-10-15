@@ -2,14 +2,20 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const PGStore = require("connect-pg-simple");
-const { db } = require("./configs/config");
+const cors = require("cors");
+const { db, NODE_ENV } = require("./configs/config");
 const { pool } = require("./configs/database");
 
 require("./configs/passport")(passport);
 
 const app = express();
+const CLIENT_URL =
+  NODE_ENV === "production"
+    ? "https://iflexhibit.com"
+    : "http://localhost:3000";
 
 app.use(express.json());
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(
   session({
     store: new (PGStore(session))({
