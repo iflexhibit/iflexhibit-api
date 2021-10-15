@@ -5,15 +5,10 @@ const QUERIES = {
   create:
     "INSERT INTO users (username, given_name, family_name, email) VALUES ($1,$2,$3,$4) RETURNING user_id",
   fetchEmailOne: "SELECT user_id FROM users WHERE email LIKE $1",
-  fetchBasic:
-    "SELECT user_id, B.usertype_title, username, A.avatar_image, A.created_at FROM users A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;",
+  fetchProfile:
+    "SELECT user_id, B.usertype_title, username, CASE WHEN show_name = FALSE THEN NULL ELSE given_name END, CASE WHEN show_name = FALSE THEN NULL ELSE family_name END, CASE WHEN show_email = FALSE THEN NULL ELSE email END, CASE WHEN show_contact = FALSE THEN NULL ELSE contact END, A.avatar_image, A.background_image, A.created_at FROM users A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;",
 };
 
-/**
- * @param {import("passport").Profile} profile Profile object
- * @returns {Promise} Returns the field `user_id` of the newly created user
- * @description Creates a new `user` in the database with the `profile` provided by Google Sign-In
- */
 function create(profile) {
   const newUser = {
     username: encrypt(generateUsername(profile._json.name)),
@@ -33,11 +28,6 @@ function create(profile) {
   });
 }
 
-/**
- * @param {*} email Email from `profile._json.email`
- * @returns {Promise} Returns the fields `user_id`, `username`, `email` in an object
- * @description Finds a `user` in the database that matches the `email`
- */
 function findByEmail(email) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -55,10 +45,12 @@ function findByEmail(email) {
   });
 }
 
-function fetchUserBasic(userId) {
+function fetchProfile(userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.fetchBasic, [userId]);
+      const { rows, rowCount } = await pool.query(QUERIES.fetchProfile, [
+        userId,
+      ]);
 
       if (!rows[0]) return resolve(null);
 
@@ -66,7 +58,12 @@ function fetchUserBasic(userId) {
         userId: rows[0].user_id,
         usertype: rows[0].usertype_title,
         username: decrypt(rows[0].username),
+        giveName: decrypt(rows[0].given_name),
+        familyName: decrypt(rows[0].family_name),
+        email: decrypt(rows[0].email),
+        contact: decrypt(rows[0].contact),
         avatarImage: rows[0].avatar_image,
+        backgroundImage: rows[0].background_image,
         createdAt: rows[0].created_at,
       };
 
@@ -90,4 +87,4 @@ function generateUsername(fullname) {
   return [initials, rng].join("");
 }
 
-module.exports = { create, findByEmail, fetchUserBasic };
+module.exports = { create, findByEmail, fetchProfile };
