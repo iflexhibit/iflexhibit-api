@@ -1,9 +1,9 @@
 const pg = require("pg");
-const { db } = require("./config");
+const { NODE_ENV, db } = require("./config");
 
 const pool = new pg.Pool({
   connectionString: db.CONNECTION_STRING,
-  ssl: false,
+  ssl: NODE_ENV === "production",
 });
 
 module.exports = { pool };

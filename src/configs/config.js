@@ -3,6 +3,7 @@ dotenv.config();
 const { decrypt } = require("../utils/encrypt");
 
 module.exports = {
+  NODE_ENV: process.env.NODE_ENV,
   db: {
     CONNECTION_STRING: decrypt(process.env.CONNECTION_STRING),
     SESSION_SECRET: decrypt(process.env.SESSION_SECRET),
