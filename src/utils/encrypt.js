@@ -7,16 +7,24 @@ const key = crypto
   .substr(0, 32);
 
 function encrypt(data) {
-  const cipher = crypto.createCipheriv(algorithm, key, null);
-  const encrypted = cipher.update(data, "utf8", "hex") + cipher.final("hex");
-  return encrypted;
+  try {
+    const cipher = crypto.createCipheriv(algorithm, key, null);
+    const encrypted = cipher.update(data, "utf8", "hex") + cipher.final("hex");
+    return encrypted;
+  } catch (error) {
+    return null;
+  }
 }
 
 function decrypt(data) {
-  const decipher = crypto.createDecipheriv(algorithm, key, null);
-  const decrypted =
-    decipher.update(data, "hex", "utf8") + decipher.final("utf8");
-  return decrypted;
+  try {
+    const decipher = crypto.createDecipheriv(algorithm, key, null);
+    const decrypted =
+      decipher.update(data, "hex", "utf8") + decipher.final("utf8");
+    return decrypted;
+  } catch (error) {
+    return null;
+  }
 }
 
 module.exports = { encrypt, decrypt };
