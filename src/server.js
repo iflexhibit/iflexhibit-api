@@ -6,7 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { db, NODE_ENV } = require("./configs/config");
 const { pool } = require("./configs/database");
-const https = require("https");
+const http = require("http");
 
 require("./configs/passport")(passport);
 
@@ -36,4 +36,9 @@ app.use(passport.session());
 app.use("/api", require("./routes/index"));
 
 const port = process.env.PORT || 5000;
-https.createServer({ rejectUnauthorized: false }, app).listen(port);
+const server = http.createServer(
+  { requestCert: false, rejectUnauthorized: false },
+  app
+);
+
+server.listen(port, () => console.log(`Server running on port ${port}...`));
