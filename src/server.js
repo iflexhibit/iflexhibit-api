@@ -24,7 +24,7 @@ app.use(
       pool,
       pruneSessionInterval: 60,
     }),
-    cookie: { maxAge: db.COOKIE_MAXAGE, secure: true },
+    cookie: { maxAge: db.COOKIE_MAXAGE, secure: false },
     secret: db.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
