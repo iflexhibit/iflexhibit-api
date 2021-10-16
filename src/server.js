@@ -3,6 +3,7 @@ const session = require("express-session");
 const passport = require("passport");
 const PGStore = require("connect-pg-simple");
 const cors = require("cors");
+const morgan = require("morgan");
 const { db, NODE_ENV } = require("./configs/config");
 const { pool } = require("./configs/database");
 
@@ -14,6 +15,7 @@ const CLIENT_URL =
     ? "https://iflexhibit.com"
     : "http://localhost:3000";
 
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(
