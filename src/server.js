@@ -17,7 +17,7 @@ const CLIENT_URL =
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors({ credentials: true }));
 app.use(
   session({
     store: new (PGStore(session))({
