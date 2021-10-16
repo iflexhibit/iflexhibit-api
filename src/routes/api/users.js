@@ -5,14 +5,14 @@ const router = express.Router();
 
 router.get("/user", async (req, res) => {
   if (!req.user) {
-    return res.sendStatus(401);
+    return res.status(401).json({ status: 401 });
   }
   try {
     const user = await UserRepository.fetchProfile(req.user.userId);
-    if (!user) return res.sendStatus(401);
-    return res.status(200).json({ user });
+    if (!user) return res.status(401).json({ status: 401 });
+    return res.status(200).json({ status: 200, user });
   } catch (error) {
-    return res.sendStatus(500);
+    return res.status(500).json({ status: 500 });
   }
 });
 
