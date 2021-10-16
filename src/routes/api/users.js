@@ -4,6 +4,7 @@ const UserRepository = require("../../repositories/UserRepository");
 const router = express.Router();
 
 router.get("/user", async (req, res) => {
+  console.log(req.headers.cookie);
   if (!req.user) {
     return res.status(401).json({ status: 401 });
   }
