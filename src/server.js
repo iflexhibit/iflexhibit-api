@@ -6,6 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { db, NODE_ENV } = require("./configs/config");
 const { pool } = require("./configs/database");
+const https = require("https");
 
 require("./configs/passport")(passport);
 
@@ -17,7 +18,7 @@ const CLIENT_URL =
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors({ credentials: true }));
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(
   session({
     store: new (PGStore(session))({
@@ -35,4 +36,4 @@ app.use(passport.session());
 app.use("/api", require("./routes/index"));
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}...`));
+https.createServer({ rejectUnauthorized: false }, app).listen(port);
