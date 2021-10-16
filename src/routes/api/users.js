@@ -1,20 +1,9 @@
 const express = require("express");
-const UserRepository = require("../../repositories/UserRepository");
-
+const auth = require("../../middlware/auth");
 const router = express.Router();
 
-router.get("/user", async (req, res) => {
-  console.log(req.headers.cookie);
-  if (!req.user) {
-    return res.status(401).json({ status: 401 });
-  }
-  try {
-    const user = await UserRepository.fetchProfile(req.user.userId);
-    if (!user) return res.status(401).json({ status: 401 });
-    return res.status(200).json({ status: 200, user }).end();
-  } catch (error) {
-    return res.status(500).json({ status: 500 }).end();
-  }
+router.get("/user", auth, async (req, res) => {
+  return res.status(200).json({ status: 200, user: req.user });
 });
 
 module.exports = router;

@@ -4,9 +4,9 @@ const { decrypt } = require("../utils/encrypt");
 
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
+  JWT_SECRET: decrypt(process.env.JWT_SECRET),
   db: {
     CONNECTION_STRING: decrypt(process.env.CONNECTION_STRING),
-    SESSION_SECRET: decrypt(process.env.SESSION_SECRET),
     COOKIE_MAXAGE: 1000 * 60 * 60,
   },
   google: {
