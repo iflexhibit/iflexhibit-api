@@ -7,7 +7,8 @@ posts.post_image,
 post_tags,
 (
     SELECT COUNT(*)
-    FROM userpost
+    FILTER (WHERE posts.user_id=users.user_id)
+    FROM userpost 
 ) AS views_count,
 (
     SELECT COUNT(*)
