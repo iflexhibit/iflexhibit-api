@@ -11,7 +11,7 @@ post_tags,
 ) AS views_count,
 (
     SELECT COUNT(*)
-    FILTER (WHERE is_liked)
+    FILTER (WHERE is_liked AND posts.post_id=userpost.post_id)
     FROM userpost
 ) AS likes_count,
 (
