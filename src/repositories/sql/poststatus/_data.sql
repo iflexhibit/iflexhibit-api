@@ -1,11 +1,13 @@
 INSERT INTO poststatus (status_title)
-VALUE ("pending");
+VALUES ('pending');
 
 INSERT INTO poststatus (status_title)
-VALUE ("approved");
+VALUES ('approved');
 
 INSERT INTO poststatus (status_title)
-VALUE ("rejected");
+VALUES ('rejected');
 
 INSERT INTO poststatus (status_title)
-VALUE ("disabled");
+VALUES ('disabled');
+
+-- 10-17-21 2nd attempt
