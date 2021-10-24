@@ -55,15 +55,17 @@ function fetchProfile(userId) {
       if (!rows[0]) return resolve(null);
 
       const user = {
-        userId: rows[0].user_id,
+        id: rows[0].user_id,
         usertype: rows[0].usertype_title,
         username: decrypt(rows[0].username),
-        giveName: decrypt(rows[0].given_name),
-        familyName: decrypt(rows[0].family_name),
+        name: {
+          given: decrypt(rows[0].given_name),
+          family: decrypt(rows[0].family_name),
+        },
         email: decrypt(rows[0].email),
         contact: decrypt(rows[0].contact),
-        avatarImage: rows[0].avatar_image,
-        backgroundImage: rows[0].background_image,
+        avatar: rows[0].avatar_image,
+        background: rows[0].background_image,
         createdAt: rows[0].created_at,
       };
 
