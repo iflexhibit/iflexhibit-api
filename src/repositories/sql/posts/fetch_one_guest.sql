@@ -6,6 +6,7 @@ posts.post_title,
 posts.post_image,
 posts.post_tags,
 posts.post_body,
+users.avatar_image,
 (
     SELECT COUNT(*)
     FILTER (WHERE posts.post_id=userpost.post_id)
@@ -25,5 +26,4 @@ posts.created_at
 FROM posts
 JOIN poststatus ON posts.status_id=poststatus.status_id
 JOIN users ON posts.user_id=users.user_id
-WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=$1
-;
+WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=$1;
