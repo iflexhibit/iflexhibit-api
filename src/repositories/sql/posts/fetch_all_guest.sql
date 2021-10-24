@@ -2,6 +2,7 @@ SELECT
 posts.post_id,
 poststatus.status_title,
 users.username,
+users.avatar_image,
 posts.post_title,
 posts.post_image,
 posts.post_tags,
