@@ -25,5 +25,5 @@ posts.created_at
 FROM posts
 JOIN poststatus ON posts.status_id=poststatus.status_id
 JOIN users ON posts.user_id=users.user_id
-WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=20
+WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=$1
 ;
