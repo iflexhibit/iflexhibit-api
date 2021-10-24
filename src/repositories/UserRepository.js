@@ -21,7 +21,11 @@ function create(profile) {
       const { rows, rowCount } = await pool.query(QUERIES.create, [
         ...Object.values(newUser),
       ]);
-      return resolve(rows[0]);
+      if (!rows[0]) return resolve(null);
+      const user = {
+        userId: rows[0].user_id,
+      };
+      return resolve(user);
     } catch (error) {
       return reject(error);
     }
