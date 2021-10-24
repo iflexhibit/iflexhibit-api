@@ -31,6 +31,35 @@ const QUERIES = {
   JOIN users ON posts.user_id=users.user_id
   WHERE posts.status_id=2 AND posts.is_deleted=FALSE
   ;`,
+  fetchPost: `SELECT 
+  posts.post_id,
+  poststatus.status_title,
+  users.username,
+  posts.post_title,
+  posts.post_image,
+  posts.post_tags,
+  posts.post_body,
+  users.avatar_image,
+  (
+      SELECT COUNT(*)
+      FILTER (WHERE posts.post_id=userpost.post_id)
+      FROM userpost 
+  ) AS views_count,
+  (
+      SELECT COUNT(*)
+      FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
+      FROM userpost
+  ) AS likes_count,
+  (
+      SELECT COUNT(*)
+      FILTER (WHERE posts.post_id=comments.post_id AND comments.is_disabled=FALSE AND comments.is_deleted=FALSE)
+      FROM comments
+  ) AS comments_count,
+  posts.created_at
+  FROM posts
+  JOIN poststatus ON posts.status_id=poststatus.status_id
+  JOIN users ON posts.user_id=users.user_id
+  WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=$1;`,
 };
 
 function fetchPosts() {
@@ -62,4 +91,37 @@ function fetchPosts() {
   });
 }
 
-module.exports = { fetchPosts };
+function fetchPost(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(QUERIES.fetchPost, [id]);
+
+      if (!rows[0]) return resolve(null);
+
+      const post = {
+        id: rows[0].post_id,
+        status: rows[0].status_title,
+        author: {
+          username: decrypt(rows[0].username),
+          avatar: rows[0].avatar_image,
+        },
+        title: rows[0].post_title,
+        image: rows[0].post_image,
+        tags: rows[0].post_tags.split(","),
+        body: rows[0].post_body,
+        statistics: {
+          views: rows[0].views_count,
+          likes: rows[0].likes_count,
+          comments: rows[0].comments_count,
+        },
+        createdAt: rows[0].created_at,
+      };
+
+      return resolve(post);
+    } catch (error) {
+      console.log(error);
+      return reject(error);
+    }
+  });
+}
+module.exports = { fetchPosts, fetchPost };
