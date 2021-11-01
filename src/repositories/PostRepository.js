@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { pool } = require("../configs/database");
 const { encrypt, decrypt } = require("../utils/encrypt");
 
@@ -60,8 +61,22 @@ const QUERIES = {
   JOIN poststatus ON posts.status_id=poststatus.status_id
   JOIN users ON posts.user_id=users.user_id
   WHERE posts.status_id=2 AND posts.is_deleted=FALSE AND post_id=$1;`,
+  fetchComments: `SELECT 
+  comments.comment_id,
+  users.user_id,
+  users.username,
+  users.avatar_image,
+  CASE WHEN is_disabled=FALSE THEN comments.comment_body
+  ELSE 'This comment has been disabled.'
+  END AS comment_body,
+  comments.is_disabled,
+  comments.created_at
+  FROM comments
+  JOIN users ON comments.user_id=users.user_id
+  JOIN posts ON comments.post_id=posts.post_id
+  WHERE comments.post_id=$1;
+  `,
 };
-
 function fetchPosts() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -124,4 +139,29 @@ function fetchPost(id) {
     }
   });
 }
-module.exports = { fetchPosts, fetchPost };
+
+function fetchComments(postId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(QUERIES.fetchComments, [
+        postId,
+      ]);
+      if (!rows) return resolve(null);
+      const comments = rows.map((comment) => ({
+        id: comment.comment_id,
+        author: {
+          id: comment.user_id,
+          username: decrypt(comment.username),
+          avatar: comment.avatar_image,
+        },
+        comment: comment.comment_body,
+        isDisabled: comment.is_disabled,
+        createdAt: comment.created_at,
+      }));
+      return resolve({ comments, count: rowCount });
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+module.exports = { fetchPosts, fetchPost, fetchComments };
