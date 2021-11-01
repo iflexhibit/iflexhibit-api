@@ -154,7 +154,7 @@ function fetchComments(postId) {
           username: decrypt(comment.username),
           avatar: comment.avatar_image,
         },
-        comment: comment.comment_body,
+        body: comment.comment_body,
         isDisabled: comment.is_disabled,
         createdAt: comment.created_at,
       }));

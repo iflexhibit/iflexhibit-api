@@ -10,9 +10,9 @@ router.get("/user", auth, async (req, res) => {
 router.post("/comment", auth, async (req, res) => {
   const { postId, commentBody } = req.body;
   if (!postId)
-    return res.status(400).json({ status: 400, msg: "Post is invalid" });
+    return res.status(400).json({ status: 400, msg: "Invalid post" });
   if (!commentBody)
-    return res.status(400).json({ status: 400, msg: "Comment is invalid" });
+    return res.status(400).json({ status: 400, msg: "Invalid comment" });
 
   try {
     const comment = await insertComment(req.user.id, postId, commentBody);
