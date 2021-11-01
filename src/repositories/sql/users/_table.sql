@@ -8,6 +8,7 @@ CREATE TABLE users (
     "contact" TEXT DEFAULT NULL,
     "avatar_image" TEXT DEFAULT '/assets/noavatar.jpg',
     "background_image" TEXT DEFAULT '/assets/nobg.jpg',
+    "bio" TEXT DEFAULT NULL,
     "show_name" BOOLEAN DEFAULT FALSE,
     "show_email" BOOLEAN DEFAULT FALSE,
     "show_contact" BOOLEAN DEFAULT FALSE,
