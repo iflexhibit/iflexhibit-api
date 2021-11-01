@@ -7,6 +7,9 @@ const QUERIES = {
   fetchEmailOne: "SELECT user_id FROM users WHERE email LIKE $1",
   fetchProfile:
     "SELECT user_id, B.usertype_title, username, CASE WHEN show_name = FALSE THEN NULL ELSE given_name END, CASE WHEN show_name = FALSE THEN NULL ELSE family_name END, CASE WHEN show_email = FALSE THEN NULL ELSE email END, CASE WHEN show_contact = FALSE THEN NULL ELSE contact END, A.avatar_image, A.background_image, A.created_at FROM users A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;",
+  insertComment: `INSERT INTO comments (user_id, post_id, comment_body)
+    VALUES ($1, $2, $3)
+    RETURNING comment_id;`,
 };
 
 function create(profile) {
@@ -93,4 +96,21 @@ function generateUsername(fullname) {
   return [initials, rng].join("");
 }
 
-module.exports = { create, findByEmail, fetchProfile };
+function insertComment(userId, postId, commentBody) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(QUERIES.insertComment, [
+        userId,
+        postId,
+        commentBody,
+      ]);
+      if (!rows[0]) return resolve(null);
+      const comment = { id: rows[0].comment_id };
+      return resolve(comment);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+module.exports = { create, findByEmail, fetchProfile, insertComment };
