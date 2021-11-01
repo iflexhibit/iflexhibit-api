@@ -92,9 +92,9 @@ function fetchPosts() {
         image: post.post_image,
         tags: post.post_tags.split(","),
         statistics: {
-          views: post.views_count,
-          likes: post.likes_count,
-          comments: post.comments_count,
+          views: parseInt(post.views_count),
+          likes: parseInt(post.likes_count),
+          comments: parseInt(post.comments_count),
         },
         createdAt: post.created_at,
       }));
@@ -125,9 +125,9 @@ function fetchPost(id) {
         tags: rows[0].post_tags.split(","),
         body: rows[0].post_body,
         statistics: {
-          views: rows[0].views_count,
-          likes: rows[0].likes_count,
-          comments: rows[0].comments_count,
+          views: parseInt(rows[0].views_count),
+          likes: parseInt(rows[0].likes_count),
+          comments: parseInt(rows[0].comments_count),
         },
         createdAt: rows[0].created_at,
       };
