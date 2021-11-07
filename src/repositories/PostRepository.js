@@ -43,6 +43,7 @@ function fetchPost(id) {
         id: rows[0].post_id,
         status: rows[0].status_title,
         author: {
+          id: rows[0].user_id,
           username: decrypt(rows[0].username),
           avatar: rows[0].avatar_image,
         },

@@ -37,6 +37,7 @@ posts.post_image,
 posts.post_tags,
 posts.post_body,
 users.avatar_image,
+users.user_id,
 (
     SELECT COUNT(*)
     FILTER (WHERE posts.post_id=userpost.post_id)
