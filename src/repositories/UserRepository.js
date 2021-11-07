@@ -1,36 +1,6 @@
 const { pool } = require("../configs/database");
 const { encrypt, decrypt } = require("../utils/encrypt");
-
-const QUERIES = {
-  create:
-    "INSERT INTO users (username, given_name, family_name, email) VALUES ($1,$2,$3,$4) RETURNING user_id",
-  fetchEmailOne: "SELECT user_id FROM users WHERE email LIKE $1",
-  fetchProfile: `SELECT user_id,
-    B.usertype_title,
-    username,
-    CASE WHEN show_name = FALSE THEN NULL
-            ELSE given_name
-            END,
-        CASE WHEN show_name = FALSE THEN NULL
-            ELSE family_name
-            END,
-        CASE WHEN show_email = FALSE THEN NULL
-            ELSE email
-            END,
-        CASE WHEN show_contact = FALSE THEN NULL
-            ELSE contact
-           END,
-        A.avatar_image,
-        A.background_image,
-        A.bio,
-        A.created_at
-    FROM users
-    A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;
-    `,
-  insertComment: `INSERT INTO comments (user_id, post_id, comment_body)
-    VALUES ($1, $2, $3)
-    RETURNING comment_id;`,
-};
+const UserQueries = require("./UserQueries");
 
 function create(profile) {
   const newUser = {
@@ -41,7 +11,7 @@ function create(profile) {
   };
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.create, [
+      const { rows, rowCount } = await pool.query(UserQueries.create, [
         ...Object.values(newUser),
       ]);
       if (!rows[0]) return resolve(null);
@@ -58,7 +28,7 @@ function create(profile) {
 function findByEmail(email) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.fetchEmailOne, [
+      const { rows, rowCount } = await pool.query(UserQueries.fetchEmailOne, [
         encrypt(email),
       ]);
       if (!rows[0]) return resolve(null);
@@ -75,7 +45,7 @@ function findByEmail(email) {
 function fetchProfile(userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.fetchProfile, [
+      const { rows, rowCount } = await pool.query(UserQueries.fetchProfile, [
         userId,
       ]);
 
@@ -120,7 +90,7 @@ function generateUsername(fullname) {
 function insertComment(userId, postId, commentBody) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(QUERIES.insertComment, [
+      const { rows, rowCount } = await pool.query(UserQueries.insertComment, [
         userId,
         postId,
         commentBody,
