@@ -1,5 +1,6 @@
 UPDATE users 
 SET 
-    background_image = $1
+    background_image = $1,
+    updated_at = NOW()
 WHERE user_id = $2
 RETURNING user_id;
