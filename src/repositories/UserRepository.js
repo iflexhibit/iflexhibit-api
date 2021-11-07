@@ -5,8 +5,28 @@ const QUERIES = {
   create:
     "INSERT INTO users (username, given_name, family_name, email) VALUES ($1,$2,$3,$4) RETURNING user_id",
   fetchEmailOne: "SELECT user_id FROM users WHERE email LIKE $1",
-  fetchProfile:
-    "SELECT user_id, B.usertype_title, username, CASE WHEN show_name = FALSE THEN NULL ELSE given_name END, CASE WHEN show_name = FALSE THEN NULL ELSE family_name END, CASE WHEN show_email = FALSE THEN NULL ELSE email END, CASE WHEN show_contact = FALSE THEN NULL ELSE contact END, A.avatar_image, A.background_image, A.created_at FROM users A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;",
+  fetchProfile: `SELECT user_id,
+    B.usertype_title,
+    username,
+    CASE WHEN show_name = FALSE THEN NULL
+            ELSE given_name
+            END,
+        CASE WHEN show_name = FALSE THEN NULL
+            ELSE family_name
+            END,
+        CASE WHEN show_email = FALSE THEN NULL
+            ELSE email
+            END,
+        CASE WHEN show_contact = FALSE THEN NULL
+            ELSE contact
+           END,
+        A.avatar_image,
+        A.background_image,
+        A.bio,
+        A.created_at
+    FROM users
+    A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;
+    `,
   insertComment: `INSERT INTO comments (user_id, post_id, comment_body)
     VALUES ($1, $2, $3)
     RETURNING comment_id;`,
@@ -71,6 +91,7 @@ function fetchProfile(userId) {
         },
         email: decrypt(rows[0].email),
         contact: decrypt(rows[0].contact),
+        bio: rows[0].bio,
         avatar: rows[0].avatar_image,
         background: rows[0].background_image,
         createdAt: rows[0].created_at,
