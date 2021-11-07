@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/post/:id", async (req, res) => {
   try {
     const post = await fetchPost(req.params.id);
     if (!post) return res.status(404).json({ status: 404, msg: "Not found" });
