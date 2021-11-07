@@ -8,6 +8,12 @@ posts.post_tags,
 posts.post_body,
 users.avatar_image,
 users.user_id,
+CASE WHEN users.show_name = FALSE THEN NULL
+        ELSE users.given_name
+        END,
+    CASE WHEN users.show_name = FALSE THEN NULL
+        ELSE users.family_name
+        END,
 (
     SELECT COUNT(*)
     FILTER (WHERE posts.post_id=userpost.post_id)
