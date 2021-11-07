@@ -10,7 +10,7 @@ router.get("/user", auth, async (req, res) => {
   return res.status(200).json({ status: 200, user: req.user });
 });
 
-router.get("/user/:id", auth, async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   if (isNaN(req.params.id))
     return res.status(400).json({ status: 400, msg: "Bad request" });
   try {
