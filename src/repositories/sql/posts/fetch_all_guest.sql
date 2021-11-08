@@ -25,7 +25,6 @@ posts.created_at
 FROM posts
 JOIN poststatus ON posts.status_id=poststatus.status_id
 JOIN users ON posts.user_id=users.user_id
-WHERE posts.status_id=2 AND posts.is_deleted=FALSE
-;
+WHERE posts.status_id=2 AND posts.is_deleted=FALSE ORDER BY posts.created_at DESC;
 
 -- For reference,  posts.status_id=2 is 'approved'
