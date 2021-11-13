@@ -108,12 +108,30 @@ function updatePreferences(userId, showName, showContact, showEmail) {
   });
 }
 
+function updateProfile(userId, username, contact, bio) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(UserQueries.updateProfile, [
+        encrypt(username),
+        encrypt(contact),
+        bio,
+        userId,
+      ]);
+      const user = { userId: rows[0].user_id };
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   create,
   findByEmail,
   fetchProfile,
   insertComment,
   updatePreferences,
+  updateProfile,
 };
 
 function generateUsername(fullname) {
