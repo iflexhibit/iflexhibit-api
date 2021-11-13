@@ -1,0 +1,2 @@
+ALTER TABLE offenses
+ALTER COLUMN offense_title TYPE VARCHAR(50); 
