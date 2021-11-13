@@ -42,6 +42,43 @@ function findByEmail(email) {
   });
 }
 
+function fetchMyProfile(userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(UserQueries.fetchMyProfile, [
+        userId,
+      ]);
+
+      if (!rows[0]) return resolve(null);
+
+      const user = {
+        id: rows[0].user_id,
+        usertype: rows[0].usertype_title,
+        username: decrypt(rows[0].username),
+        name: {
+          given: decrypt(rows[0].given_name),
+          family: decrypt(rows[0].family_name),
+        },
+        email: decrypt(rows[0].email),
+        contact: decrypt(rows[0].contact),
+        bio: rows[0].bio,
+        avatar: rows[0].avatar_image,
+        background: rows[0].background_image,
+        preferences: {
+          showName: rows[0].show_name,
+          showEmail: rows[0].show_email,
+          showContact: rows[0].show_contact,
+        },
+        createdAt: rows[0].created_at,
+      };
+
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 function fetchProfile(userId) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -133,6 +170,7 @@ function updateProfile(userId, username, contact, bio) {
 module.exports = {
   create,
   findByEmail,
+  fetchMyProfile,
   fetchProfile,
   insertComment,
   updatePreferences,
