@@ -27,6 +27,16 @@ module.exports = {
   insertComment: `INSERT INTO comments (user_id, post_id, comment_body)
       VALUES ($1, $2, $3)
       RETURNING comment_id;`,
+  updatePreferences: `
+      UPDATE users
+      SET
+          show_name = $1,
+          show_contact = $2,
+          show_email = $3,
+          updated_at = NOW()
+      WHERE user_id = $4
+      RETURNING user_id;
+      `,
   updateProfile: `
       UPDATE users
       SET

@@ -91,6 +91,23 @@ function insertComment(userId, postId, commentBody) {
   });
 }
 
+function updatePreferences(userId, showName, showContact, showEmail) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(
+        UserQueries.updatePreferences,
+        [showName, showContact, showEmail, userId]
+      );
+      const user = {
+        userId: rows[0].user_id,
+      };
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 function updateProfile(userId, username, contact, bio) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -113,6 +130,7 @@ module.exports = {
   findByEmail,
   fetchProfile,
   insertComment,
+  updatePreferences,
   updateProfile,
 };
 
