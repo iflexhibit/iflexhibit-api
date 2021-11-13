@@ -64,6 +64,11 @@ function fetchProfile(userId) {
         bio: rows[0].bio,
         avatar: rows[0].avatar_image,
         background: rows[0].background_image,
+        preferences: {
+          showName: rows[0].show_name,
+          showEmail: rows[0].show_email,
+          showContact: rows[0].show_contact,
+        },
         createdAt: rows[0].created_at,
       };
 
