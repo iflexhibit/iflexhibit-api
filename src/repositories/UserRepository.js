@@ -74,19 +74,6 @@ function fetchProfile(userId) {
   });
 }
 
-function generateUsername(fullname) {
-  const initials = fullname
-    .split(" ")
-    .map((name) => name.charAt(0))
-    .join("");
-
-  const rng = (Math.floor(Math.random() * 10000) + 10000)
-    .toString()
-    .substring(1);
-
-  return [initials, rng].join("");
-}
-
 function insertComment(userId, postId, commentBody) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -104,4 +91,40 @@ function insertComment(userId, postId, commentBody) {
   });
 }
 
-module.exports = { create, findByEmail, fetchProfile, insertComment };
+function updateProfile(userId, username, contact, bio) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, rowCount } = await pool.query(UserQueries.updateProfile, [
+        encrypt(username),
+        encrypt(contact),
+        bio,
+        userId,
+      ]);
+      const user = { userId: rows[0].user_id };
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+module.exports = {
+  create,
+  findByEmail,
+  fetchProfile,
+  insertComment,
+  updateProfile,
+};
+
+function generateUsername(fullname) {
+  const initials = fullname
+    .split(" ")
+    .map((name) => name.charAt(0))
+    .join("");
+
+  const rng = (Math.floor(Math.random() * 10000) + 10000)
+    .toString()
+    .substring(1);
+
+  return [initials, rng].join("");
+}
