@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
   } else {
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      req.user = await UserRepository.fetchProfile(decoded.userId);
+      req.user = await UserRepository.fetchMyProfile(decoded.userId);
       next();
     } catch (error) {
       return res.status(400).json({ msg: "Invalid token", status: 400 });

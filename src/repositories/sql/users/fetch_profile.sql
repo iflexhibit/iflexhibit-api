@@ -16,6 +16,9 @@ CASE WHEN show_name = FALSE THEN NULL
     A.avatar_image,
     A.background_image,
     A.bio,
+    show_name,
+    show_email,
+    show_contact,
     A.created_at
 FROM users
 A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;
