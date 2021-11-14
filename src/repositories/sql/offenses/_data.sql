@@ -136,7 +136,7 @@ VALUES
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('P02', 'Showing Disrespect to National Symbols' , 'P', '07');
+    ('P02', 'Showing Disrespect to National Symbols' , 'p', '07');
 
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
