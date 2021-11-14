@@ -21,7 +21,7 @@ VALUES
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('U11', 'Recruiting to any Fraternities and or Sororities' , 'u', '14');
+    ('U11', 'Recruiting to any Fraternities or Sororities' , 'u', '14');
 
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
@@ -86,7 +86,7 @@ VALUES
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('C11', 'Recruiting to any Fraternities and or Sororities' , 'c', '14');
+    ('C11', 'Recruiting to any Fraternities or Sororities' , 'c', '14');
 
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
@@ -151,7 +151,7 @@ VALUES
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('P11', 'Recruiting to any Fraternities and or Sororities' , 'p', '14');
+    ('P11', 'Recruiting to any Fraternities or Sororities' , 'p', '14');
 
 INSERT INTO offenses    
     (offense_code, offense_title, offense_type, ban_time)
