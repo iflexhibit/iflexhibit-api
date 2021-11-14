@@ -1,198 +1,194 @@
 INSERT INTO offenses    
-    ( offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ( 'Using foul language or gestures.' , 'u', '07');
+    ('U01', 'Using Foul Language or Gestures' , 'u', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing disrespect to National Symbols.' , 'u', '07');
+    ('U02', 'Showing Disrespect to National Symbols' , 'u', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing inappropriate behavior.' , 'u', '07');
+    ('U03', 'Showing Inappropriate Behavior' , 'u', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Inappropriate display of intimacy.' , 'u', '07');
+    ('U04', 'Inappropriate Display of Intimacy' , 'u', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Recruiting to any fraternities and/or sororities.' , 'u', '14');
+    ('U11', 'Recruiting to any Fraternities and or Sororities' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Any act/form of cheating.' , 'u', '14');
+    ('U12', 'Any Act Form of Cheating' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of immoral conduct and disrespect.' , 'u', '14');
+    ('U13', 'Acts of Immoral Conduct and Disrespect' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Blatantly disregarding approved school policies.' , 'u', '14');
+    ('U14', 'Blatantly Disregarding Approved School Policies' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of dishonor to the school.' , 'u', '14');
+    ('U15', 'Acts of Dishonor to the School' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('False representation as student organizations.' , 'u', '14');
+    ('U16', 'False Representation as Student Organizations' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Commiting act of cyberbullying.' , 'u', '14');
+    ('U17', 'Commiting Any Act of Cyberbullying' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of Intellectual Property theft.' , 'u', '14');
+    ('U18', 'Acts of Intellectual Property Theft' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('False claim of Intellectual Property.' , 'u', '14');
-
+    ('U19', 'False Claim of Intellectual Property' , 'u', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Using foul language or gestures.' , 'c', '07');
+    ('C01', 'Using Foul Language or Gestures' , 'c', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing disrespect to National Symbols.' , 'c', '07');
+    ('C02', 'Showing Disrespect to National Symbols' , 'c', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing inappropriate behavior.' , 'c', '07');
+    ('C03', 'Showing Inappropriate Behavior' , 'c', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Inappropriate display of intimacy.' , 'c', '07');
-
+    ('C04', 'Inappropriate Display of Intimacy' , 'c', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Recruiting to any fraternities and/or sororities.' , 'c', '14');
+    ('C11', 'Recruiting to any Fraternities and or Sororities' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Any act/form of cheating.' , 'c', '14');
+    ('C12', 'Any Act Form of Cheating' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of immoral conduct and disrespect.' , 'c', '14');
+    ('C13', 'Acts of Immoral Conduct and Disrespect' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Blatantly disregarding approved school policies.' , 'c', '14');
+    ('C14', 'Blatantly Disregarding Approved School Policies' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of dishonor to the school.' , 'c', '14');
+    ('C15', 'Acts of Dishonor to the School' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('False representation as student organizations.' , 'u', '14');
+    ('C16', 'False Representation as Student Organizations' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Commiting act of cyberbullying.' , 'c', '14');
-
+    ('C17', 'Commiting Any Act of Cyberbullying' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of Intellectual Property theft.' , 'c', '14');
-
-
-INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
-VALUES
-    ('False claim of Intellectual Property.' , 'c', '14');
+    ('C18', 'Acts of Intellectual Property Theft' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Using foul language or gestures.' , 'p', '07');
+    ('C19', 'False Claim of Intellectual Property' , 'c', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing disrespect to National Symbols.' , 'p', '07');
+    ('P01', 'Using Foul Language or Gestures' , 'p', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Showing inappropriate behavior.' , 'p', '07');
+    ('P02', 'Showing Disrespect to National Symbols' , 'P', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Inappropriate display of intimacy.' , 'p', '07');
+    ('P03', 'Showing Inappropriate Behavior' , 'p', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Recruiting to any fraternities and/or sororities.' , 'p', '14');
+    ('P04', 'Inappropriate Display of Intimacy' , 'p', '07');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Any act/form of cheating.' , 'p', '14');
+    ('P11', 'Recruiting to any Fraternities and or Sororities' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of immoral conduct and disrespect.' , 'p', '14');
+    ('P12', 'Any Act Form of Cheating' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Blatantly disregarding approved school policies.' , 'p', '14');
+    ('P13', 'Acts of Immoral Conduct and Disrespect' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of dishonor to the school.' , 'p', '14');
+    ('P14', 'Blatantly Disregarding Approved School Policies' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('False representation as student organizations.' , 'u', '14');
+    ('P15', 'Acts of Dishonor to the School' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Commiting act of cyberbullying.' , 'p', '14');
+    ('P16', 'False Representation as Student Organizations' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('Acts of Intellectual Property theft.' , 'p', '14');
+    ('P17', 'Commiting Any Act of Cyberbullying' , 'p', '14');
 
 INSERT INTO offenses    
-    (offense_title, offense_type, ban_time)
+    (offense_code, offense_title, offense_type, ban_time)
 VALUES
-    ('False claim of Intellectual Property.' , 'p', '14');
+    ('P18', 'Acts of Intellectual Property Theft' , 'p', '14');
+
+INSERT INTO offenses    
+    (offense_code, offense_title, offense_type, ban_time)
+VALUES
+    ('P19', 'False Claim of Intellectual Property' , 'p', '14');
