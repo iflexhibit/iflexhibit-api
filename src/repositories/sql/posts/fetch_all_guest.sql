@@ -26,6 +26,9 @@ FROM posts
 JOIN poststatus ON posts.status_id=poststatus.status_id
 JOIN users ON posts.user_id=users.user_id
 WHERE posts.status_id=2 AND posts.is_deleted=FALSE 
-ORDER BY posts.created_at DESC;
+ORDER BY posts.created_at DESC
+LIMIT 15
+OFFSET ($1-1)*15;
 
 -- For reference,  posts.status_id=2 is 'approved'
+-- $1 is supposed to be the page number
