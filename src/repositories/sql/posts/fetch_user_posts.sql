@@ -27,3 +27,6 @@ JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
 WHERE posts.status_id = 2 AND posts.is_deleted = FALSE AND posts.user_id = $1
 ORDER BY posts.created_at DESC;
+
+-- $1 user's id
+-- $2 page number;
