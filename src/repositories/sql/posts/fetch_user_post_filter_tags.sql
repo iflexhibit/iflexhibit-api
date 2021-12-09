@@ -26,7 +26,7 @@ FROM posts
 JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
 WHERE posts.status_id = 2 AND posts.is_deleted = FALSE AND posts.user_id = $1 AND post_tags LIKE $3
-ORDER BY comments_count DESC
+ORDER BY post_tags DESC
 LIMIT 15
 OFFSET ($2-1)*15;
 
