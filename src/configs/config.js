@@ -14,4 +14,9 @@ module.exports = {
     CLIENT_SECRET: decrypt(process.env.CLIENT_SECRET),
     SCOPE: ["profile", "email"],
   },
+  cloudinary: {
+    C_NAME: process.env.C_NAME,
+    C_API_KEY: process.env.C_API_KEY,
+    C_SECRET: process.env.C_SECRET,
+  },
 };
