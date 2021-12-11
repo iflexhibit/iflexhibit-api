@@ -93,4 +93,35 @@ function fetchComments(postId) {
     }
   });
 }
-module.exports = { fetchPosts, fetchPost, fetchComments };
+
+function insertPost(
+  userId,
+  postTitle,
+  postBody,
+  postImage,
+  postVideo,
+  postTags
+) {
+  return new Promise(async (resolve, reject) => {
+    const newPost = {
+      userId,
+      postTitle,
+      postBody,
+      postImage,
+      postVideo,
+      postTags,
+      statusId: 2,
+    };
+    try {
+      const { rows, rowCount } = await pool.query(PostQueries.insertPost, [
+        ...Object.values(newPost),
+      ]);
+      if (!rows[0]) return resolve(null);
+      const post = { id: rows[0].post_id };
+      return resolve(post);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+module.exports = { fetchPosts, fetchPost, fetchComments, insertPost };
