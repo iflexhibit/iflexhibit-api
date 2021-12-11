@@ -55,7 +55,9 @@ router.post("/", auth, async (req, res) => {
 
   form.parse(req, async (err, fields, files) => {
     if (err)
-      return res.status(500).json({ status: 500, msg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ status: 500, msg: "Something went wrong", error: err });
 
     if (!["image/jpeg", "image/png"].includes(files.file.type)) {
       fs.unlinkSync(files.file.path);
@@ -85,7 +87,9 @@ router.post("/", auth, async (req, res) => {
 
       return res.status(201).json({ status: 201, post });
     } catch (error) {
-      return res.status(500).json({ status: 500, msg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ status: 500, msg: "Something went wrong", error });
     } finally {
       fs.unlinkSync(files.file.path);
     }
