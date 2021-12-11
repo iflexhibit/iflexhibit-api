@@ -14,7 +14,7 @@ const CLIENT_URL =
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors({ origin: CLIENT_URL }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api", require("./routes/index"));
