@@ -73,7 +73,7 @@ router.post("/", auth, async (req, res) => {
       const response = await cloudinary.uploader.upload(files.file.path, {
         folder: "iflexhibit/uploads",
         upload_preset: "iflexhibit",
-        allowed_formats: ["png"],
+        allowed_formats: ["png", "jpg"],
       });
 
       const post = await insertPost(
