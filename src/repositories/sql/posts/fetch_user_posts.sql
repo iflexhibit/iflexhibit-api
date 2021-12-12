@@ -30,5 +30,5 @@ OFFSET ($2-1)*15;
 -- 1 - order thru likes
 -- 2 - order thru views
 -- 3 - order thru comments
--- 4 - add title param
--- 5 - add tags param
+-- 4 - title param
+-- 5 - tags param
