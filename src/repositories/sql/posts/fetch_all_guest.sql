@@ -1,34 +1,39 @@
-SELECT
-posts.post_id,
-poststatus.status_title,
-users.username,
-users.avatar_image,
-posts.post_title,
-posts.post_image,
-posts.post_tags,
-(
-    SELECT COUNT(*)
-    FILTER (WHERE posts.post_id=userpost.post_id)
-    FROM userpost 
-) AS views_count,
-(
-    SELECT COUNT(*)
-    FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-    FROM userpost
-) AS likes_count,
-(
-    SELECT COUNT(*)
-    FILTER (WHERE posts.post_id=comments.post_id AND comments.is_disabled=FALSE AND comments.is_deleted=FALSE)
-    FROM comments
-) AS comments_count,
-posts.created_at
+SELECT 
+    posts.post_id,
+    posts.status_id,
+    posts.user_id,
+    users.username,
+    users.avatar_image,
+    likes_count,
+    views_count,
+    comments_count,
+    posts.post_title,
+        posts.post_tags,
+    posts.post_image,
+    posts.created_at
 FROM posts
-JOIN poststatus ON posts.status_id=poststatus.status_id
-JOIN users ON posts.user_id=users.user_id
-WHERE posts.status_id=2 AND posts.is_deleted=FALSE 
-ORDER BY posts.created_at DESC
+JOIN users ON posts.user_id = users.user_id
+JOIN poststatus ON posts.status_id = poststatus.status_id
+WHERE posts.status_id = 2 AND posts.is_deleted = FALSE
+AND (CASE
+            WHEN $4 = 4 THEN posts.post_title ~* $3
+            WHEN $4 = 5 THEN posts.post_tags LIKE $2
+            ELSE TRUE
+END)
+ORDER BY CASE
+    WHEN $4 = 1 THEN likes_count
+    WHEN $4 = 2 THEN views_count
+    WHEN $4 = 3 THEN comments_count
+    ELSE post_id
+END DESC
 LIMIT 15
 OFFSET ($1-1)*15;
 
--- For reference,  posts.status_id=2 is 'approved'
--- $1 is supposed to be the page number
+-- end of code
+-- SYNTAX ($1 pagenumber, $2 tags_pattern, $3 title pattern, $4 order_type)
+-- Types of order type ($4) : 
+-- 1 - order thru likes
+-- 2 - order thru views
+-- 3 - order thru comments
+-- 4 - add title param
+-- 5 - add tags param
