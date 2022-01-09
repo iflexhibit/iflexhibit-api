@@ -15,7 +15,7 @@ FROM posts
 JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
 WHERE posts.status_id = 2 AND posts.is_deleted = FALSE AND posts.user_id = $1
-AND posts.post_title ~* $2 AND posts.post_tags LIKE $3
+AND posts.post_title ~* $2 OR posts.post_tags LIKE $3
 ORDER BY CASE
     WHEN $4 = 1 THEN likes_count
     WHEN $4 = 2 THEN views_count
