@@ -8,7 +8,7 @@ SELECT
     views_count,
     comments_count,
     posts.post_title,
-        posts.post_tags,
+    posts.post_tags,
     posts.post_image,
     posts.created_at,
     posts.updated_at
