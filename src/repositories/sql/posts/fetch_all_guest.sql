@@ -20,7 +20,7 @@ AND posts.post_title LIKE $1 OR posts.post_tags LIKE $2
 ORDER BY CASE
     WHEN ($3 = 1) THEN likes_count END DESC,
     WHEN ($3 = 2) THEN views_count END DESC,
-    WHEN ($3 = 3) THEN comments_count END DESC
+    WHEN ($3 = 3) THEN comments_count END DESC,
     posts.updated_at
 LIMIT 15
 OFFSET ($4-1)*15;
