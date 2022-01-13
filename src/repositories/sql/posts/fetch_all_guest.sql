@@ -10,7 +10,8 @@ SELECT
     posts.post_title,
         posts.post_tags,
     posts.post_image,
-    posts.created_at
+    posts.created_at,
+    posts.updated_at
 FROM posts
 JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
