@@ -19,7 +19,7 @@ ORDER BY CASE
     WHEN $2 = 1 THEN likes_count END DESC,
     WHEN $2 = 2 THEN views_count END DESC,
     WHEN $2 = 3 THEN comments_count END DESC,
-    posts.updated_at
+    posts.updated_at DESC
 LIMIT 15
 OFFSET ($3-1)*15;
 
