@@ -3,7 +3,7 @@ CREATE TABLE bans(
     "report_id" INT NOT NULL REFERENCES reports(report_id),
     "target_id" INT NOT NULL REFERENCES users(user_id),
     "user_id" INT NOT NULL REFERENCES users(user_id),
-    "offense_id" INT NOT NULL REFERENCES offenses(offense_id),
+    "offense_id" VARCHAR(3) NOT NULL REFERENCES offenses(offense_id),
     "ban_note" TEXT NOT NULL,
     "expires_at" TIMESTAMPTZ NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT NOW(),
