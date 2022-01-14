@@ -1,12 +1,12 @@
 -- member
 INSERT INTO usertypes (permission_id, usertype_title)
-VALUES (1, 'member');
+VALUES ('ut1', 'member');
 -- moderator
 INSERT INTO usertypes (permission_id, usertype_title)
-VALUES (2, 'moderator');
+VALUES ('ut2', 'moderator');
 -- administrator
 INSERT INTO usertypes (permission_id, usertype_title)
-VALUES (3, 'administrator');
+VALUES ('ut3', 'administrator');
 -- banned
 INSERT INTO usertypes (permission_id, usertype_title)
-VALUES (4, 'banned');
+VALUES ('ut4', 'banned');

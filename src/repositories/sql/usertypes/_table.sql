@@ -1,5 +1,5 @@
 CREATE TABLE usertypes (
-    "usertype_id" SMALLSERIAL NOT NULL PRIMARY KEY UNIQUE,
+    "usertype_id" CHAR(3) NOT NULL PRIMARY KEY UNIQUE,
     "permission_id" SMALLINT NOT NULL REFERENCES permissions(permission_id) DEFAULT 0,
     "usertype_title" VARCHAR(20) NOT NULL DEFAULT 'NO ACCESS',
     "created_at" TIMESTAMPTZ DEFAULT NOW(),
