@@ -4,7 +4,7 @@ CREATE TABLE reports (
     "target_post_id" INT DEFAULT NULL REFERENCES posts(post_id) NULL,
     "target_comment_id" INT DEFAULT NULL REFERENCES comments(comment_id) NULL,
     "user_id" INT NOT NULL REFERENCES users(user_id),
-    "offense_id" SMALLINT NOT NULL REFERENCES offenses(offense_id),
+    "offense_id" VARCHAR(3) NOT NULL REFERENCES offenses(offense_id),
     "report_note" TEXT DEFAULT NULL,
     "is_deleted" BOOLEAN NOT NULL DEFAULT FALSE,
     "created_at" TIMESTAMPTZ DEFAULT NOW(),
