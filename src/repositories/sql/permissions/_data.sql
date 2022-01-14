@@ -1,12 +1,12 @@
 -- member permissions
-INSERT INTO permissions(submit_post, comment_post, moderator_access, admin_access)
-VALUES (TRUE, TRUE, FALSE, FALSE);
+INSERT INTO permissions(permission_id, submit_post, comment_post, moderator_access, admin_access)
+VALUES ('mem', TRUE, TRUE, FALSE, FALSE);
 -- moderator
-INSERT INTO permissions(submit_post, comment_post, moderator_access, admin_access)
-VALUES (TRUE, TRUE, TRUE, FALSE);
+INSERT INTO permissions(permission_id, submit_post, comment_post, moderator_access, admin_access)
+VALUES ('mod', TRUE, TRUE, TRUE, FALSE);
 -- administrator
-INSERT INTO permissions(submit_post, comment_post, moderator_access, admin_access)
-VALUES (TRUE, TRUE, TRUE, TRUE);
+INSERT INTO permissions(permission_id, submit_post, comment_post, moderator_access, admin_access)
+VALUES ('adm', TRUE, TRUE, TRUE, TRUE);
 -- banned 
-INSERT INTO permissions(submit_post, comment_post, moderator_access, admin_access)
-VALUES (FALSE, FALSE, FALSE, FALSE);
+INSERT INTO permissions(permission_id, submit_post, comment_post, moderator_access, admin_access)
+VALUES ('ban', FALSE, FALSE, FALSE, FALSE);
