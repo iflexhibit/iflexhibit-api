@@ -1,3 +1,6 @@
+-- guests
+INSERT INTO usertypes (permission_id, usertype_title)
+VALUES ('ut0', 'guest');
 -- member
 INSERT INTO usertypes (permission_id, usertype_title)
 VALUES ('ut1', 'member');
