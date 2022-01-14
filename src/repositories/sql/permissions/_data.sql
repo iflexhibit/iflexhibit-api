@@ -1,3 +1,6 @@
+-- guest permissions
+INSERT INTO permissions (permission_id, submit_post, comment_post, moderator_access, admin_access)
+VALUES ('gue', FALSE, FALSE, FALSE, FALSE);
 -- member permissions
 INSERT INTO permissions(permission_id, submit_post, comment_post, moderator_access, admin_access)
 VALUES ('mem', TRUE, TRUE, FALSE, FALSE);
