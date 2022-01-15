@@ -22,7 +22,7 @@ ORDER BY CASE
     WHEN $2 = 3 THEN comments_count END DESC,
     posts.updated_at DESC
 LIMIT 15
-OFFSET ($3-1)*15;
+OFFSET ($3 - 1) * 15;
 
 -- SYNTAX ($1 user_id, $2 order_pattern, $3 page_number)
 -- Types of order type ($4) : 
