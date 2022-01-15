@@ -23,7 +23,7 @@ ORDER BY CASE
     WHEN ($3 = 3) THEN comments_count END DESC,
     posts.updated_at DESC
 LIMIT 15
-OFFSET ($4-1)*15;
+OFFSET ($4 - 1 ) * 15;
 
 -- end of code
 -- SYNTAX ($1 post_title, $2 post_tags, $3 order_pattern, $4 page_number)
