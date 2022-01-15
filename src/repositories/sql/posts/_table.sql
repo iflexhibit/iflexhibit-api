@@ -1,6 +1,6 @@
 CREATE TABLE posts (
     "post_id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "status_id" VARCHAR(3) NOT NULL REFERENCES poststatus(status_id) DEFAULT 'ps1',
+    "status_id" CHAR(3) NOT NULL REFERENCES poststatus(status_id) DEFAULT 'ps1',
     "user_id" INT NOT NULL REFERENCES users(user_id),
     "post_title" VARCHAR(100) NOT NULL,
     "post_body" TEXT DEFAULT NULL,
