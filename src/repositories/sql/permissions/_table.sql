@@ -1,5 +1,5 @@
 CREATE TABLE permissions (
-    "permission_id" VARCHAR(3) PRIMARY KEY,
+    "permission_id" CHAR(3) PRIMARY KEY,
     "submit_post" BOOLEAN NOT NULL DEFAULT FALSE,
     "comment_post" BOOLEAN NOT NULL DEFAULT FALSE,
     "moderator_access" BOOLEAN NOT NULL DEFAULT FALSE,
