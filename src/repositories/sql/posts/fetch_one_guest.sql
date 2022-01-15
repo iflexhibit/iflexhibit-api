@@ -26,7 +26,7 @@ CASE WHEN users.show_name = FALSE THEN NULL
 ) AS likes_count,
 (
     SELECT COUNT(*)
-    FILTER (WHERE posts.post_id=comments.post_id AND comments.is_disabled=FALSE AND comments.is_deleted=FALSE)
+    FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
     FROM comments
 ) AS comments_count,
 posts.created_at
