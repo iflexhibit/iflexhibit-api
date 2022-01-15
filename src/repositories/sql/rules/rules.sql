@@ -22,7 +22,7 @@ CREATE RULE add_view AS
 	DO ALSO
 		UPDATE posts SET views_count = (
         SELECT COUNT(*)
-        FILTER (WHERE posts.post_id=userpost.post_id)
+        FILTER (WHERE posts.post_id = userpost.post_id AND posts.user_id = userpost.user_id)
         FROM userpost 
     	) + 1
 		WHERE new.post_id = posts.post_id;
