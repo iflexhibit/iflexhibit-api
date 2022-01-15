@@ -1,6 +1,6 @@
 CREATE TABLE users (
     "user_id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "usertype_id" VARCHAR(3) NOT NULL REFERENCES usertypes(usertype_id) DEFAULT 1,
+    "usertype_id" VARCHAR(3) NOT NULL REFERENCES usertypes(usertype_id) DEFAULT 'ut0',
     "username" TEXT NOT NULL UNIQUE,
     "given_name" TEXT DEFAULT NULL,
     "family_name" TEXT DEFAULT NULL,
