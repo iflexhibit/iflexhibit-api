@@ -1,6 +1,6 @@
 -- add like
 
-CREATE RULE add_like AS
+CREATE OR REPLACE RULE add_like AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
@@ -17,24 +17,24 @@ CREATE RULE add_like AS
 
 -- add view
 
-CREATE RULE add_view AS 
+CREATE OR REPLACE RULE add_view AS 
 	ON INSERT TO userpost
 	DO ALSO
 		UPDATE posts SET views_count = (
         SELECT COUNT(*)
-        FILTER (WHERE posts.post_id = userpost.post_id AND posts.user_id = userpost.user_id)
+        FILTER (WHERE posts.post_id = userpost.post_id)
         FROM userpost 
-    	) + 1
+    	)
 		WHERE new.post_id = posts.post_id;
 
 --add comments
 
-CREATE RULE add_comments AS
+CREATE OR REPLACE RULE add_comments AS
 	ON INSERT TO comments
 	DO ALSO
 		UPDATE posts SET comments_count = (
         SELECT COUNT(*)
-        FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE AND comments.comment_id = posts.comment_id)
+        FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
         FROM comments
-    	) + 1
+    	)
 		WHERE new.post_id = posts.post_id;
