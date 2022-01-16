@@ -22,9 +22,8 @@ CREATE OR REPLACE RULE add_view AS
 	DO ALSO
 		UPDATE posts SET views_count = (
         SELECT COUNT(*)
-        FILTER (WHERE posts.post_id = userpost.post_id)
-        FROM userpost 
-    	)
+        FILTER (WHERE posts.post_id = userpost.post_id AND posts.user_id = userpost.user_id)
+        FROM userpost)
 		WHERE new.post_id = posts.post_id;
 
 --add comments
@@ -35,6 +34,5 @@ CREATE OR REPLACE RULE add_comments AS
 		UPDATE posts SET comments_count = (
         SELECT COUNT(*)
         FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
-        FROM comments
-    	)
+        FROM comments)
 		WHERE new.post_id = posts.post_id;
