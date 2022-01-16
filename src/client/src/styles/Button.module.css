@@ -1,0 +1,32 @@
+button.button {
+  width: min-content;
+  height: 2.5rem;
+  padding: 0 1rem;
+
+  background: none;
+  border: none;
+  color: var(--color-white);
+  border-radius: 5px;
+
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button.contained {
+  background: var(--color-black);
+  border: solid 1px var(--color-black);
+  color: var(--color-white);
+}
+
+button.outlined {
+  background: none;
+  border: solid 1px var(--color-white);
+  color: var(--color-white);
+}

@@ -1,0 +1,42 @@
+div.table {
+  width: 100%;
+
+  box-shadow: 0 0.25rem 1rem 0 var(--color-shadow);
+  border: solid 1px var(--color-shadow);
+  border-radius: 5px;
+}
+
+div.table > div.header {
+  padding: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+div.header > div.label {
+  width: 100%;
+  white-space: nowrap;
+
+  font-weight: 700;
+  text-align: center;
+}
+
+div.table > div.body {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+div.body > div.row {
+  padding: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  transition: 75ms ease-in-out;
+}
+
+div.row:hover {
+  background: var(--color-shadow);
+}
+
+div.row > div.data {
+  width: 100%;
+  text-align: center;
+}
