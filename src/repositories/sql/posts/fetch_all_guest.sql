@@ -17,10 +17,10 @@ JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
 WHERE posts.status_id = 'ps2' AND posts.is_deleted = FALSE
 AND posts.post_title LIKE $1 OR posts.post_tags LIKE $2
-ORDER BY CASE
-    WHEN ($3 = 1) THEN likes_count END DESC,
-    WHEN ($3 = 2) THEN views_count END DESC,
-    WHEN ($3 = 3) THEN comments_count END DESC,
+ORDER BY 
+    CASE WHEN ($3 = 1) THEN likes_count END DESC,
+    CASE WHEN ($3 = 2) THEN views_count END DESC,
+    CASE WHEN ($3 = 3) THEN comments_count END DESC,
     posts.updated_at DESC
 LIMIT 15
 OFFSET ($4 - 1 ) * 15;
