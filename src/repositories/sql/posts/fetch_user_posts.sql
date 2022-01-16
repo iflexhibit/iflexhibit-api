@@ -25,7 +25,7 @@ LIMIT 15
 OFFSET ($3 - 1) * 15;
 
 -- SYNTAX ($1 user_id, $2 order_pattern, $3 page_number)
--- Types of order type ($4) : 
+-- Types of order type ($2) : 
 -- 1 - order thru likes
 -- 2 - order thru views
 -- 3 - order thru comments
