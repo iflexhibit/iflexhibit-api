@@ -29,3 +29,4 @@ OFFSET ($3 - 1) * 15;
 -- 1 - order thru likes
 -- 2 - order thru views
 -- 3 - order thru comments
+-- For reference, 'ps2' means approved
