@@ -34,7 +34,7 @@ CREATE RULE add_comments AS
 	DO ALSO
 		UPDATE posts SET comments_count = (
         SELECT COUNT(*)
-        FILTER (WHERE posts.post_id=comments.post_id AND comments.is_disabled=FALSE AND comments.is_deleted=FALSE)
+        FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE AND comments.comment_id = posts.comment_id)
         FROM comments
     	) + 1
 		WHERE new.post_id = posts.post_id;
