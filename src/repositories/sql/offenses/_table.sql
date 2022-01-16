@@ -1,6 +1,6 @@
 CREATE TABLE offenses (
-    "offense_id" SMALLSERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "offense_title" VARCHAR(10) NOT NULL,
+    "offense_id" CHAR(3) NOT NULL PRIMARY KEY,
+    "offense_title" VARCHAR(50) NOT NULL,
     "offense_type" CHAR(1) NOT NULL DEFAULT 'u',
     "ban_time" CHAR(2) NOT NULL DEFAULT 00,
     "created_at" TIMESTAMPTZ DEFAULT NOW(),

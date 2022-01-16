@@ -21,4 +21,4 @@ CASE WHEN show_name = FALSE THEN NULL
     show_contact,
     A.created_at
 FROM users
-A INNER JOIN usertypes B ON A.usertype_id=B.usertype_id WHERE user_id=$1;
+A INNER JOIN usertypes B ON A.usertype_id = B.usertype_id WHERE user_id = $1;

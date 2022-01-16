@@ -1,5 +1,5 @@
 SELECT 
-    offense_code, offense_title, ban_time, offense_id
+    offense_id, offense_title, ban_time
 FROM offenses
-WHERE offense_type='p'
-ORDER BY offense_code;
+WHERE offense_type = 'p'
+ORDER BY offense_id;
