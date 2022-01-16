@@ -59,6 +59,9 @@ router.post("/", auth, async (req, res) => {
         .status(500)
         .json({ status: 500, msg: "Something went wrong", error: err });
 
+    if (Object.keys(files).length === 0)
+      return res.status(400).json({ status: 400, msg: "Image required" });
+
     if (!["image/jpeg", "image/png"].includes(files.file.type)) {
       fs.unlinkSync(files.file.path);
       return res.status(400).json({ status: 400, msg: "Invalid file type" });
