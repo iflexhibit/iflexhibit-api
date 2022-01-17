@@ -209,8 +209,6 @@ VALUES ('ps3','rejected');
 INSERT INTO poststatus (status_id, status_title)
 VALUES ('ps4','disabled');
 
--- 10-17-21 2nd attempt
-
 
 -- guest permissions
 INSERT INTO permissions (permission_id, submit_post, comment_post, moderator_access, admin_access)
