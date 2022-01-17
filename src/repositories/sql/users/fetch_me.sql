@@ -25,6 +25,6 @@ WHERE users.user_id = $1;
 
 -- Syntax ($1) user_id
 
--- Status: For Testing 1-17-22
+-- Status: Done Testing 1-17-22
 -- As seen in the code, this particular code might be moved to /usertypes since it both requires ID's 
 -- from /permissions and /users
