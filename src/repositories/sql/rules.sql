@@ -1,3 +1,5 @@
+-- Rules
+
 -- add like
 
 CREATE OR REPLACE RULE add_like AS
