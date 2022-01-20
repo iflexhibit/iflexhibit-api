@@ -1,5 +1,14 @@
 -- Rules
 
+-- check userpost
+CREATE OR REPLACE RULE check_userpost AS 
+	ON INSERT INTO userpost
+	DO ALSO	
+		CASE
+			WHEN new.user_id = userpost.user_id AND new.post_id = userpost
+
+-- Status: In Progress
+
 -- add like
 
 CREATE OR REPLACE RULE add_like AS
