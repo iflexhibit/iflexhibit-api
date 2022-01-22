@@ -16,7 +16,7 @@ New branch: `sql-`
 
 **Prerequisites**:
 
-- 
+- [ ] Finish reading the entire issue before beninging.
 
 ---
 
