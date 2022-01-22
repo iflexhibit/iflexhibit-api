@@ -3,10 +3,19 @@
 -- check userpost
 CREATE OR REPLACE RULE check_userpost AS 
 	ON INSERT TO userpost
-	DO INSTEAD NOTHING
 	WHERE 
-		old.user_id IN (new.user_id) AND old.post_id IN (new.post_id);
+		EXISTS ( 
+			SELECT 
+				userpost.post_id,
+				userpost.user_id
+			FROM 
+				userpost
+			WHERE
+				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
+		)
+	DO INSTEAD NOTHING;
 -- Status: In Progress
+-- Findings: Working (1-22-22)
 
 -- SELECT * FROM userpost
 -- WHERE user_id IN (x) AND post_id in (X);
