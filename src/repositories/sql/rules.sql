@@ -2,12 +2,14 @@
 
 -- check userpost
 CREATE OR REPLACE RULE check_userpost AS 
-	ON INSERT INTO userpost
-	DO ALSO	
-		CASE
-			WHEN new.user_id = userpost.user_id AND new.post_id = userpost
-
+	ON INSERT TO userpost
+	DO INSTEAD NOTHING
+	WHERE 
+		old.user_id IN (new.user_id) AND old.post_id IN (new.post_id);
 -- Status: In Progress
+
+-- SELECT * FROM userpost
+-- WHERE user_id IN (x) AND post_id in (X);
 
 -- add like
 
