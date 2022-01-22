@@ -43,9 +43,9 @@ CREATE OR REPLACE RULE count_views AS
         FROM userpost)
 		WHERE new.post_id = posts.post_id;
 
---add comments
+-- count comments
 
-CREATE OR REPLACE RULE add_comments AS
+CREATE OR REPLACE RULE count_comments AS
 	ON INSERT TO comments
 	DO ALSO
 		UPDATE posts SET comments_count = (
