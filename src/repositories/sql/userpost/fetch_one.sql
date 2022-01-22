@@ -1,6 +1,6 @@
 SELECT * 
 FROM userpost 
-WHERE userpost.user_id = $1 AND userpost.post_id = $2;
+WHERE userpost.post_id = $1 AND userpost.user_id = $2;
 
 -- SYNTAX
 -- $1 user_id
