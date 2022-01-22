@@ -14,8 +14,6 @@ CREATE OR REPLACE RULE check_userpost AS
 				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
 		)
 	DO INSTEAD NOTHING;
--- Status: In Progress
--- Findings: Working (1-22-22)
 
 -- add like
 
