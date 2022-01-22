@@ -19,6 +19,15 @@ CASE WHEN show_name = FALSE THEN NULL
     show_name,
     show_email,
     show_contact,
+    (SELECT SUM (likes_count) 
+    FROM posts
+    WHERE posts.user_id = $1) AS likes_received,
+    (SELECT SUM (views_count)
+    FROM posts 
+    WHERE posts.user_id = $1) AS views_received,
     A.created_at
 FROM users
 A INNER JOIN usertypes B ON A.usertype_id = B.usertype_id WHERE user_id = $1;
+
+-- Subject to testing #113
+-- Findings: Working (1-22-22)
