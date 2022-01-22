@@ -34,7 +34,7 @@ CREATE OR REPLACE RULE add_like AS
 
 -- add view
 
-CREATE OR REPLACE RULE add_view AS 
+CREATE OR REPLACE RULE count_views AS 
 	ON INSERT TO userpost
 	DO ALSO
 		UPDATE posts SET views_count = (
