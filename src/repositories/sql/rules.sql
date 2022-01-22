@@ -17,9 +17,6 @@ CREATE OR REPLACE RULE check_userpost AS
 -- Status: In Progress
 -- Findings: Working (1-22-22)
 
--- SELECT * FROM userpost
--- WHERE user_id IN (x) AND post_id in (X);
-
 -- add like
 
 CREATE OR REPLACE RULE add_like AS
