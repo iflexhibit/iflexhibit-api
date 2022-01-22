@@ -6,4 +6,4 @@ WHERE userpost.post_id = $1 AND userpost.user_id = $2;
 -- $1 user_id
 -- $2 post_id
 -- Status: In Progress
--- Findings: (1-22-22)
+-- Findings: Working (1-22-22)
