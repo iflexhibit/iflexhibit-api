@@ -15,9 +15,9 @@ CREATE OR REPLACE RULE check_userpost AS
 		)
 	DO INSTEAD NOTHING;
 
--- add like
+-- count like
 
-CREATE OR REPLACE RULE add_like AS
+CREATE OR REPLACE RULE count_like AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
@@ -32,7 +32,7 @@ CREATE OR REPLACE RULE add_like AS
 			END
 		WHERE new.post_id = posts.post_id;
 
--- add view
+-- count view
 
 CREATE OR REPLACE RULE count_views AS 
 	ON INSERT TO userpost
