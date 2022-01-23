@@ -148,9 +148,24 @@ CREATE TABLE bans(
 
 -- Rules
 
--- add like
+-- check userpost
+CREATE OR REPLACE RULE check_userpost AS 
+	ON INSERT TO userpost
+	WHERE 
+		EXISTS ( 
+			SELECT 
+				userpost.post_id,
+				userpost.user_id
+			FROM 
+				userpost
+			WHERE
+				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
+		)
+	DO INSTEAD NOTHING;
 
-CREATE OR REPLACE RULE add_like AS
+-- count like
+
+CREATE OR REPLACE RULE count_likes AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
@@ -165,9 +180,9 @@ CREATE OR REPLACE RULE add_like AS
 			END
 		WHERE new.post_id = posts.post_id;
 
--- add view
+-- count view
 
-CREATE OR REPLACE RULE add_view AS 
+CREATE OR REPLACE RULE count_views AS 
 	ON INSERT TO userpost
 	DO ALSO
 		UPDATE posts SET views_count = (
@@ -176,9 +191,9 @@ CREATE OR REPLACE RULE add_view AS
         FROM userpost)
 		WHERE new.post_id = posts.post_id;
 
---add comments
+-- count comments
 
-CREATE OR REPLACE RULE add_comments AS
+CREATE OR REPLACE RULE count_comments AS
 	ON INSERT TO comments
 	DO ALSO
 		UPDATE posts SET comments_count = (
