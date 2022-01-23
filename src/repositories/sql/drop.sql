@@ -1,10 +1,10 @@
 -- Rules
 -- add like
-DROP RULE IF EXISTS add_like ON userpost;
+DROP RULE IF EXISTS count_likes ON userpost;
 -- add view
-DROP RULE IF EXISTS add_view ON userpost;
+DROP RULE IF EXISTS count_views ON userpost;
 -- add comments
-DROP RULE IF EXISTS add_comments ON comments;
+DROP RULE IF EXISTS count_comments ON comments;
 -- Bans
 DROP TABLE bans;
 -- Reports
