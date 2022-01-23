@@ -17,7 +17,7 @@ CREATE OR REPLACE RULE check_userpost AS
 
 -- count like
 
-CREATE OR REPLACE RULE count_like AS
+CREATE OR REPLACE RULE count_likes AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
