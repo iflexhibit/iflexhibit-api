@@ -24,7 +24,7 @@ router.get(
   async (req, res) => {
     if (!req.user) return res.redirect(CLIENT_URL + "/login");
 
-    const token = await jwt.sign(req.user, JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign(req.user, JWT_SECRET, { expiresIn: "7d" });
     return res.redirect(CLIENT_URL + "/api/auth?token=" + token);
   }
 );

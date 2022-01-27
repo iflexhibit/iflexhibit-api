@@ -58,14 +58,14 @@ CREATE TABLE usertypes (
 
 CREATE TABLE users (
     "user_id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
-    "usertype_id" CHAR(3) NOT NULL REFERENCES usertypes(usertype_id) DEFAULT 'ut0',
+    "usertype_id" CHAR(3) NOT NULL REFERENCES usertypes(usertype_id) DEFAULT 'ut1',
     "username" TEXT NOT NULL UNIQUE,
     "given_name" TEXT DEFAULT NULL,
     "family_name" TEXT DEFAULT NULL,
     "email" TEXT NOT NULL UNIQUE,
     "contact" TEXT DEFAULT NULL,
-    "avatar_image" TEXT DEFAULT '/assets/noavatar.jpg',
-    "background_image" TEXT DEFAULT '/assets/nobg.jpg',
+    "avatar_image" TEXT DEFAULT NULL,
+    "background_image" TEXT DEFAULT NULL,
     "bio" TEXT DEFAULT NULL,
     "show_name" BOOLEAN DEFAULT FALSE,
     "show_email" BOOLEAN DEFAULT FALSE,
@@ -169,15 +169,9 @@ CREATE OR REPLACE RULE count_likes AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
-			CASE
-				WHEN new.is_liked = TRUE THEN 
-					(SELECT COUNT(*)
-        				FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-        				FROM userpost) + 1
-				ELSE (SELECT COUNT(*)
-        				FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-        				FROM userpost)
-			END
+			(SELECT COUNT(*)
+			FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
+			FROM userpost)
 		WHERE new.post_id = posts.post_id;
 
 -- count view
