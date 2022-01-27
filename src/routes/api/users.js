@@ -1,5 +1,6 @@
 const express = require("express");
 const auth = require("../../middlware/auth");
+const { fetchUserPosts } = require("../../repositories/PostRepository");
 const {
   insertComment,
   fetchProfile,
@@ -15,10 +16,13 @@ router.get("/user", auth, async (req, res) => {
 router.get("/user/:id", async (req, res) => {
   if (isNaN(req.params.id))
     return res.status(400).json({ status: 400, msg: "Bad request" });
+
+  const { sort, page } = req.query;
   try {
     const user = await fetchProfile(req.params.id);
     if (!user) return res.status(404).json({ status: 404, msg: "Not found" });
-    return res.status(200).json({ status: 200, user });
+    const { posts, count } = await fetchUserPosts(user.id, sort, page);
+    return res.status(200).json({ status: 200, user, results: count, posts });
   } catch (error) {
     return res.status(500).json({ status: 500, msg: "Something went wrong" });
   }

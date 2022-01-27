@@ -42,10 +42,10 @@ function findByEmail(email) {
   });
 }
 
-function fetchMyProfile(userId) {
+function fetchMe(userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.fetchMyProfile, [
+      const { rows, rowCount } = await pool.query(UserQueries.fetchMe, [
         userId,
       ]);
 
@@ -62,14 +62,21 @@ function fetchMyProfile(userId) {
         email: decrypt(rows[0].email),
         contact: decrypt(rows[0].contact),
         bio: rows[0].bio,
-        avatar: rows[0].avatar_image,
-        background: rows[0].background_image,
+        avatar: decrypt(rows[0].avatar_image),
+        background: decrypt(rows[0].background_image),
         preferences: {
           showName: rows[0].show_name,
           showEmail: rows[0].show_email,
           showContact: rows[0].show_contact,
         },
+        permissions: {
+          submitPost: rows[0].submit_post,
+          commentPost: rows[0].comment_post,
+          moderatorAccess: rows[0].moderator_access,
+          adminAccess: rows[0].admin_access,
+        },
         createdAt: rows[0].created_at,
+        updatedAt: rows[0].updated_at,
       };
 
       return resolve(user);
@@ -99,12 +106,16 @@ function fetchProfile(userId) {
         email: decrypt(rows[0].email),
         contact: decrypt(rows[0].contact),
         bio: rows[0].bio,
-        avatar: rows[0].avatar_image,
-        background: rows[0].background_image,
+        avatar: decrypt(rows[0].avatar_image),
+        background: decrypt(rows[0].background_image),
         preferences: {
           showName: rows[0].show_name,
           showEmail: rows[0].show_email,
           showContact: rows[0].show_contact,
+        },
+        statistics: {
+          views: rows[0].views_received,
+          likes: rows[0].likes_received,
         },
         createdAt: rows[0].created_at,
       };
@@ -170,7 +181,7 @@ function updateProfile(userId, username, contact, bio) {
 module.exports = {
   create,
   findByEmail,
-  fetchMyProfile,
+  fetchMe,
   fetchProfile,
   insertComment,
   updatePreferences,

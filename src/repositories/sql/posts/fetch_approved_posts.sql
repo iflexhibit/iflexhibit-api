@@ -1,12 +1,13 @@
 SELECT 
     posts.post_id,
     posts.status_id,
+    poststatus.status_title,
     posts.user_id,
     users.username,
     users.avatar_image,
-    likes_count,
-    views_count,
-    comments_count,
+    posts.likes_count,
+    posts.views_count,
+    posts.comments_count,
     posts.post_title,
     posts.post_tags,
     posts.post_image,
@@ -16,11 +17,11 @@ FROM posts
 JOIN users ON posts.user_id = users.user_id
 JOIN poststatus ON posts.status_id = poststatus.status_id
 WHERE posts.status_id = 'ps2' AND posts.is_deleted = FALSE
-AND posts.post_title LIKE $1 OR posts.post_tags LIKE $2
+AND posts.post_title ~* $1 AND posts.post_tags LIKE $2
 ORDER BY 
-    CASE WHEN ($3 = 1) THEN likes_count END DESC,
-    CASE WHEN ($3 = 2) THEN views_count END DESC,
-    CASE WHEN ($3 = 3) THEN comments_count END DESC,
+    CASE WHEN ($3 = 'likes') THEN likes_count END DESC,
+    CASE WHEN ($3 = 'views') THEN views_count END DESC,
+    CASE WHEN ($3 = 'comments') THEN comments_count END DESC,
     posts.updated_at DESC
 LIMIT 15
 OFFSET ($4 - 1 ) * 15;

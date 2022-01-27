@@ -21,15 +21,9 @@ CREATE OR REPLACE RULE count_likes AS
 	ON UPDATE TO userpost
 	DO ALSO
 		UPDATE posts SET likes_count = 
-			CASE
-				WHEN new.is_liked = TRUE THEN 
-					(SELECT COUNT(*)
-        				FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-        				FROM userpost) + 1
-				ELSE (SELECT COUNT(*)
-        				FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-        				FROM userpost)
-			END
+			(SELECT COUNT(*)
+			FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
+			FROM userpost)
 		WHERE new.post_id = posts.post_id;
 
 -- count view

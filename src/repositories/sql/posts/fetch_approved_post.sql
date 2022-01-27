@@ -29,7 +29,8 @@ CASE WHEN users.show_name = FALSE THEN NULL
     FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
     FROM comments
 ) AS comments_count,
-posts.created_at
+posts.created_at,
+posts.updated_at
 FROM posts
 JOIN poststatus ON posts.status_id = poststatus.status_id
 JOIN users ON posts.user_id = users.user_id
