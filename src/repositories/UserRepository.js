@@ -178,6 +178,34 @@ function updateProfile(userId, username, contact, bio) {
   });
 }
 
+function updateAvatar(userId, image) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(UserQueries.updateAvatar, [
+        encrypt(image),
+        userId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function updateBackground(userId, image) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(UserQueries.updateBackground, [
+        encrypt(image),
+        userId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   create,
   findByEmail,
@@ -186,6 +214,8 @@ module.exports = {
   insertComment,
   updatePreferences,
   updateProfile,
+  updateAvatar,
+  updateBackground,
 };
 
 function generateUsername(fullname) {

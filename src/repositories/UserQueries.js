@@ -80,4 +80,20 @@ module.exports = {
         INNER JOIN permissions ON usertypes.permission_id = permissions.permission_id
     WHERE users.user_id = $1;
   `,
+  updateAvatar: `
+    UPDATE users
+    SET
+        avatar_image = $1,
+        updated_at = NOW()
+    WHERE user_id = $2
+    RETURNING user_id;
+  `,
+  updateBackground: `
+  UPDATE users 
+    SET 
+        background_image = $1,
+        updated_at = NOW()
+    WHERE user_id = $2
+    RETURNING user_id;
+  `,
 };
