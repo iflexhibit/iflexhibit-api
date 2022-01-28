@@ -1,4 +1,7 @@
 const express = require("express");
+const formidable = require("formidable");
+const fs = require("fs");
+const { cloudinary } = require("../../configs/cloudinary");
 const auth = require("../../middlware/auth");
 const { fetchUserPosts } = require("../../repositories/PostRepository");
 const {
@@ -6,6 +9,8 @@ const {
   fetchProfile,
   updatePreferences,
   updateProfile,
+  updateAvatar,
+  updateBackground,
 } = require("../../repositories/UserRepository");
 const router = express.Router();
 
@@ -126,6 +131,102 @@ router.post("/profile", auth, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ status: 500, msg: "Something went wrong" });
   }
+});
+
+router.post("/avatar", auth, async (req, res) => {
+  const form = new formidable.IncomingForm({
+    multiples: false,
+    uploadDir: "temp",
+  });
+  form.parse(req, async (err, fields, files) => {
+    if (err)
+      return res
+        .status(500)
+        .json({ status: 500, msg: "Something went wrong", error: err });
+
+    if (Object.keys(files).length === 0)
+      return res.status(400).json({ status: 400, msg: "Image required" });
+
+    if (!["image/jpeg", "image/png"].includes(files.file.type)) {
+      fs.unlinkSync(files.file.path);
+      return res.status(400).json({ status: 400, msg: "Invalid file type" });
+    }
+
+    try {
+      const response = await cloudinary.uploader.upload(files.file.path, {
+        folder: "iflexhibit/uploads",
+        upload_preset: "iflexhibit",
+        allowed_formats: ["png", "jpg"],
+      });
+
+      const result = await updateAvatar(req.user.id, response.url);
+
+      if (result) {
+        if (req.user.avatar) {
+          const publicId = `iflexhibit/uploads/${
+            req.user.avatar.split("iflexhibit/uploads/")[1].split(".")[0]
+          }`;
+          cloudinary.uploader.destroy(publicId);
+        }
+        return res
+          .status(200)
+          .json({ status: 200, msg: "Avatar successfully updated" });
+      }
+      return res.status(200).json({ status: 200, msg: "Nothing changed" });
+    } catch (error) {
+      return res.status(500).json({ status: 500, msg: "Something went wrong" });
+    } finally {
+      fs.unlinkSync(files.file.path);
+    }
+  });
+});
+
+router.post("/background", auth, async (req, res) => {
+  const form = new formidable.IncomingForm({
+    multiples: false,
+    uploadDir: "temp",
+  });
+  form.parse(req, async (err, fields, files) => {
+    if (err)
+      return res
+        .status(500)
+        .json({ status: 500, msg: "Something went wrong", error: err });
+
+    if (Object.keys(files).length === 0)
+      return res.status(400).json({ status: 400, msg: "Image required" });
+
+    if (!["image/jpeg", "image/png"].includes(files.file.type)) {
+      fs.unlinkSync(files.file.path);
+      return res.status(400).json({ status: 400, msg: "Invalid file type" });
+    }
+
+    try {
+      const response = await cloudinary.uploader.upload(files.file.path, {
+        folder: "iflexhibit/uploads",
+        upload_preset: "iflexhibit",
+        allowed_formats: ["png", "jpg"],
+      });
+
+      const result = await updateBackground(req.user.id, response.url);
+
+      if (result) {
+        if (req.user.background) {
+          const publicId = `iflexhibit/uploads/${
+            req.user.background.split("iflexhibit/uploads/")[1].split(".")[0]
+          }`;
+          cloudinary.uploader.destroy(publicId);
+        }
+        return res
+          .status(200)
+          .json({ status: 200, msg: "Background successfully updated" });
+      }
+      return res.status(200).json({ status: 200, msg: "Nothing changed" });
+    } catch (error) {
+      return res.status(500).json({ status: 500, msg: "Something went wrong" });
+    } finally {
+      fs.unlinkSync(files.file.path);
+    }
+  });
 });
 
 module.exports = router;
