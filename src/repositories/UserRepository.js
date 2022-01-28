@@ -114,8 +114,8 @@ function fetchProfile(userId) {
           showContact: rows[0].show_contact,
         },
         statistics: {
-          views: rows[0].views_received,
-          likes: rows[0].likes_received,
+          views: rows[0].views_received || 0,
+          likes: rows[0].likes_received || 0,
         },
         createdAt: rows[0].created_at,
       };
