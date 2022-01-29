@@ -21,7 +21,7 @@ function fetchOffenses(type) {
       const offenses = rows.map((row) => {
         return {
           id: row.offense_id,
-          offense: row.offense_title,
+          title: row.offense_title,
           banTime: row.ban_time,
         };
       });
