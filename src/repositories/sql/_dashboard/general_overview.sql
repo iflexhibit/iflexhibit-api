@@ -1,12 +1,3 @@
--- reported users DONE
--- reported posts DONE
--- reported comments DONE 
--- pending posts DONE
--- banned users DONE
--- disabled posts DONE 
--- disabled_comments DONE 
--- issued_at DONE
-
 DROP VIEW IF EXISTS general_overview;
 
 CREATE VIEW general_overview AS
