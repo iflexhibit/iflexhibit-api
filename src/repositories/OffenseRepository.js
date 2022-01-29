@@ -17,7 +17,15 @@ function fetchOffenses(type) {
         }
       };
       const { rows } = await pool.query(query(type), []);
-      return resolve({ offenses: rows || [] });
+
+      const offenses = rows.map((row) => {
+        return {
+          id: row.offense_id,
+          offense: row.offense_title,
+          banTime: row.ban_time,
+        };
+      });
+      return resolve({ offenses: offenses || [] });
     } catch (error) {
       return reject(error);
     }
