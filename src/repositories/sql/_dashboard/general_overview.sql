@@ -1,32 +1,30 @@
--- BANS
--- banned users
--- disabled posts
--- pending posts
--- disabled comments
--- issued at
+-- reported users DONE
+-- reported posts DONE
+-- reported comments DONE 
+-- pending posts DONE
+-- banned users DONE
+-- disabled posts DONE 
+-- disabled_comments DONE 
+-- issued_at DONE
 
--- for reported users, posts and comments
--- I added DISTINCT to avoid duplicates
+DROP VIEW IF EXISTS general_overview;
 
-SELECT 
-    COUNT (DISTINCT target_user_id) AS reported_users,
-    COUNT (DISTINCT target_post_id) AS reported_posts,
-    COUNT (DISTINCT target_comment_id) AS reported_comments
-    FROM reports; 
+CREATE VIEW general_overview AS
+    SELECT 
+        (SELECT COUNT (DISTINCT target_user_id) FROM reports) AS reported_users,
+        (SELECT COUNT (DISTINCT target_post_id) FROM reports) AS reported_posts,
+        (SELECT COUNT (DISTINCT target_comment_id) FROM reports) AS reported_comments,
+        (SELECT COUNT (target_id) FROM bans WHERE bans.expires_at > now()) AS banned_users,
+        (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps1') AS pending_posts,
+        (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
+        (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
+        (SELECT now()) AS issued_at;
+SELECT * FROM general_overview;
 
--- for banned users
--- note: the reason for adding is_deleted is because
--- those reports with TRUE means it's "resolved"
--- same reason in the bans below for making target_post/user/comment_id for making it the param
+-- Syntax
 
-SELECT 
-    COUNT (target_id) AS banned_users
-    FROM bans
-    WHERE expires_at > now();
+-- To get all 
+-- SELECT * FROM general_overview;
 
--- note: I've placed target_id so that
--- it would only count as one user
--- even if the said user is
--- banned multiple times.
-
-
+-- To get specific value
+-- SELECT * FROM general_overview.VALUE HERE BASED from the ALIASES ABOVE;
