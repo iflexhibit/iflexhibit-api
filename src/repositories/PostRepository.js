@@ -24,7 +24,7 @@ function fetchApprovedPosts(title = "%", tags = "%", sort = "date", page = 1) {
         author: {
           id: post.user_id,
           username: decrypt(post.username),
-          avatar: post.avatar_image,
+          avatar: decrypt(post.avatar_image),
         },
         title: post.post_title,
         image: post.post_image,
@@ -76,7 +76,7 @@ function fetchApprovedPost(postId) {
         author: {
           id: rows[0].user_id,
           username: decrypt(rows[0].username),
-          avatar: rows[0].avatar_image,
+          avatar: decrypt(rows[0].avatar_image),
           givenName: decrypt(rows[0].given_name),
           familyName: decrypt(rows[0].family_name),
         },
@@ -122,7 +122,7 @@ function fetchUserPosts(userId, sort = "date", page = 1) {
         author: {
           id: post.user_id,
           username: decrypt(post.username),
-          avatar: post.avatar_image,
+          avatar: decrypt(post.avatar_image),
         },
         title: post.post_title,
         image: post.post_image,
@@ -164,7 +164,7 @@ function fetchPostComments(postId) {
         author: {
           id: comment.user_id,
           username: decrypt(comment.username),
-          avatar: comment.avatar_image,
+          avatar: decrypt(comment.avatar_image),
         },
         body: comment.comment_body,
         isDisabled: comment.is_disabled,
