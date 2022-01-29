@@ -6,17 +6,13 @@
 -- issued at
 
 -- for reported users, posts and comments
+-- I added DISTINCT to avoid duplicates
 
--- SELECT LEFT (offense_id, 1) = 'U' FROM reports;
-
--- SELECT
---     (SELECT COUNT (target_user_id) FROM reports WHERE offenses.offense_type = 'u' AND is_deleted = FALSE) AS reported_users,
---     (SELECT COUNT (target_post_id) FROM reports WHERE offenses.offense_type = 'p' AND is_deleted = FALSE) AS reported_posts,
---     (SELECT COUNT (target_comment_id) FROM reports WHERE offenses.offense_type = 'c' AND is_deleted = FALSE) AS reported_comments
---     FROM reports
---     INNER JOIN offenses ON reports.offense_id = offenses.offense_id
---     GROUP BY reported_users, reported_posts, reported_comments;
-
+SELECT 
+    COUNT (DISTINCT target_user_id) AS reported_users,
+    COUNT (DISTINCT target_post_id) AS reported_posts,
+    COUNT (DISTINCT target_comment_id) AS reported_comments
+    FROM reports; 
 
 -- for banned users
 -- note: the reason for adding is_deleted is because
