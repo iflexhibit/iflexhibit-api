@@ -208,4 +208,3 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
-SELECT * FROM general_overview;
