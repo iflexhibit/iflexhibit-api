@@ -50,6 +50,8 @@ router.post("/comment", auth, async (req, res) => {
     return res.status(400).json({ status: 400, msg: "Invalid post" });
   if (!commentBody)
     return res.status(400).json({ status: 400, msg: "Invalid comment" });
+  if (!commentBody.trim().length > 0)
+    return res.status(400).json({ status: 400, msg: "Invalid comment" });
 
   try {
     const comment = await UserRepository.insertComment(
