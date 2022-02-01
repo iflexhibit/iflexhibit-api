@@ -148,4 +148,7 @@ module.exports = {
     FROM userpost 
     WHERE userpost.user_id = $1 AND userpost.post_id = $2;
 `,
+  deletePost: `
+    UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 RETURNING post_id;
+`,
 };

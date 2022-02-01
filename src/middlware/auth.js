@@ -13,10 +13,10 @@ const auth = async (req, res, next) => {
       const decoded = jwt.verify(decrypt(token), JWT_SECRET);
       req.user = await UserRepository.fetchMe(decoded.userId);
       if (!req.user)
-        return res.status(404).json({ msg: "User not found", status: 404 });
+        return res.status(401).json({ msg: "Unauthorized", status: 401 });
       next();
     } catch (error) {
-      return res.status(400).json({ msg: "Invalid token", status: 400 });
+      return res.status(403).json({ msg: "Unauthorized", status: 403 });
     }
   }
 };

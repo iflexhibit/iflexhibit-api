@@ -1,0 +1,1 @@
+UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 RETURNING post_id;
