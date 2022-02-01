@@ -151,6 +151,57 @@ function fetchUserPosts(userId, sort = "date", page = 1) {
   });
 }
 
+function fetchMyPosts(userId, sort = "date", page = 1) {
+  const params = {
+    sort,
+    page: isNaN(parseInt(page)) ? 1 : parseInt(page),
+  };
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(PostQueries.fetchMyPosts, [
+        userId,
+        params.sort,
+        params.page,
+      ]);
+
+      if (!rows[0] || rows.length === 0)
+        return resolve({ posts: null, count: 0 });
+
+      const posts = rows.map((post) => ({
+        id: post.post_id,
+        author: {
+          id: post.user_id,
+          username: decrypt(post.username),
+          avatar: decrypt(post.avatar_image),
+        },
+        title: post.post_title,
+        status: post.status_title,
+        image: post.post_image,
+        tags: post.post_tags.split(","),
+        statistics: {
+          views: parseInt(post.views_count),
+          likes: parseInt(post.likes_count),
+          comments: parseInt(post.comments_count),
+        },
+        createdAt: post.created_at,
+        updatedAt: post.updated_at,
+      }));
+
+      const count = await pool.query(PostQueries.fetchMyPostsCount, [userId]);
+
+      return resolve({
+        posts,
+        count: isNaN(parseInt(count.rows[0].posts_count))
+          ? 0
+          : parseInt(count.rows[0].posts_count),
+      });
+    } catch (error) {
+      console.log(error);
+      return reject(error);
+    }
+  });
+}
+
 function fetchPostComments(postId) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -262,6 +313,7 @@ module.exports = {
   fetchApprovedPost,
   fetchPostComments,
   fetchUserPosts,
+  fetchMyPosts,
   insertPost,
   viewPost,
   likePost,
