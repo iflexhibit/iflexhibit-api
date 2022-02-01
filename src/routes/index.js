@@ -1,11 +1,19 @@
 const express = require("express");
 const router = express.Router();
+const rateLimit = require("express-rate-limit");
 
-router.get("/", (req, res) => res.send("API"));
-router.use("/offenses", require("./api/offenses"));
-router.use("/users", require("./api/users"));
-router.use("/posts", require("./api/posts"));
-router.use("/auth", require("./api/auth"));
-router.use("/reports", require("./api/reports"));
+const basicLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.get("/", basicLimiter, (req, res) => res.send("API"));
+router.use("/offenses", basicLimiter, require("./api/offenses"));
+router.use("/users", basicLimiter, require("./api/users"));
+router.use("/posts", basicLimiter, require("./api/posts"));
+router.use("/auth", basicLimiter, require("./api/auth"));
+router.use("/reports", basicLimiter, require("./api/reports"));
 
 module.exports = router;
