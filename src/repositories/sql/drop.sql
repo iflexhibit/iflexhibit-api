@@ -1,4 +1,7 @@
 -- View
+-- reported_users
+DROP VIEW IF EXISTS reported_users;
+-- general_overview
 DROP VIEW IF EXISTS general_overview;
 -- Rules
 -- add like
