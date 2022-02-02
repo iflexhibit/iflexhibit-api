@@ -14,5 +14,5 @@ CREATE VIEW pending_posts AS
     INNER JOIN users ON users.user_id = posts.user_id
     WHERE posts.status_id = 'ps1'
     ORDER BY 
-        created_at DESC;
+        created_at ASC;
 SELECT * FROM pending_posts;
