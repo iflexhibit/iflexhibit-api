@@ -197,7 +197,7 @@ CREATE OR REPLACE RULE count_comments AS
 		WHERE new.post_id = posts.post_id;
 
 -- Create View
-
+-- general_overview
 CREATE VIEW general_overview AS
     SELECT 
         (SELECT COUNT (DISTINCT target_user_id) FROM reports) AS reported_users,
