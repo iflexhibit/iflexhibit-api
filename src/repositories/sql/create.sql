@@ -224,4 +224,5 @@ CREATE VIEW reported_users AS
         reports.created_at
     FROM reports
     JOIN offenses ON offenses.offense_id = reports.offense_id
+    WHERE offenses.offense_type = 'u'
     ORDER BY reports.created_at ASC;
