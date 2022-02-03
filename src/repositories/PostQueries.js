@@ -107,7 +107,7 @@ module.exports = {
     FROM comments
         JOIN users ON comments.user_id=users.user_id
         JOIN posts ON comments.post_id=posts.post_id
-    WHERE comments.post_id = $1
+    WHERE comments.post_id = $1 AND comments.is_deleted=FALSE
     ORDER BY comments.created_at DESC;
 `,
   insertPost: `
@@ -149,7 +149,7 @@ module.exports = {
     WHERE userpost.user_id = $1 AND userpost.post_id = $2;
 `,
   deletePost: `
-    UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 RETURNING post_id;
+    UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 AND user_id=$2 RETURNING post_id;
 `,
   fetchMyPosts: `
     SELECT 

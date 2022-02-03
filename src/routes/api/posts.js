@@ -144,12 +144,12 @@ router.post("/isliked/:id", auth, async (req, res) => {
   }
 });
 
-router.post("/delete/:id", auth, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;
   if (!id)
     return res.status(400).json({ status: 400, msg: "Missing post parameter" });
   try {
-    const result = await PostRepository.deletePost(id);
+    const result = await PostRepository.deletePost(id, req.user.id);
     if (result)
       return res
         .status(200)

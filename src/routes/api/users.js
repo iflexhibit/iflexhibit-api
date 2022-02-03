@@ -65,6 +65,27 @@ router.post("/comment", auth, async (req, res) => {
   }
 });
 
+router.delete("/comment/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  if (!id || isNaN(parseInt(id)))
+    return res.status(400).json({ status: 400, msg: "Invalid comment id" });
+
+  try {
+    const result = await UserRepository.deleteComment(id, req.user.id);
+    if (result)
+      return res
+        .status(200)
+        .json({ status: 200, msg: "Comment successfully deleted" });
+    return res
+      .status(400)
+      .json({ status: 400, msg: "Unable to delete comment at this moment" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: 500, msg: "Something went wrong", error });
+  }
+});
+
 router.post("/preferences", auth, async (req, res) => {
   const { showName, showContact, showEmail } = req.body;
 
