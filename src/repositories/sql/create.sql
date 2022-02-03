@@ -1,5 +1,4 @@
 -- Session
-
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
 	"sess" json NOT NULL,
@@ -208,3 +207,21 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
+
+-- reported_users
+
+CREATE VIEW reported_users AS
+    SELECT 
+        reports.report_id,
+        reports.target_user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
+        reports.user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
+        reports.offense_id,
+        offenses.offense_title,
+        offenses.ban_time,
+        reports.report_note,
+        reports.created_at
+    FROM reports
+    JOIN offenses ON offenses.offense_id = reports.offense_id
+    ORDER BY reports.created_at ASC;
