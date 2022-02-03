@@ -108,7 +108,7 @@ module.exports = {
         JOIN users ON comments.user_id=users.user_id
         JOIN posts ON comments.post_id=posts.post_id
     WHERE comments.post_id = $1
-    ORDER BY comments.created_at DESC;
+    ORDER BY comments.created_at ASC;
 `,
   insertPost: `
     INSERT INTO posts (user_id, post_title, post_body, post_image, post_video, post_tags)
