@@ -1,5 +1,7 @@
 -- View
 DROP VIEW IF EXISTS general_overview;
+-- reported_posts
+DROP VIEW IF EXISTS reported_posts;
 -- Rules
 -- add like
 DROP RULE IF EXISTS count_likes ON userpost;
