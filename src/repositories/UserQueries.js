@@ -89,11 +89,14 @@ module.exports = {
     RETURNING user_id;
   `,
   updateBackground: `
-  UPDATE users 
+    UPDATE users 
     SET 
         background_image = $1,
         updated_at = NOW()
     WHERE user_id = $2
     RETURNING user_id;
+  `,
+  deleteComment: `
+    UPDATE comments SET is_deleted=TRUE WHERE comment_id=$1 AND user_id=$2 RETURNING comment_id;
   `,
 };

@@ -1,0 +1,1 @@
+UPDATE comments SET is_deleted=TRUE WHERE comment_id=$1 RETURNING comment_id;
