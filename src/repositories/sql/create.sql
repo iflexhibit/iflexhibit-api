@@ -227,7 +227,7 @@ CREATE VIEW reported_posts AS
     FROM reports
     JOIN posts ON reports.target_post_id = posts.post_id
     JOIN offenses ON reports.offense_id = offenses.offense_id
-    ORDER BY reports.created_at ASC;
+    ORDER BY reports.created_at ASC
     WHERE offenses.offense_type = 'p';
-    
+
 SELECT * FROM reported_posts;
