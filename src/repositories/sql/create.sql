@@ -1,5 +1,4 @@
 -- Session
-
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
 	"sess" json NOT NULL,
@@ -197,7 +196,6 @@ CREATE OR REPLACE RULE count_comments AS
 		WHERE new.post_id = posts.post_id;
 
 -- Create View
-
 -- general_overview
 CREATE VIEW general_overview AS
     SELECT 
@@ -210,19 +208,20 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
 
--- pending_posts
-CREATE VIEW pending_posts AS
+-- reported_users
+
+CREATE VIEW reported_users AS
     SELECT 
-        posts.post_id,
-        posts.user_id,
-        users.username,
-        posts.post_title,
-        posts.post_body,
-        posts.post_image,
-        posts.post_video,
-        posts.created_at
-    FROM posts
-    INNER JOIN users ON users.user_id = posts.user_id
-    WHERE posts.status_id = 'ps1'
-    ORDER BY 
-        created_at ASC;
+        reports.report_id,
+        reports.target_user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
+        reports.user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
+        reports.offense_id,
+        offenses.offense_title,
+        offenses.ban_time,
+        reports.report_note,
+        reports.created_at
+    FROM reports
+    JOIN offenses ON offenses.offense_id = reports.offense_id
+    ORDER BY reports.created_at ASC;
