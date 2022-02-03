@@ -80,6 +80,31 @@ router.post("/", auth, async (req, res) => {
         folder: "iflexhibit/uploads",
         upload_preset: "iflexhibit",
         allowed_formats: ["png", "jpg"],
+        transformation:
+          fields.watermark === "true"
+            ? [
+                { height: 720, quality: "auto", crop: "scale" },
+                {
+                  overlay: "black_bar",
+                  gravity: "south",
+                  width: "1.0",
+                  height: "0.0625",
+                  flags: "relative",
+                  opacity: 60,
+                },
+                {
+                  overlay: {
+                    font_family: "Rubik",
+                    font_size: 20,
+                    text: `Posted on iFlexhibit by ${req.user.username}`,
+                  },
+                  gravity: "south_west",
+                  y: 8,
+                  x: 10,
+                  color: "#eee",
+                },
+              ]
+            : null,
       });
 
       const post = await PostRepository.insertPost(

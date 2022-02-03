@@ -166,12 +166,11 @@ CREATE OR REPLACE RULE check_userpost AS
 
 CREATE OR REPLACE RULE count_likes AS
 	ON UPDATE TO userpost
-	DO ALSO
-		UPDATE posts SET likes_count = 
-			(SELECT COUNT(*)
-			FILTER (WHERE userpost.is_liked AND posts.post_id=userpost.post_id)
-			FROM userpost)
-		WHERE new.post_id = posts.post_id;
+	DO ALSO UPDATE posts SET likes_count = 
+			(SELECT COUNT (*)
+			FROM userpost
+			WHERE is_liked AND userpost.post_id = new.post_id) + 1
+	WHERE posts.post_id = new.post_id;
 
 -- count view
 
@@ -224,5 +223,4 @@ CREATE VIEW reported_users AS
         reports.created_at
     FROM reports
     JOIN offenses ON offenses.offense_id = reports.offense_id
-    WHERE offenses.offense_type = 'u'
     ORDER BY reports.created_at ASC;
