@@ -208,3 +208,25 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
+
+-- reported_posts
+CREATE VIEW reported_posts AS
+    SELECT 
+        reports.report_id,
+        reports.target_post_id,
+        posts.post_title,
+        posts.user_id,
+        (SELECT username FROM users WHERE users.user_id = posts.user_id) AS target_username,
+        reports.user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
+        reports.offense_id,
+        offenses.offense_title,
+        offenses.ban_time,
+        reports.report_note,
+        reports.created_at
+    FROM reports
+    JOIN posts ON reports.target_post_id = posts.post_id
+    JOIN offenses ON reports.offense_id = offenses.offense_id
+    ORDER BY reports.created_at ASC;
+    WHERE offenses.offense_type = 'p'
+SELECT * FROM reported_posts;
