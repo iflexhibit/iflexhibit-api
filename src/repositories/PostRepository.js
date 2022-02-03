@@ -295,11 +295,14 @@ function fetchUserPostInteraction(userId, postId) {
   });
 }
 
-function deletePost(postId) {
+function deletePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
       if (isNaN(parseInt(postId))) throw "Invalid post id";
-      const { rows } = await pool.query(PostQueries.deletePost, [postId]);
+      const { rows } = await pool.query(PostQueries.deletePost, [
+        postId,
+        userId,
+      ]);
       if (!rows[0]) return resolve(false);
       return resolve(true);
     } catch (error) {
