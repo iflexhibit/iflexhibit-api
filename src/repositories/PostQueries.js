@@ -149,7 +149,7 @@ module.exports = {
     WHERE userpost.user_id = $1 AND userpost.post_id = $2;
 `,
   deletePost: `
-    UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 RETURNING post_id;
+    UPDATE posts SET is_deleted=TRUE WHERE post_id=$1 AND user_id=$2 RETURNING post_id;
 `,
   fetchMyPosts: `
     SELECT 
