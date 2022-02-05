@@ -14,7 +14,7 @@ const Layout = () => {
               <b>Dashboard</b>
             </div>
           </div>
-          <a href="http://localhost:5000/dashboard/auth/google">
+          <a href="/dashboard/auth/google">
             <img src="/assets/google/google_default.png" alt="google button" />
           </a>
         </div>
