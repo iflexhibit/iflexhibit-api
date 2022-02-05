@@ -206,6 +206,22 @@ function updateBackground(userId, image) {
   });
 }
 
+function deleteComment(commentId, userId) {
+  return new Promise(async (resolve, reject) => {
+    if (isNaN(parseInt(commentId))) throw "Invalid comment id";
+    try {
+      const { rows } = await pool.query(UserQueries.deleteComment, [
+        commentId,
+        userId,
+      ]);
+      if (!rows[0]) return resolve(false);
+      return resolve(true);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   create,
   findByEmail,
@@ -216,6 +232,7 @@ module.exports = {
   updateProfile,
   updateAvatar,
   updateBackground,
+  deleteComment,
 };
 
 function generateUsername(fullname) {
