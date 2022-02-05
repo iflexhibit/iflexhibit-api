@@ -2,9 +2,8 @@ a.button,
 button.button {
   --button-color: var(--color-black);
 
-  width: min-content;
+  width: 2rem;
   height: 2rem;
-  padding: 0 1.5rem;
 
   background: none;
   border: none;
@@ -22,7 +21,6 @@ button.button {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
 
   cursor: pointer;
 

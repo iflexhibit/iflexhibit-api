@@ -32,6 +32,7 @@ body {
 body > div#root {
   width: 100vw;
   height: 100vh;
+  min-width: 1024px;
 }
 
 svg {
@@ -55,6 +56,13 @@ main {
   overflow-y: scroll;
 }
 
+main.login {
+  max-height: unset;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black);
+}
+
 div.content {
   width: 100%;
   padding: 2rem;
@@ -62,4 +70,38 @@ div.content {
   display: flex;
   flex-flow: column nowrap;
   gap: 2rem;
+}
+
+main.login > div.content {
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+}
+
+main.login > div.content img {
+  width: 20rem;
+  border-radius: 5px;
+}
+
+main.login p {
+  max-width: 50ch;
+  text-align: center;
+}
+
+main.login a {
+  font-weight: bold;
+}
+
+main.login a:hover {
+  text-decoration: underline;
+}
+
+main.login div.section {
+  display: flex;
+  gap: 2rem;
+}
+
+main.login div.logo {
+  border-right: solid 1px var(--color-white);
+  padding: 0 2rem;
 }

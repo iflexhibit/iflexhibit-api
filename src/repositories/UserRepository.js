@@ -16,7 +16,7 @@ function create(profile) {
       ]);
       if (!rows[0]) return resolve(null);
       const user = {
-        userId: rows[0].user_id,
+        id: rows[0].user_id,
       };
       return resolve(user);
     } catch (error) {
@@ -33,7 +33,7 @@ function findByEmail(email) {
       ]);
       if (!rows[0]) return resolve(null);
       const user = {
-        userId: rows[0].user_id,
+        id: rows[0].user_id,
       };
       return resolve(user);
     } catch (error) {

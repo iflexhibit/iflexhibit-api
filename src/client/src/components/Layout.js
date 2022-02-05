@@ -16,9 +16,9 @@ const Layout = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<GeneralOverviewLayout />} />
-            <Route path="pending" element={<PendingPostsLayout />} />
-            <Route path="reports" element={<ReportEntriesLayout />} />
-            <Route path="bans" element={<BannedEntriesLayout />} />
+            <Route path="/pending" element={<PendingPostsLayout />} />
+            <Route path="/reports" element={<ReportEntriesLayout />} />
+            <Route path="/bans" element={<BannedEntriesLayout />} />
           </Routes>
         </div>
       </main>

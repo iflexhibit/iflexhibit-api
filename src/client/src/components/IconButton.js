@@ -1,41 +1,27 @@
-import styles from "../styles/Button.module.css";
+import styles from "../styles/IconButton.module.css";
 import React from "react";
 
-const Button = ({
-  startIcon,
-  endIcon,
-  variant,
-  color,
-  onClick,
-  disabled,
-  href,
-  label,
-  fullWidth,
-}) => {
+const Button = ({ icon, variant, color, onClick, disabled, href }) => {
   return href ? (
     <a
       href={href}
       className={`${styles.button} ${variant ? styles[variant] : ""} ${
         color ? styles[color] : ""
-      } ${fullWidth ? styles.fullWidth : ""}`}
+      }`}
       rel="noopener noreferrer"
       target="_blank"
     >
-      {startIcon}
-      <span>{label}</span>
-      {endIcon}
+      {icon}
     </a>
   ) : (
     <button
       className={`${styles.button} ${variant ? styles[variant] : ""} ${
         color ? styles[color] : ""
-      } ${fullWidth ? styles.fullWidth : ""}`}
+      }`}
       onClick={onClick}
       disabled={disabled}
     >
-      {startIcon}
-      <span>{label}</span>
-      {endIcon}
+      {icon}
     </button>
   );
 };

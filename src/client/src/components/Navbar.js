@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
+import ExternalIcon from "./icons/ExternalIcon";
 
 const Navbar = () => {
   const [date, setDate] = useState(new Date());
@@ -17,7 +18,13 @@ const Navbar = () => {
       </a>
       <div className={styles.info}>
         <div>{date.toLocaleString()}</div>
-        <Button />
+        <Button
+          href="https://iflexhibit.com"
+          variant="outlined"
+          label="Back to iflexhibit"
+          startIcon={<ExternalIcon />}
+          color="white"
+        />
       </div>
     </nav>
   );
