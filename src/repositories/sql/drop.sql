@@ -1,6 +1,8 @@
 -- View
 -- general_overview
 DROP VIEW IF EXISTS general_overview;
+-- reported_posts
+DROP VIEW IF EXISTS reported_posts;
 -- pending_posts
 DROP VIEW IF EXISTS pending_posts;
 -- reported_users
