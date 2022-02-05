@@ -4,6 +4,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { google, NODE_ENV, JWT_SECRET } = require("../../configs/config");
+const { encrypt } = require("../../utils/encrypt");
 
 const CLIENT_URL =
   NODE_ENV === "production"
@@ -24,8 +25,8 @@ router.get(
   async (req, res) => {
     if (!req.user) return res.redirect(CLIENT_URL + "/login");
 
-    const token = await jwt.sign(req.user, JWT_SECRET, { expiresIn: "7d" });
-    return res.redirect(CLIENT_URL + "/api/auth?token=" + token);
+    const token = jwt.sign(req.user, JWT_SECRET, { expiresIn: "7d" });
+    return res.redirect(CLIENT_URL + "/api/auth?token=" + encrypt(token));
   }
 );
 
