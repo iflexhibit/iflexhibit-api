@@ -7,7 +7,7 @@ div.table {
 }
 
 div.table > div.header {
-  padding: 1rem;
+  padding: 0.75rem;
   display: flex;
   flex-flow: row nowrap;
 }
@@ -26,17 +26,41 @@ div.table > div.body {
 }
 
 div.body > div.row {
-  padding: 1rem;
+  padding: 0.75rem;
   display: flex;
   flex-flow: row nowrap;
   transition: 75ms ease-in-out;
 }
 
 div.row:hover {
-  background: var(--color-blue);
+  background: var(--color-highlight);
 }
 
 div.row > div.data {
   width: 100%;
-  text-align: center;
+  height: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+div.controls {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+div.header > div.label.sm,
+div.row > div.data.sm {
+  width: 5ch;
+  min-width: 5ch;
+  max-width: 5ch;
+}
+
+div.header > div.label.md,
+div.row > div.data.md {
+  width: 25ch;
+  min-width: 25ch;
+  max-width: 25ch;
 }

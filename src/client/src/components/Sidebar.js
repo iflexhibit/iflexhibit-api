@@ -1,23 +1,52 @@
 import styles from "../styles/Sidebar.module.css";
 import Button from "./Button";
 import React from "react";
+import HomeIcon from "./icons/HomeIcon";
+import HourglassIcon from "./icons/HourglassIcon";
+import FlagIcon from "./icons/FlagIcon";
+import BanIcon from "./icons/BanIcon";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
     <nav className={styles.side}>
       <div className={styles.links}>
-        <a href="/" className={styles.link}>
-          Dashboard
-        </a>
-        <a href="/" className={styles.link}>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <HomeIcon />
+          General Overview
+        </NavLink>
+        <NavLink
+          to="/pending"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <HourglassIcon />
           Pending Posts
-        </a>
-        <a href="/" className={styles.link}>
+        </NavLink>
+        <NavLink
+          to="/reports"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <FlagIcon />
           Report Entries
-        </a>
-        <a href="/" className={styles.link}>
+        </NavLink>
+        <NavLink
+          to="/bans"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <BanIcon />
           Ban Entries
-        </a>
+        </NavLink>
       </div>
       <Button />
     </nav>

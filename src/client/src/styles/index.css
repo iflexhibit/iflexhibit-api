@@ -15,6 +15,8 @@
   --color-red: #f43c3c;
   --color-blue: #4461ca;
   --color-shadow: #22273040;
+  --color-highlight: #dae0f5;
+  --color-none: #00000000;
 }
 
 html {
@@ -46,9 +48,11 @@ a {
 main {
   width: 100%;
   height: 100%;
+  max-height: calc(100vh - 4rem);
 
   display: flex;
   flex-flow: row nowrap;
+  overflow-y: scroll;
 }
 
 div.content {

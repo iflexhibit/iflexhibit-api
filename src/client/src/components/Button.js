@@ -1,12 +1,28 @@
 import styles from "../styles/Button.module.css";
-import ExternalIcon from "./icons/ExternalIcon";
 import React from "react";
 
-const Button = () => {
+const Button = ({
+  startIcon,
+  endIcon,
+  variant,
+  color,
+  onClick,
+  disabled,
+  href,
+  label,
+  fullWidth,
+}) => {
   return (
-    <button className={`${styles.button} ${styles.outlined}`}>
-      <ExternalIcon />
-      Button
+    <button
+      className={`${styles.button} ${variant ? styles[variant] : ""} ${
+        color ? styles[color] : ""
+      } ${fullWidth ? styles.fullWidth : ""}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {startIcon}
+      <span>{label}</span>
+      {endIcon}
     </button>
   );
 };

@@ -1,53 +1,34 @@
 import styles from "../styles/Table.module.css";
 import React from "react";
+import Select from "./Select";
 
-const Table = () => {
-  const column = [
-    { field: "id", label: "ID", align: "center" },
-    { field: "user", label: "Posted By", align: "left" },
-    { field: "title", label: "Title", align: "left" },
-    { field: "createdAt", label: "Created At", align: "center" },
-  ];
-  const row = [
-    {
-      id: 1,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-    {
-      id: 2,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-    {
-      id: 3,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-    {
-      id: 4,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-  ];
+const Table = ({ columns, rows, controls, options }) => {
   return (
     <div className={styles.table}>
+      {controls && (
+        <div className={styles.controls}>
+          <h2>{controls}</h2>
+          <Select options={options} />
+        </div>
+      )}
       <div className={styles.header}>
-        {column.map((c) => (
-          <div key={c.field} className={styles.label}>
+        {columns.map((c) => (
+          <div
+            key={c.field}
+            className={`${styles.label} ${c.size ? styles[c.size] : ""}`}
+          >
             {c.label}
           </div>
         ))}
       </div>
       <div className={styles.body}>
-        {row.map((r, i) => (
+        {rows.map((r, i) => (
           <div key={i} className={styles.row}>
-            {column.map((c, i) => (
-              <div key={i} className={styles.data}>
+            {columns.map((c, i) => (
+              <div
+                key={i}
+                className={`${styles.data} ${c.size ? styles[c.size] : ""}`}
+              >
                 {r[c.field]}
               </div>
             ))}

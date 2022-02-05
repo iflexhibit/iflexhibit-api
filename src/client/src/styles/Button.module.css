@@ -1,32 +1,59 @@
 button.button {
+  --button-color: var(--color-black);
+
   width: min-content;
-  height: 2.5rem;
-  padding: 0 1rem;
+  height: 2rem;
+  padding: 0 1.5rem;
 
   background: none;
   border: none;
   color: var(--color-white);
   border-radius: 5px;
+  box-shadow: 0.125rem 0.125rem 0 0 var(--color-shadow);
 
   font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
 
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+
+  transition: 125ms ease-in-out;
 }
 
 button.contained {
-  background: var(--color-black);
-  border: solid 1px var(--color-black);
+  background: var(--button-color);
+  border: solid 1px var(--button-color);
   color: var(--color-white);
 }
 
 button.outlined {
-  background: none;
-  border: solid 1px var(--color-white);
-  color: var(--color-white);
+  background: var(--color-white);
+  border: solid 1px var(--button-color);
+  color: var(--button-color);
+}
+
+button.fullWidth {
+  width: 100%;
+}
+
+button.blue {
+  --button-color: var(--color-blue);
+}
+
+button.green {
+  --button-color: var(--color-green);
+}
+
+button.red {
+  --button-color: var(--color-red);
+}
+
+button.button:hover {
+  --button-color: var(--color-black);
 }

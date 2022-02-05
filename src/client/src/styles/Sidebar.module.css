@@ -18,12 +18,19 @@ div.links {
   flex-flow: column nowrap;
 }
 
-div.links > a.link {
-  padding: 0.75rem 0 0.75rem 2rem;
+a.link {
+  padding: 1.25rem 0 1.25rem 2rem;
 
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  gap: 0.5rem;
 
-  border-right: solid 10px var(--color-blue);
+  border-right: solid 10px var(--color-none);
+  transition: 125ms ease-in-out;
+}
+
+a.link:hover,
+a.link.active {
+  border-color: var(--color-blue);
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Table from "../Table";
 import Button from "../Button";
 
-const ReportEntriesLayout = () => {
+const BannedEntriesLayout = () => {
   const columns = [
     { field: "id", label: "ID", align: "center" },
     { field: "user", label: "Posted By", align: "left" },
@@ -18,8 +18,7 @@ const ReportEntriesLayout = () => {
       createdAt: new Date().toLocaleString(),
       actions: (
         <React.Fragment>
-          <Button variant="contained" label="Inspect" color="blue" fullWidth />
-          <Button variant="outlined" label="Clear" color="blue" fullWidth />
+          <Button variant="contained" label="Inspect" color="blue" />
         </React.Fragment>
       ),
     },
@@ -54,11 +53,11 @@ const ReportEntriesLayout = () => {
       <Table
         columns={columns}
         rows={rows}
-        controls="Reported Users"
+        controls="Banned Users"
         options={options}
       />
     </React.Fragment>
   );
 };
 
-export default ReportEntriesLayout;
+export default BannedEntriesLayout;
