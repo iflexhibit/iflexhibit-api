@@ -1,15 +1,12 @@
 -- View
 -- general_overview
 DROP VIEW IF EXISTS general_overview;
-<<<<<<< HEAD
 -- reported_posts
 DROP VIEW IF EXISTS reported_posts;
-=======
 -- pending_posts
 DROP VIEW IF EXISTS pending_posts;
 -- reported_users
 DROP VIEW IF EXISTS reported_users;
->>>>>>> main
 -- Rules
 -- add like
 DROP RULE IF EXISTS count_likes ON userpost;
