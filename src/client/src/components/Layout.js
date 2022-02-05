@@ -1,6 +1,8 @@
+import PendingPostsLayout from "./layouts/PendingPostsLayout";
+import ReportEntriesLayout from "./layouts/ReportEntriesLayout";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Table from "./Table";
+import React from "react";
 
 const Layout = () => {
   return (
@@ -9,8 +11,8 @@ const Layout = () => {
       <main>
         <Sidebar />
         <div className="content">
-          <h1>PENDING POSTS</h1>
-          <Table />
+          {/* <PendingPostsLayout/> */}
+          <ReportEntriesLayout />
         </div>
       </main>
     </>

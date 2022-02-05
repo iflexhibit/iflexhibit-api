@@ -33,7 +33,7 @@ div.body > div.row {
 }
 
 div.row:hover {
-  background: var(--color-shadow);
+  background: var(--color-blue);
 }
 
 div.row > div.data {

@@ -1,5 +1,6 @@
 import styles from "../styles/Sidebar.module.css";
 import Button from "./Button";
+import React from "react";
 
 const Sidebar = () => {
   return (
