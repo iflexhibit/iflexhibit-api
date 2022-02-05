@@ -1,6 +1,6 @@
 import React from "react";
 
-const Layout = () => {
+const Login = () => {
   return (
     <main className="login">
       <div className="content">
@@ -42,4 +42,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default Login;
