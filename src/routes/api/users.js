@@ -167,7 +167,9 @@ router.post("/profile", auth, async (req, res) => {
       .status(200)
       .json({ status: 200, user, msg: "Profile updated successfully" });
   } catch (error) {
-    return res.status(500).json({ status: 500, msg: "Something went wrong" });
+    return res
+      .status(500)
+      .json({ status: 500, msg: "Username already exists" });
   }
 });
 

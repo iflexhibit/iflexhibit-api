@@ -15,4 +15,5 @@ CREATE VIEW pending_posts AS
     WHERE posts.status_id = 'ps1'
     ORDER BY 
         created_at ASC;
+        
 SELECT * FROM pending_posts;

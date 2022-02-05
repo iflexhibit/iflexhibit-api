@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
   } else {
     try {
       const decoded = jwt.verify(decrypt(token), JWT_SECRET);
-      req.user = await UserRepository.fetchMe(decoded.userId);
+      req.user = await UserRepository.fetchMe(decoded.id);
       if (!req.user)
         return res.status(401).json({ msg: "Invalid user", status: 401 });
       next();

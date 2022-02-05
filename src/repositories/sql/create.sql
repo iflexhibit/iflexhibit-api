@@ -207,6 +207,23 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
 
+-- pending_posts
+CREATE VIEW pending_posts AS
+    SELECT 
+        posts.post_id,
+        posts.user_id,
+        users.username,
+        posts.post_title,
+        posts.post_body,
+        posts.post_image,
+        posts.post_video,
+        posts.created_at
+    FROM posts
+    INNER JOIN users ON users.user_id = posts.user_id
+    WHERE posts.status_id = 'ps1'
+    ORDER BY 
+        created_at ASC;
+
 -- reported_posts
 CREATE VIEW reported_posts AS
     SELECT 
