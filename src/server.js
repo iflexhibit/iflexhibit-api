@@ -27,7 +27,7 @@ app.use(
     cookie: {
       maxAge: db.COOKIE_MAXAGE,
       sameSite: true,
-      secure: true,
+      secure: "auto",
       httpOnly: true,
     },
     secret: db.SESSION_SECRET,
