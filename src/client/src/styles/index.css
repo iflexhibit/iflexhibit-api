@@ -1,0 +1,107 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-sans: "Roboto", sans-serif;
+  --font-serif: "Roboto Slab", serif;
+  --color-black: #222730;
+  --color-white: #f8f9f9;
+  --color-green: #26d94f;
+  --color-red: #f43c3c;
+  --color-blue: #4461ca;
+  --color-shadow: #22273040;
+  --color-highlight: #dae0f5;
+  --color-none: #00000000;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+body > div#root {
+  width: 100vw;
+  height: 100vh;
+  min-width: 1024px;
+}
+
+svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: currentColor;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 4rem);
+
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-y: scroll;
+}
+
+main.login {
+  max-height: unset;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black);
+}
+
+div.content {
+  width: 100%;
+  padding: 2rem;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+}
+
+main.login > div.content {
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+}
+
+main.login > div.content img {
+  width: 20rem;
+  border-radius: 5px;
+}
+
+main.login p {
+  max-width: 50ch;
+  text-align: center;
+}
+
+main.login a {
+  font-weight: bold;
+}
+
+main.login a:hover {
+  text-decoration: underline;
+}
+
+main.login div.section {
+  display: flex;
+  gap: 2rem;
+}
+
+main.login div.logo {
+  border-right: solid 1px var(--color-white);
+  padding: 0 2rem;
+}

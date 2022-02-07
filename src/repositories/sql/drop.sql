@@ -9,6 +9,8 @@ DROP VIEW IF EXISTS pending_posts;
 DROP VIEW IF EXISTS reported_users;
 -- banned_users
 DROP VIEW IF EXISTS banned_users;
+-- reported_comments
+DROP VIEW IF EXISTS reported_comments;
 -- Rules
 -- add like
 DROP RULE IF EXISTS count_likes ON userpost;

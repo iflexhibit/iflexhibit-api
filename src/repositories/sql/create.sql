@@ -207,6 +207,23 @@ CREATE VIEW general_overview AS
         (SELECT COUNT (comment_id) FROM comments WHERE is_disabled = TRUE) AS disabled_comments,
         (SELECT now()) AS issued_at;
 
+-- pending_posts
+CREATE VIEW pending_posts AS
+    SELECT 
+        posts.post_id,
+        posts.user_id,
+        users.username,
+        posts.post_title,
+        posts.post_body,
+        posts.post_image,
+        posts.post_video,
+        posts.created_at
+    FROM posts
+    INNER JOIN users ON users.user_id = posts.user_id
+    WHERE posts.status_id = 'ps1'
+    ORDER BY 
+        created_at ASC;
+
 -- reported_posts
 CREATE VIEW reported_posts AS
     SELECT 
@@ -229,7 +246,6 @@ CREATE VIEW reported_posts AS
     ORDER BY reports.created_at ASC;
     
 -- reported_users
-
 CREATE VIEW reported_users AS
     SELECT 
         reports.report_id,
@@ -247,8 +263,9 @@ CREATE VIEW reported_users AS
     WHERE offenses.offense_type = 'u'
     ORDER BY reports.created_at ASC;
 
-    -- banned_users
-    CREATE VIEW banned_users AS 
+
+-- banned_users
+CREATE VIEW banned_users AS 
     SELECT 
         bans.ban_id,
         bans.target_id,
@@ -262,3 +279,25 @@ CREATE VIEW reported_users AS
     FROM bans
     JOIN offenses ON offenses.offense_id = bans.offense_id
     ORDER BY complainee_username ASC;
+
+-- reported_comments 
+CREATE VIEW reported_comments AS
+    SELECT 
+        reports.report_id,
+        reports.target_comment_id,
+        comments.comment_body,
+        reports.target_user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
+        reports.user_id,
+        (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
+        reports.offense_id,
+        offenses.offense_title,
+        offenses.ban_time,
+        reports.report_note,
+        reports.created_at
+    FROM reports
+    JOIN comments ON comments.comment_id = reports.target_comment_id
+    JOIN offenses ON offenses.offense_id = reports.offense_id
+    WHERE offenses.offense_type = 'c'
+    ORDER BY reports.created_at ASC;
+

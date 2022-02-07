@@ -1,0 +1,74 @@
+a.button,
+button.button {
+  --button-color: var(--color-black);
+
+  width: 2rem;
+  height: 2rem;
+
+  background: none;
+  border: none;
+  color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: 0.125rem 0.125rem 0 0 var(--color-shadow);
+
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 125ms ease-in-out;
+}
+
+a.contained,
+button.contained,
+a.outlined:hover,
+button.outlined:hover {
+  background: var(--button-color);
+  border: solid 1px var(--button-color);
+  color: var(--color-white);
+}
+
+a.outlined,
+button.outlined {
+  background: var(--color-none);
+  border: solid 1px var(--button-color);
+  color: var(--button-color);
+}
+
+a.fullWidth,
+button.fullWidth {
+  width: 100%;
+}
+
+a.blue,
+button.blue {
+  --button-color: var(--color-blue);
+}
+
+a.green,
+button.green {
+  --button-color: var(--color-green);
+}
+
+a.red,
+button.red {
+  --button-color: var(--color-red);
+}
+
+a.white,
+button.white {
+  --button-color: var(--color-white);
+}
+
+a.button:hover,
+button.button:hover {
+  --button-color: var(--color-black);
+}
