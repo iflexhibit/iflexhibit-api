@@ -199,7 +199,7 @@ CREATE OR REPLACE RULE update_usertype_to_ban AS
     ON INSERT TO bans  
     DO ALSO
         UPDATE users SET usertype_id = 'ut4'
-        WHERE users.user_id = new.target_user_id;
+        WHERE users.user_id = new.target_id;
 
 -- Create View
 -- general_overview
