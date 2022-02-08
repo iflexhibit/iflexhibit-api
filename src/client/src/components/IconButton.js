@@ -1,7 +1,7 @@
 import styles from "../styles/IconButton.module.css";
 import React from "react";
 
-const Button = ({ icon, variant, color, onClick, disabled, href }) => {
+const IconButton = ({ icon, variant, color, onClick, disabled, href }) => {
   return href ? (
     <a
       href={href}
@@ -26,4 +26,4 @@ const Button = ({ icon, variant, color, onClick, disabled, href }) => {
   );
 };
 
-export default Button;
+export default IconButton;

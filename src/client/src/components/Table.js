@@ -4,14 +4,15 @@ import Select from "./Select";
 import IconButton from "./IconButton";
 import PlusIcon from "./icons/PlusIcon";
 import ExternalIcon from "./icons/ExternalIcon";
+import Button from "./Button";
 
-const Table = ({ columns, rows, controls, options }) => {
+const Table = ({ columns, rows, controls, options, value, onChange }) => {
   return (
     <div className={styles.table}>
       {controls && (
         <div className={styles.controls}>
           <h2>{controls}</h2>
-          <Select options={options} />
+          <Select options={options} onChange={onChange} value={value} />
         </div>
       )}
       <div className={styles.header}>
@@ -49,6 +50,13 @@ const Table = ({ columns, rows, controls, options }) => {
                         onClick={() => c.buttonClick(r)}
                       />
                     )
+                  ) : c.field === "actions" ? (
+                    <Button
+                      variant="contained"
+                      label="Inspect"
+                      color="blue"
+                      onClick={() => c.buttonClick(r[c.field])}
+                    />
                   ) : (
                     r[c.field]
                   )

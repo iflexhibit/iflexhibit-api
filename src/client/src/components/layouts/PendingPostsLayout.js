@@ -13,16 +13,15 @@ const formatData = (data) => {
     body: d.body,
     image: d.image,
     video: d.video,
-    createdAt: d.createdAt,
-    actions: (
-      <React.Fragment>
-        <Button variant="contained" label="Approve" color="green" fullWidth />
-        <Button variant="contained" label="Reject" color="red" fullWidth />
-      </React.Fragment>
-    ),
+    createdAt: formatDate(d.createdAt),
+    actions: d,
   }));
 
   return rows;
+};
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleString();
 };
 
 const PendingPostsLayout = () => {
@@ -64,7 +63,15 @@ const PendingPostsLayout = () => {
       external: true,
     },
     { field: "createdAt", label: "Created At", align: "center", size: "md" },
-    { field: "actions", label: "Actions", align: "center" },
+    {
+      field: "actions",
+      label: "Actions",
+      align: "center",
+      size: "md",
+      buttonClick: (ctx) => {
+        console.log(ctx);
+      },
+    },
   ];
 
   useEffect(() => {
@@ -89,21 +96,21 @@ const PendingPostsLayout = () => {
   };
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ label: "", body: "" });
-  return (
-    !isLoading && (
-      <React.Fragment>
-        <h1>PENDING POSTS</h1>
-        <Table columns={columns} rows={data} />
-        {isModalOpen && (
-          <Modal
-            label={modalContent.label}
-            closeModal={() => setModalOpen(false)}
-          >
-            {modalContent.body}
-          </Modal>
-        )}
-      </React.Fragment>
-    )
+  return isLoading ? (
+    <span>LOADING</span>
+  ) : (
+    <React.Fragment>
+      <h1>PENDING POSTS</h1>
+      <Table columns={columns} rows={data} />
+      {isModalOpen && (
+        <Modal
+          label={modalContent.label}
+          closeModal={() => setModalOpen(false)}
+        >
+          {modalContent.body}
+        </Modal>
+      )}
+    </React.Fragment>
   );
 };
 

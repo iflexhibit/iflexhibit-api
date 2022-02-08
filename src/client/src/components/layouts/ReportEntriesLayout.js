@@ -1,62 +1,200 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table";
 import Button from "../Button";
+import Modal from "../Modal";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const formatData = (data, type) => {
+  switch (type) {
+    case "posts": {
+      const rows = data.map((d) => ({
+        id: d.id,
+        postTitle: d.target.post.title,
+        reportedBy: d.reporter.username,
+        link: `https://iflexhibit.com/post/${d.target.post.id}`,
+        reportedAt: formatDate(d.createdAt),
+        actions: d,
+      }));
+      return rows;
+    }
+    case "users": {
+      const rows = data.map((d) => ({
+        id: d.id,
+        reportedUser: d.target.user.username,
+        reportedBy: d.reporter.username,
+        link: `https://iflexhibit.com/profile/${d.target.user.id}`,
+        reportedAt: formatDate(d.createdAt),
+        actions: d,
+      }));
+      return rows;
+    }
+    case "comments": {
+      const rows = data.map((d) => ({
+        id: d.id,
+        comment: d.target.comment.body,
+        reportedBy: d.reporter.username,
+        link: `https://iflexhibit.com/post/${d.target.post.id}/title?tab=Comments#${d.target.comment.id}`,
+        reportedAt: formatDate(d.createdAt),
+        actions: d,
+      }));
+      return rows;
+    }
+    default:
+      return [];
+  }
+};
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleString();
+};
 
 const ReportEntriesLayout = () => {
-  const columns = [
-    { field: "id", label: "ID", align: "center" },
-    { field: "user", label: "Posted By", align: "left" },
-    { field: "title", label: "Title", align: "left" },
-    { field: "createdAt", label: "Created At", align: "center" },
-    { field: "actions", label: "Actions", align: "center" },
+  const navigate = useNavigate();
+
+  const REPORT_TYPES = [
+    { value: "posts", label: "Posts" },
+    { value: "users", label: "Users" },
+    { value: "comments", label: "Comments" },
   ];
-  const rows = [
+
+  const REPORTED_POSTS_COLUMNS = [
+    { field: "id", label: "ID", align: "center", size: "sm" },
+    { field: "postTitle", label: "Reported Post", align: "center" },
+    { field: "reportedBy", label: "Reported By", align: "center", size: "md" },
     {
-      id: 1,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-      actions: (
-        <React.Fragment>
-          <Button variant="contained" label="Inspect" color="blue" fullWidth />
-          <Button variant="outlined" label="Clear" color="blue" fullWidth />
-        </React.Fragment>
-      ),
+      field: "link",
+      label: "Link",
+      align: "center",
+      size: "sm",
+      hidden: true,
+      external: true,
     },
+    { field: "reportedAt", label: "Reported At", align: "center", size: "md" },
     {
-      id: 2,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-    {
-      id: 3,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
-    },
-    {
-      id: 4,
-      user: "sosig69",
-      title: "Through the Lens",
-      createdAt: new Date().toLocaleString(),
+      field: "actions",
+      label: "Actions",
+      align: "center",
+      size: "md",
+      buttonClick: (ctx) => {
+        setModalOpen(true);
+        setModalContent({
+          label: <h1>{ctx.target.post.title}</h1>,
+          body: <p></p>,
+        });
+      },
     },
   ];
-  const options = [
-    { value: "date", label: "Most Recent" },
-    { value: "views", label: "Most Views" },
-    { value: "likes", label: "Top Rated" },
-    { value: "comments", label: "Most Discussed" },
+
+  const REPORTED_USERS_COLUMNS = [
+    { field: "id", label: "ID", align: "center", size: "sm" },
+    {
+      field: "reportedUser",
+      label: "Reported User",
+      align: "center",
+    },
+    { field: "reportedBy", label: "Reported By", align: "center", size: "md" },
+    {
+      field: "link",
+      label: "Link",
+      align: "center",
+      size: "sm",
+      hidden: true,
+      external: true,
+    },
+    { field: "reportedAt", label: "Reported At", align: "center", size: "md" },
+    {
+      field: "actions",
+      label: "Actions",
+      align: "center",
+      size: "md",
+      buttonClick: (ctx) => {
+        console.log(ctx);
+      },
+    },
   ];
-  return (
+
+  const REPORTED_COMMENTS_COLUMNS = [
+    { field: "id", label: "ID", align: "center", size: "sm" },
+    { field: "comment", label: "Reported Comment", align: "center" },
+    { field: "reportedBy", label: "Reported By", align: "center", size: "md" },
+    {
+      field: "link",
+      label: "Link",
+      align: "center",
+      size: "sm",
+      hidden: true,
+      external: true,
+    },
+    { field: "reportedAt", label: "Reported At", align: "center", size: "md" },
+    {
+      field: "actions",
+      label: "Actions",
+      align: "center",
+      size: "md",
+      buttonClick: (ctx) => {
+        console.log(ctx);
+      },
+    },
+  ];
+
+  const [columns, setColumns] = useState([]);
+  const [data, setData] = useState([]);
+  const [reportType, setReportType] = useState(REPORT_TYPES[0].value);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ label: "", body: "" });
+  const [isLoading, setLoading] = useState(false);
+
+  const fetchData = () => {
+    setLoading(true);
+    axios
+      .get(`/dashboard/data/reports/${reportType}`)
+      .then((response) => {
+        setLoading(false);
+        setData(formatData(response.data.data, reportType));
+      })
+      .catch(() => {
+        setLoading(false);
+        setData([]);
+        navigate("/login");
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+    switch (reportType) {
+      case "posts":
+        return setColumns(REPORTED_POSTS_COLUMNS);
+      case "users":
+        return setColumns(REPORTED_USERS_COLUMNS);
+      case "comments":
+        return setColumns(REPORTED_COMMENTS_COLUMNS);
+      default:
+        return setColumns(REPORTED_POSTS_COLUMNS);
+    }
+  }, [reportType]);
+
+  return isLoading ? (
+    <span>LOADING</span>
+  ) : (
     <React.Fragment>
-      <h1>PENDING POSTS</h1>
+      <h1>REPORT ENTRIES</h1>
       <Table
         columns={columns}
-        rows={rows}
-        controls="Reported Users"
-        options={options}
+        rows={data}
+        controls={`Reported ${reportType}`}
+        options={REPORT_TYPES}
+        value={reportType}
+        onChange={(e) => setReportType(e.target.value)}
       />
+      {isModalOpen && (
+        <Modal
+          label={modalContent.label}
+          closeModal={() => setModalOpen(false)}
+        >
+          {modalContent.body}
+        </Modal>
+      )}
     </React.Fragment>
   );
 };

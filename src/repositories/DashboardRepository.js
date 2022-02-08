@@ -117,6 +117,7 @@ function fetchReportedComments() {
         target: {
           user: { id: r.target_user_id, username: decrypt(r.target_username) },
           comment: { id: r.target_comment_id, body: r.comment_body },
+          post: { id: r.target_post_id },
         },
         reporter: { id: r.user_id, username: decrypt(r.complainee_username) },
         offense: {
