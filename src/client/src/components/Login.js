@@ -1,10 +1,6 @@
 import React from "react";
 
-<<<<<<< HEAD
-const Layout = () => {
-=======
 const Login = () => {
->>>>>>> main
   return (
     <main className="login">
       <div className="content">
@@ -46,8 +42,4 @@ const Login = () => {
   );
 };
 
-<<<<<<< HEAD
-export default Layout;
-=======
 export default Login;
->>>>>>> main
