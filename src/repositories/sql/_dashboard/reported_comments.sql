@@ -1,10 +1,10 @@
-DROP VIEW IF EXISTS reported_posts;
+DROP VIEW IF EXISTS reported_comments;
 
-CREATE VIEW reported_posts AS
+CREATE VIEW reported_comments AS
     SELECT 
         reports.report_id,
-        reports.target_post_id,
-        posts.post_title,
+        reports.target_comment_id,
+        comments.comment_body,
         reports.target_user_id,
         (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
         reports.user_id,
@@ -15,9 +15,9 @@ CREATE VIEW reported_posts AS
         reports.report_note,
         reports.created_at
     FROM reports
-    JOIN posts ON reports.target_post_id = posts.post_id
-    JOIN offenses ON reports.offense_id = offenses.offense_id
-    WHERE offenses.offense_type = 'p'
+    JOIN comments ON comments.comment_id = reports.target_comment_id
+    JOIN offenses ON offenses.offense_id = reports.offense_id
+    WHERE offenses.offense_type = 'c'
     ORDER BY reports.created_at ASC;
 
-SELECT * FROM reported_posts;
+SELECT * FROM reported_comments;

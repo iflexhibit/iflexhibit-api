@@ -75,6 +75,21 @@ router.post("/", auth, async (req, res) => {
       return res.status(400).json({ status: 400, msg: "Title required" });
     }
 
+    if (!fields.title.trim().length > 0) {
+      fs.unlinkSync(files.file.path);
+      return res.status(400).json({ status: 400, msg: "Title required" });
+    }
+
+    if (fields.description) {
+      if (fields.description.trim().length > 1000) {
+        fs.unlinkSync(files.file.path);
+        return res.status(400).json({
+          status: 400,
+          msg: "Description cannot exceed 1000 characters",
+        });
+      }
+    }
+
     try {
       const response = await cloudinary.uploader.upload(files.file.path, {
         folder: "iflexhibit/uploads",
@@ -84,6 +99,13 @@ router.post("/", auth, async (req, res) => {
           fields.watermark === "true"
             ? [
                 { height: 720, quality: "auto", crop: "scale" },
+                {
+                  overlay: "iflexhibit_lettermark",
+                  gravity: "north",
+                  width: "1.0",
+                  flags: ["relative", "tiled"],
+                  opacity: 10,
+                },
                 {
                   overlay: "black_bar",
                   gravity: "south",
@@ -109,8 +131,8 @@ router.post("/", auth, async (req, res) => {
 
       const post = await PostRepository.insertPost(
         req.user.id,
-        fields.title,
-        fields.description,
+        fields.title.trim(),
+        fields.description ? fields.description.trim() : null,
         response.url,
         null,
         fields.tags

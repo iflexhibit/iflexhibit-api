@@ -12,7 +12,10 @@
     "react-chartjs-2": "^4.0.1",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.1",
+<<<<<<< HEAD
     "react-scripts": "5.0.0",
+=======
+>>>>>>> main
     "web-vitals": "^2.1.3"
   },
   "scripts": {
@@ -39,5 +42,12 @@
       "last 1 safari version"
     ]
   },
+<<<<<<< HEAD
   "proxy": "http://localhost:5000"
+=======
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "react-scripts": "^5.0.0"
+  }
+>>>>>>> main
 }
