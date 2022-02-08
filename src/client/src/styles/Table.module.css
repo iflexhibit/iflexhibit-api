@@ -49,7 +49,6 @@ div.row > div.data {
   width: 100%;
   height: 2rem;
   display: flex;
-  gap: 0.5rem;
   align-items: center;
   justify-content: center;
 }
@@ -60,11 +59,16 @@ div.controls {
   justify-content: space-between;
 }
 
+div.controls h2 {
+  text-transform: capitalize;
+}
+
 div.header > div.label.sm,
 div.row > div.data.sm {
   width: 7ch;
   min-width: 7ch;
   max-width: 7ch;
+  overflow-x: hidden;
 }
 
 div.header > div.label.md,
@@ -72,7 +76,9 @@ div.row > div.data.md {
   width: 25ch;
   min-width: 25ch;
   max-width: 25ch;
+  overflow-x: hidden;
 }
+
 div.row > div.data.left {
   justify-content: flex-start;
 }
