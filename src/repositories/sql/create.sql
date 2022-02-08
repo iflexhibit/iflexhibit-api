@@ -288,6 +288,7 @@ CREATE VIEW reported_comments AS
         comments.comment_body,
         reports.target_user_id,
         (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
+        reports.target_post_id,
         reports.user_id,
         (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
         reports.offense_id,
