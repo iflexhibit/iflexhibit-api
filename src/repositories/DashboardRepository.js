@@ -105,9 +105,39 @@ function fetchReportedUsers() {
   });
 }
 
+function fetchReportedComments() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(
+        DashboardQueries.fetchReportedComments,
+        []
+      );
+      const data = rows.map((r) => ({
+        id: r.report_id,
+        target: {
+          user: { id: r.target_user_id, username: decrypt(r.target_username) },
+          comment: { id: r.target_comment_id, body: r.comment_body },
+        },
+        reporter: { id: r.user_id, username: decrypt(r.complainee_username) },
+        offense: {
+          id: r.offense_id,
+          title: r.offense_title,
+          banTime: r.ban_time,
+        },
+        note: r.report_note,
+        createdAt: r.created_at,
+      }));
+      return resolve(data);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
   fetchReportedPosts,
   fetchReportedUsers,
+  fetchReportedComments,
 };

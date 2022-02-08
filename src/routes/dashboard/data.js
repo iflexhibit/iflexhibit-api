@@ -37,6 +37,9 @@ router.get("/reports/:type", authModerator, async (req, res) => {
       case "users":
         data = await DashboardRepository.fetchReportedUsers();
         break;
+      case "comments":
+        data = await DashboardRepository.fetchReportedComments();
+        break;
       default:
         data = {};
         break;
