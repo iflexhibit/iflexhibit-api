@@ -1,5 +1,5 @@
 UPDATE posts 
-SET status_id = 'ps2' 
+SET status_id = 'ps3' 
 WHERE post_id = $1
 RETURNING post_id;
 
