@@ -2,8 +2,8 @@ INSERT INTO bans (report_id, target_id, user_id, offense_id, ban_note, expires_a
 VALUES ($1, 
 (SELECT target_user_id FROM reports WHERE report_id = $1), $2, $3, $4, 
 (CASE
-    WHEN (SELECT ban_time FROM offenses WHERE offenses.offense_id = $4) = '07' THEN now() + 'INTERVAL 7 days',
-    ELSE now () + 'INTERVAL 14 days'
+    WHEN (SELECT ban_time FROM offenses WHERE offenses.offense_id = $4) = '07' THEN now() + INTERVAL '7 days',
+    ELSE now () + INTERVAL '14 days'
 END))
 RETURNING ban_id;
 
