@@ -11,8 +11,8 @@ CREATE VIEW disabled_posts AS
         posts.post_video,
         posts.created_at
     FROM posts
+    JOIN users ON posts.user_id = users.user_id
     WHERE posts.status_id = 'ps4'
-    JOIN users on posts.user_id = users.user_id
     ORDER BY posts.post_id ASC;
 
 SELECT * FROM disabled_posts;
