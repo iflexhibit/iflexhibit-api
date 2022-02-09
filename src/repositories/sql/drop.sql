@@ -12,6 +12,8 @@ DROP VIEW IF EXISTS banned_users;
 -- reported_comments
 DROP VIEW IF EXISTS reported_comments;
 -- Rules
+-- update_usertype_to_ban
+DROP RULE IF EXISTS update_usertype_to_ban ON bans;
 -- add like
 DROP RULE IF EXISTS count_likes ON userpost;
 -- add view

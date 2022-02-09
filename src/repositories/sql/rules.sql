@@ -47,3 +47,10 @@ CREATE OR REPLACE RULE count_comments AS
         FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
         FROM comments)
 		WHERE new.post_id = posts.post_id;
+
+-- update usertypes
+CREATE OR REPLACE RULE update_usertype_to_ban AS
+    ON INSERT TO bans  
+    DO ALSO
+        UPDATE users SET usertype_id = 'ut4'
+        WHERE users.user_id = new.target_id;
