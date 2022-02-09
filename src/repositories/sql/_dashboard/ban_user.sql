@@ -5,7 +5,7 @@ VALUES ($1,
 RETURNING ban_id;
 
 -- Syntax 
--- $1 ban_id
+-- $1 report_id
 -- $2 user_id
 -- $3 offense_id
 -- $4 ban_note
