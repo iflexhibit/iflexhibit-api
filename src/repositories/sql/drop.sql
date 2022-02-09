@@ -1,4 +1,6 @@
 -- View
+-- disabled_posts
+DROP VIEW IF EXISTS disabled_posts;
 -- general_overview
 DROP VIEW IF EXISTS general_overview;
 -- reported_posts
