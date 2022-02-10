@@ -54,3 +54,15 @@ CREATE OR REPLACE RULE update_usertype_to_ban AS
     DO ALSO
         UPDATE users SET usertype_id = 'ut4'
         WHERE users.user_id = new.target_id;
+
+-- reset_usertype
+
+CREATE OR REPLACE RULE reset_usertype AS 
+	ON DELETE TO bans
+	DO
+	UPDATE users 
+	SET usertype_id = 'ut1'
+	WHERE (
+		SELECT bans.target_id 
+		FROM bans 
+		WHERE ban_id = old.ban_id) = users.user_id;

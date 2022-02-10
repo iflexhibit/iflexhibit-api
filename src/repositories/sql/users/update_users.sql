@@ -7,3 +7,4 @@ WHERE users.user_id = $1
 
 -- Syntax
 -- $1 user_id
+--  runs along with fetch_me.sql
