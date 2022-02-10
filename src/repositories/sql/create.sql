@@ -322,3 +322,19 @@ CREATE VIEW disabled_comments AS
     JOIN users ON users.user_id = comments.user_id
     WHERE is_disabled = TRUE
     ORDER BY comments.comment_id ASC;
+-- disabled_posts
+
+CREATE VIEW disabled_posts AS
+    SELECT
+        posts.post_id,
+        posts.post_title,
+        posts.user_id,
+        users.username,
+        posts.post_body,
+        posts.post_image,
+        posts.post_video,
+        posts.created_at
+    FROM posts
+    JOIN users ON posts.user_id = users.user_id
+    WHERE posts.status_id = 'ps4'
+    ORDER BY posts.post_id ASC;
