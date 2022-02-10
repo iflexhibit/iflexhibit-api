@@ -13,6 +13,8 @@ DROP VIEW IF EXISTS reported_users;
 DROP VIEW IF EXISTS banned_users;
 -- reported_comments
 DROP VIEW IF EXISTS reported_comments;
+-- disabled_comments
+DROP VIEW IF EXISTS disabled_comments;
 -- Rules
 -- update_usertype_to_ban
 DROP RULE IF EXISTS update_usertype_to_ban ON bans;
