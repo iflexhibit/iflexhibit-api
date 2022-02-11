@@ -16,18 +16,6 @@ const ReportedPostDetails = ({ ctx }) => {
   const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
   const [banNote, setBanNote] = useState("");
 
-  const handleApprove = () => {
-    if (window.confirm("Approve this post?")) {
-      console.log("Approve");
-    }
-  };
-
-  const handleReject = () => {
-    if (window.confirm("Reject this post?")) {
-      console.log("Reject");
-    }
-  };
-
   const fetchBanTime = (offenseId) => {
     const offense = postOffenses.find((o) => o.id === offenseId);
     if (!offense) return "";
