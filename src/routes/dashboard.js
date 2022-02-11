@@ -18,5 +18,6 @@ const dataLimiter = rateLimit({
 
 router.use("/auth", authLimiter, require("./dashboard/auth"));
 router.use("/data", dataLimiter, require("./dashboard/data"));
+router.use("/actions", dataLimiter, require("./dashboard/actions"));
 
 module.exports = router;

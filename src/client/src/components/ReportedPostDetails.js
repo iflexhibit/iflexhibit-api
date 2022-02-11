@@ -40,6 +40,18 @@ const ReportedPostDetails = ({ ctx }) => {
       .then((response) => setPostOffenses(response.data.offenses));
   }, [ctx]);
 
+  const handleBanUser = () => {
+    if (window.confirm("Ban this user?")) {
+      axios
+        .post("/dashboard/actions/banuser", {
+          reportId: ctx.id,
+          offenseId: ctx.offense.id,
+          banNote,
+        })
+        .finally(() => window.location.reload());
+    }
+  };
+
   return (
     <div className={styles.content}>
       <div className={styles.details}>
@@ -116,6 +128,7 @@ const ReportedPostDetails = ({ ctx }) => {
             color="red"
             variant="contained"
             label={`ban ${ctx.target.user.username}`}
+            onClick={handleBanUser}
           />
           <Button
             fullWidth

@@ -77,6 +77,7 @@ function fetchReportedPosts() {
     }
   });
 }
+
 function fetchReportedUsers() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -135,10 +136,51 @@ function fetchReportedComments() {
   });
 }
 
+function banUser(reportId, userId, offenseId, banNote) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.banUser, [
+        reportId,
+        userId,
+        offenseId,
+        banNote,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function approvePost(postId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.approvePost, [postId]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function rejectPost(postId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.rejectPost, [postId]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
   fetchReportedPosts,
   fetchReportedUsers,
   fetchReportedComments,
+  banUser,
+  approvePost,
+  rejectPost,
 };
