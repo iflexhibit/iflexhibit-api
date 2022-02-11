@@ -23,6 +23,10 @@ div.box {
   z-index: 50;
 }
 
+div.box.wide {
+  width: 100ch;
+}
+
 div.header {
   display: flex;
   align-items: center;

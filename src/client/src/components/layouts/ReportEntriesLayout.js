@@ -5,6 +5,8 @@ import Modal from "../Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReportedPostDetails from "../ReportedPostDetails";
+import ReportedUserDetails from "../ReportedUserDetails";
+import ReportedCommentDetails from "../ReportedCommentDetails";
 
 const formatData = (data, type) => {
   switch (type) {
@@ -110,7 +112,11 @@ const ReportEntriesLayout = () => {
       align: "center",
       size: "md",
       buttonClick: (ctx) => {
-        console.log(ctx);
+        setModalOpen(true);
+        setModalContent({
+          label: <h1>Report Details</h1>,
+          body: <ReportedUserDetails ctx={ctx} />,
+        });
       },
     },
   ];
@@ -134,7 +140,11 @@ const ReportEntriesLayout = () => {
       align: "center",
       size: "md",
       buttonClick: (ctx) => {
-        console.log(ctx);
+        setModalOpen(true);
+        setModalContent({
+          label: <h1>Report Details</h1>,
+          body: <ReportedCommentDetails ctx={ctx} />,
+        });
       },
     },
   ];
@@ -190,6 +200,7 @@ const ReportEntriesLayout = () => {
       />
       {isModalOpen && (
         <Modal
+          wide
           label={modalContent.label}
           closeModal={() => setModalOpen(false)}
         >

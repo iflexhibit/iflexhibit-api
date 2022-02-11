@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styles from "../styles/ReportDetails.module.css";
 import Button from "./Button";
 import DetailsGroup from "./DetailsGroup";
@@ -11,8 +11,8 @@ const formatDate = (date) => {
   return new Date(date).toLocaleString();
 };
 
-const ReportedPostDetails = ({ ctx }) => {
-  const [postOffenses, setPostOffenses] = useState([]);
+const ReportedUserDetails = ({ ctx }) => {
+  const [userOffenses, setUserOffenses] = useState([]);
   const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
   const [banNote, setBanNote] = useState("");
 
@@ -29,31 +29,21 @@ const ReportedPostDetails = ({ ctx }) => {
   };
 
   const fetchBanTime = (offenseId) => {
-    const offense = postOffenses.find((o) => o.id === offenseId);
+    const offense = userOffenses.find((o) => o.id === offenseId);
     if (!offense) return "";
     return offense.banTime;
   };
 
   useEffect(() => {
     axios
-      .get("/api/offenses/p")
-      .then((response) => setPostOffenses(response.data.offenses));
+      .get("/api/offenses/u")
+      .then((response) => setUserOffenses(response.data.offenses));
   }, [ctx]);
-
   return (
     <div className={styles.content}>
       <div className={styles.details}>
         <DetailsGroup
-          label="reported post"
-          value={
-            <LinkValue
-              label={ctx.target.post.title}
-              link={`https://iflexhibit.com/post/${ctx.target.post.id}`}
-            />
-          }
-        />
-        <DetailsGroup
-          label="post author"
+          label="reported user"
           value={
             <LinkValue
               label={ctx.target.user.username}
@@ -75,12 +65,12 @@ const ReportedPostDetails = ({ ctx }) => {
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
       </div>
       <div className={styles.form}>
-        <label htmlFor="postoffense">
+        <label htmlFor="useroffense">
           <div>VIOLATED RULE</div>
           <Select
-            id="postoffense"
+            id="useroffense"
             fullWidth
-            options={postOffenses.map((o) => ({
+            options={userOffenses.map((o) => ({
               label: `${o.id}: ${o.title}`,
               value: o.id,
             }))}
@@ -136,4 +126,4 @@ const LinkValue = ({ link, label }) => (
   </a>
 );
 
-export default ReportedPostDetails;
+export default ReportedUserDetails;
