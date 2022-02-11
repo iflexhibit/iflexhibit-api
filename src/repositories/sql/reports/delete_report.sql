@@ -1,0 +1,1 @@
+UPDATE reports SET is_deleted=TRUE WHERE report_id=$1 RETURNING report_id;
