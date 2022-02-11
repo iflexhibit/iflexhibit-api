@@ -16,15 +16,15 @@ const ReportedUserDetails = ({ ctx }) => {
   const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
   const [banNote, setBanNote] = useState("");
 
-  const handleApprove = () => {
-    if (window.confirm("Approve this post?")) {
-      console.log("Approve");
-    }
-  };
-
-  const handleReject = () => {
-    if (window.confirm("Reject this post?")) {
-      console.log("Reject");
+  const handleBanUser = () => {
+    if (window.confirm("Ban this user?")) {
+      axios
+        .post("/dashboard/actions/banuser", {
+          reportId: ctx.id,
+          offenseId: ctx.offense.id,
+          banNote,
+        })
+        .finally(() => window.location.reload());
     }
   };
 
@@ -66,6 +66,12 @@ const ReportedUserDetails = ({ ctx }) => {
         />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
+        <Button
+          fullWidth
+          color="blue"
+          variant="outlined"
+          label="clear report"
+        />
       </div>
       <div className={styles.form}>
         <label htmlFor="useroffense">
@@ -100,12 +106,7 @@ const ReportedUserDetails = ({ ctx }) => {
             color="red"
             variant="contained"
             label={`ban ${ctx.target.user.username}`}
-          />
-          <Button
-            fullWidth
-            color="red"
-            variant="outlined"
-            label="Clear report"
+            onClick={handleBanUser}
           />
         </div>
       </div>

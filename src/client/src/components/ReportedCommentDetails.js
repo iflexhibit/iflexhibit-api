@@ -16,15 +16,23 @@ const ReportedCommentDetails = ({ ctx }) => {
   const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
   const [banNote, setBanNote] = useState("");
 
-  const handleApprove = () => {
-    if (window.confirm("Approve this post?")) {
-      console.log("Approve");
+  const handleBanUser = () => {
+    if (window.confirm("Ban this user?")) {
+      axios
+        .post("/dashboard/actions/banuser", {
+          reportId: ctx.id,
+          offenseId: ctx.offense.id,
+          banNote,
+        })
+        .finally(() => window.location.reload());
     }
   };
 
-  const handleReject = () => {
-    if (window.confirm("Reject this post?")) {
-      console.log("Reject");
+  const handleDisableComment = () => {
+    if (window.confirm("Disable this comment?")) {
+      axios
+        .post(`/dashboard/actions/disablecomment/${ctx.target.comment.id}`)
+        .finally(() => window.location.reload());
     }
   };
 
@@ -115,12 +123,14 @@ const ReportedCommentDetails = ({ ctx }) => {
             color="red"
             variant="contained"
             label={`ban ${ctx.target.user.username}`}
+            onClick={handleBanUser}
           />
           <Button
             fullWidth
             color="red"
             variant="outlined"
             label="disable comment"
+            onClick={handleDisableComment}
           />
         </div>
       </div>

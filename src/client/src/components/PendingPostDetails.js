@@ -3,18 +3,25 @@ import styles from "../styles/PendingPostDetails.module.css";
 import Button from "./Button";
 import ExternalIcon from "./icons/ExternalIcon";
 import DetailsGroup from "./DetailsGroup";
+import axios from "axios";
 
 const PendingPostDetails = ({ ctx }) => {
   const handleApprove = () => {
     if (window.confirm("Approve this post?")) {
-      console.log("Approve");
+      axios
+        .post(`/dashboard/actions/approvepost/${ctx.id}`)
+        .finally(() => window.location.reload());
     }
   };
+
   const handleReject = () => {
     if (window.confirm("Reject this post?")) {
-      console.log("Reject");
+      axios
+        .post(`/dashboard/actions/rejectpost/${ctx.id}`)
+        .finally(() => window.location.reload());
     }
   };
+
   return (
     <div className={styles.details}>
       <DetailsGroup label="user" value={ctx.author.username} />

@@ -16,18 +16,6 @@ const ReportedPostDetails = ({ ctx }) => {
   const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
   const [banNote, setBanNote] = useState("");
 
-  const handleApprove = () => {
-    if (window.confirm("Approve this post?")) {
-      console.log("Approve");
-    }
-  };
-
-  const handleReject = () => {
-    if (window.confirm("Reject this post?")) {
-      console.log("Reject");
-    }
-  };
-
   const fetchBanTime = (offenseId) => {
     const offense = postOffenses.find((o) => o.id === offenseId);
     if (!offense) return "";
@@ -39,6 +27,26 @@ const ReportedPostDetails = ({ ctx }) => {
       .get("/api/offenses/p")
       .then((response) => setPostOffenses(response.data.offenses));
   }, [ctx]);
+
+  const handleBanUser = () => {
+    if (window.confirm("Ban this user?")) {
+      axios
+        .post("/dashboard/actions/banuser", {
+          reportId: ctx.id,
+          offenseId: ctx.offense.id,
+          banNote,
+        })
+        .finally(() => window.location.reload());
+    }
+  };
+
+  const handleDisable = () => {
+    if (window.confirm("Disable this post?")) {
+      axios
+        .post(`/dashboard/actions/disablepost/${ctx.target.post.id}`)
+        .finally(() => window.location.reload());
+    }
+  };
 
   return (
     <div className={styles.content}>
@@ -116,12 +124,14 @@ const ReportedPostDetails = ({ ctx }) => {
             color="red"
             variant="contained"
             label={`ban ${ctx.target.user.username}`}
+            onClick={handleBanUser}
           />
           <Button
             fullWidth
             color="red"
             variant="outlined"
             label="disable post"
+            onClick={handleDisable}
           />
         </div>
       </div>
