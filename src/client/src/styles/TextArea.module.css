@@ -1,0 +1,24 @@
+textarea.textarea {
+  min-height: 2.25rem;
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.5rem;
+
+  background: var(--color-white);
+  color: var(--color-black);
+  border: solid 1px var(--color-black);
+  border-radius: 5px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+
+  resize: none;
+}
+
+textarea.textarea.fullHeight {
+  min-height: 7.625rem;
+  height: 7.625rem;
+}
+
+textarea.textarea:focus {
+  outline: none;
+}

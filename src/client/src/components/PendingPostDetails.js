@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/PendingPostDetails.module.css";
 import Button from "./Button";
 import ExternalIcon from "./icons/ExternalIcon";
+import DetailsGroup from "./DetailsGroup";
 
 const PendingPostDetails = ({ ctx }) => {
   const handleApprove = () => {
@@ -51,13 +52,6 @@ const PendingPostDetails = ({ ctx }) => {
     </div>
   );
 };
-
-const DetailsGroup = ({ label, value }) => (
-  <div className={styles.group}>
-    <div className={styles.label}>{label}</div>
-    <div className={styles.value}>{value}</div>
-  </div>
-);
 
 const PostActions = ({ handleApprove, handleReject }) => {
   return (

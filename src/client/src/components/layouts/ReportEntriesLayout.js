@@ -4,6 +4,7 @@ import Button from "../Button";
 import Modal from "../Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ReportedPostDetails from "../ReportedPostDetails";
 
 const formatData = (data, type) => {
   switch (type) {
@@ -79,8 +80,8 @@ const ReportEntriesLayout = () => {
       buttonClick: (ctx) => {
         setModalOpen(true);
         setModalContent({
-          label: <h1>{ctx.target.post.title}</h1>,
-          body: <p></p>,
+          label: <h1>Report Details</h1>,
+          body: <ReportedPostDetails ctx={ctx} />,
         });
       },
     },

@@ -4,25 +4,6 @@ div.details {
   gap: 1rem;
 }
 
-div.group {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.25rem;
-}
-
-div.label {
-  text-transform: uppercase;
-}
-
-div.value {
-  font-weight: bold;
-  overflow-wrap: break-word;
-}
-
-div.value > a {
-  text-decoration: underline;
-}
-
 div.actions {
   display: flex;
   gap: 1rem;
