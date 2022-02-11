@@ -194,13 +194,31 @@ CREATE OR REPLACE RULE count_comments AS
         FROM comments)
 		WHERE new.post_id = posts.post_id;
 
+-- update usertypes
+CREATE OR REPLACE RULE update_usertype_to_ban AS
+    ON INSERT TO bans  
+    DO ALSO
+        UPDATE users SET usertype_id = 'ut4'
+        WHERE users.user_id = new.target_id;
+
+-- reset_usertype
+CREATE OR REPLACE RULE reset_usertype AS 
+	ON DELETE TO bans
+	DO
+	UPDATE users 
+	SET usertype_id = 'ut1'
+	WHERE (
+		SELECT bans.target_id 
+		FROM bans 
+		WHERE ban_id = old.ban_id) = users.user_id;
+
 -- Create View
 -- general_overview
 CREATE VIEW general_overview AS
     SELECT 
-        (SELECT COUNT (DISTINCT target_user_id) FROM reports) AS reported_users,
-        (SELECT COUNT (DISTINCT target_post_id) FROM reports) AS reported_posts,
-        (SELECT COUNT (DISTINCT target_comment_id) FROM reports) AS reported_comments,
+        (SELECT COUNT (DISTINCT target_user_id) FROM reports WHERE reports.offense_id LIKE 'U%') AS reported_users,
+        (SELECT COUNT (DISTINCT target_post_id) FROM reports WHERE reports.offense_id LIKE 'P%') AS reported_posts,
+        (SELECT COUNT (DISTINCT target_comment_id) FROM reports WHERE reports.offense_id LIKE 'C%') AS reported_comments,
         (SELECT COUNT (target_id) FROM bans WHERE bans.expires_at > now()) AS banned_users,
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps1') AS pending_posts,
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
@@ -288,6 +306,7 @@ CREATE VIEW reported_comments AS
         comments.comment_body,
         reports.target_user_id,
         (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username,
+        reports.target_post_id,
         reports.user_id,
         (SELECT username FROM users WHERE users.user_id = reports.user_id) AS complainee_username,
         reports.offense_id,
@@ -301,3 +320,32 @@ CREATE VIEW reported_comments AS
     WHERE offenses.offense_type = 'c'
     ORDER BY reports.created_at ASC;
 
+-- disabled_comments
+CREATE VIEW disabled_comments AS
+    SELECT
+        comments.comment_id,
+        comments.comment_body,
+        comments.user_id,
+        users.username,
+        comments.post_id,
+        comments.created_at
+    FROM comments
+    JOIN users ON users.user_id = comments.user_id
+    WHERE is_disabled = TRUE
+    ORDER BY comments.comment_id ASC;
+-- disabled_posts
+
+CREATE VIEW disabled_posts AS
+    SELECT
+        posts.post_id,
+        posts.post_title,
+        posts.user_id,
+        users.username,
+        posts.post_body,
+        posts.post_image,
+        posts.post_video,
+        posts.created_at
+    FROM posts
+    JOIN users ON posts.user_id = users.user_id
+    WHERE posts.status_id = 'ps4'
+    ORDER BY posts.post_id ASC;
