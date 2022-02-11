@@ -4,6 +4,7 @@ import Button from "../Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
+import PendingPostDetails from "../PendingPostDetails";
 
 const formatData = (data) => {
   const rows = data.map((d) => ({
@@ -69,7 +70,11 @@ const PendingPostsLayout = () => {
       align: "center",
       size: "md",
       buttonClick: (ctx) => {
-        console.log(ctx);
+        setModalContent({
+          label: <h1>Post Details</h1>,
+          body: <PendingPostDetails ctx={ctx} />,
+        });
+        setModalOpen(true);
       },
     },
   ];
