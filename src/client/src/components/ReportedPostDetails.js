@@ -70,9 +70,18 @@ const ReportedPostDetails = ({ ctx }) => {
             />
           }
         />
-        <DetailsGroup label="offenses" value={ctx.offense.title} />
+        <DetailsGroup
+          label="offenses"
+          value={`${ctx.offense.id}: ${ctx.offense.title}`}
+        />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
+        <Button
+          fullWidth
+          color="blue"
+          variant="outlined"
+          label="clear report"
+        />
       </div>
       <div className={styles.form}>
         <label htmlFor="postoffense">
@@ -112,7 +121,7 @@ const ReportedPostDetails = ({ ctx }) => {
             fullWidth
             color="red"
             variant="outlined"
-            label="Clear report"
+            label="disable post"
           />
         </div>
       </div>

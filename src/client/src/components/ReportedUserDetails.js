@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/ReportDetails.module.css";
 import Button from "./Button";
 import DetailsGroup from "./DetailsGroup";
@@ -60,7 +60,10 @@ const ReportedUserDetails = ({ ctx }) => {
             />
           }
         />
-        <DetailsGroup label="offenses" value={ctx.offense.title} />
+        <DetailsGroup
+          label="offenses"
+          value={`${ctx.offense.id}: ${ctx.offense.title}`}
+        />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
       </div>
