@@ -1,0 +1,19 @@
+div.group {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.25rem;
+}
+
+div.label {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+div.value {
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
+
+div.value > a {
+  text-decoration: underline;
+}

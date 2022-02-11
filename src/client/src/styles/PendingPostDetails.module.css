@@ -1,0 +1,19 @@
+div.details {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+div.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+div.details > small {
+  text-align: center;
+}
+
+div.details > small > a {
+  color: var(--color-blue);
+  font-weight: bold;
+}
