@@ -17,7 +17,9 @@ const Button = ({
       href={href}
       className={`${styles.button} ${variant ? styles[variant] : ""} ${
         color ? styles[color] : ""
-      } ${fullWidth ? styles.fullWidth : ""}`}
+      } ${fullWidth ? styles.fullWidth : ""} ${
+        disabled ? styles.disabled : ""
+      }`}
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -29,7 +31,9 @@ const Button = ({
     <button
       className={`${styles.button} ${variant ? styles[variant] : ""} ${
         color ? styles[color] : ""
-      } ${fullWidth ? styles.fullWidth : ""}`}
+      } ${fullWidth ? styles.fullWidth : ""} ${
+        disabled ? styles.disabled : ""
+      }`}
       onClick={onClick}
       disabled={disabled}
     >

@@ -5,10 +5,14 @@ div.select {
   max-width: 20ch;
 }
 
+div.select.fullWidth {
+  max-width: unset;
+}
+
 div.select > select {
   width: 100%;
   height: 100%;
-  padding: 0 2rem 0 0.75rem;
+  padding: 0 0.125rem 0 0.75rem;
 
   border-radius: 5px;
 

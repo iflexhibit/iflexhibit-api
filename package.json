@@ -5,8 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "server": "nodemon src/server.js",
     "client": "npm start --prefix src/client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-install": "npm install --prefix src/client",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client-install && npm run build --prefix src/client"
   },
@@ -37,5 +38,8 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }

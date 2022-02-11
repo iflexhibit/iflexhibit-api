@@ -1,0 +1,132 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styles from "../styles/ReportDetails.module.css";
+import Button from "./Button";
+import DetailsGroup from "./DetailsGroup";
+import ExternalIcon from "./icons/ExternalIcon";
+import Select from "./Select";
+import TextArea from "./TextArea";
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleString();
+};
+
+const ReportedUserDetails = ({ ctx }) => {
+  const [userOffenses, setUserOffenses] = useState([]);
+  const [selectedOffense, setSelectedOffense] = useState(ctx.offense.id);
+  const [banNote, setBanNote] = useState("");
+
+  const handleApprove = () => {
+    if (window.confirm("Approve this post?")) {
+      console.log("Approve");
+    }
+  };
+
+  const handleReject = () => {
+    if (window.confirm("Reject this post?")) {
+      console.log("Reject");
+    }
+  };
+
+  const fetchBanTime = (offenseId) => {
+    const offense = userOffenses.find((o) => o.id === offenseId);
+    if (!offense) return "";
+    return offense.banTime;
+  };
+
+  useEffect(() => {
+    axios
+      .get("/api/offenses/u")
+      .then((response) => setUserOffenses(response.data.offenses));
+  }, [ctx]);
+  return (
+    <div className={styles.content}>
+      <div className={styles.details}>
+        <DetailsGroup
+          label="reported user"
+          value={
+            <LinkValue
+              label={ctx.target.user.username}
+              link={`https://iflexhibit.com/profile/${ctx.target.user.id}`}
+            />
+          }
+        />
+        <DetailsGroup
+          label="reported by"
+          value={
+            <LinkValue
+              label={ctx.reporter.username}
+              link={`https://iflexhibit.com/profile/${ctx.reporter.id}`}
+            />
+          }
+        />
+        <DetailsGroup
+          label="offenses"
+          value={`${ctx.offense.id}: ${ctx.offense.title}`}
+        />
+        {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
+        <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
+      </div>
+      <div className={styles.form}>
+        <label htmlFor="useroffense">
+          <div>VIOLATED RULE</div>
+          <Select
+            id="useroffense"
+            fullWidth
+            options={userOffenses.map((o) => ({
+              label: `${o.id}: ${o.title}`,
+              value: o.id,
+            }))}
+            value={selectedOffense}
+            onChange={(e) => setSelectedOffense(e.target.value)}
+          />
+        </label>
+        <label htmlFor="bannote">
+          <div>BAN DETAILS</div>
+          <TextArea
+            fullHeight
+            id="bannote"
+            onChange={(e) => setBanNote(e.target.value)}
+            value={banNote}
+          />
+        </label>
+        <small className={styles.warning}>
+          {ctx.target.user.username} will be banned for{" "}
+          {fetchBanTime(selectedOffense)} days
+        </small>
+        <div className={styles.actions}>
+          <Button
+            fullWidth
+            color="red"
+            variant="contained"
+            label={`ban ${ctx.target.user.username}`}
+          />
+          <Button
+            fullWidth
+            color="red"
+            variant="outlined"
+            label="Clear report"
+          />
+        </div>
+      </div>
+      <small>
+        Learn more about our{" "}
+        <a
+          href="https://iflexhibit.com/legal"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Terms of Service
+        </a>
+      </small>
+    </div>
+  );
+};
+
+const LinkValue = ({ link, label }) => (
+  <a href={link} target="_blank" rel="noopener noreferrer">
+    {label} <ExternalIcon />
+  </a>
+);
+
+export default ReportedUserDetails;

@@ -2,10 +2,10 @@ import styles from "../styles/Modal.module.css";
 import TimesIcon from "./icons/TimesIcon";
 import IconButton from "./IconButton";
 
-const Modal = ({ label, children, closeModal }) => {
+const Modal = ({ label, children, closeModal, wide }) => {
   return (
     <div className={styles.modal}>
-      <div className={styles.box}>
+      <div className={`${styles.box} ${wide ? styles.wide : ""}`}>
         <div className={styles.header}>
           <div>{label}</div>
           <IconButton
