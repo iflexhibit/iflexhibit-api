@@ -16,6 +16,8 @@ DROP VIEW IF EXISTS reported_comments;
 -- disabled_comments
 DROP VIEW IF EXISTS disabled_comments;
 -- Rules
+-- reset_usertype
+DROP RULE IF EXISTS reset_usertype ON bans;
 -- update_usertype_to_ban
 DROP RULE IF EXISTS update_usertype_to_ban ON bans;
 -- add like
