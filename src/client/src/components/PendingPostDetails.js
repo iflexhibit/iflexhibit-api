@@ -13,6 +13,7 @@ const PendingPostDetails = ({ ctx }) => {
         .finally(() => window.location.reload());
     }
   };
+
   const handleReject = () => {
     if (window.confirm("Reject this post?")) {
       axios
@@ -20,6 +21,7 @@ const PendingPostDetails = ({ ctx }) => {
         .finally(() => window.location.reload());
     }
   };
+
   return (
     <div className={styles.details}>
       <DetailsGroup label="user" value={ctx.author.username} />

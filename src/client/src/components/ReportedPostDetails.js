@@ -52,6 +52,14 @@ const ReportedPostDetails = ({ ctx }) => {
     }
   };
 
+  const handleDisable = () => {
+    if (window.confirm("Disable this post?")) {
+      axios
+        .post(`/dashboard/actions/disablepost/${ctx.target.post.id}`)
+        .finally(() => window.location.reload());
+    }
+  };
+
   return (
     <div className={styles.content}>
       <div className={styles.details}>
@@ -135,6 +143,7 @@ const ReportedPostDetails = ({ ctx }) => {
             color="red"
             variant="outlined"
             label="disable post"
+            onClick={handleDisable}
           />
         </div>
       </div>

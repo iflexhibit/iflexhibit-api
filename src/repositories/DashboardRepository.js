@@ -174,6 +174,30 @@ function rejectPost(postId) {
   });
 }
 
+function disablePost(postId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.disablePost, [postId]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function disableComment(commentId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.disableComment, [
+        commentId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -183,4 +207,6 @@ module.exports = {
   banUser,
   approvePost,
   rejectPost,
+  disablePost,
+  disableComment,
 };

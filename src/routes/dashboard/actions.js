@@ -26,6 +26,28 @@ router.post("/rejectpost/:postId", authModerator, async (req, res) => {
   }
 });
 
+router.post("/disablepost/:postId", authModerator, async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const result = await DashboardRepository.disablePost(postId);
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
+router.post("/disablecomment/:commentId", authModerator, async (req, res) => {
+  const { commentId } = req.params;
+  try {
+    const result = await DashboardRepository.disableComment(commentId);
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
 router.post("/banuser", authModerator, async (req, res) => {
   const { reportId, offenseId, banNote } = req.body;
 
