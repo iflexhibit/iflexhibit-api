@@ -55,6 +55,7 @@ router.post("/", auth, async (req, res) => {
     multiples: false,
     uploadDir: "temp",
   });
+  let isVideo = false;
 
   form.parse(req, async (err, fields, files) => {
     if (err)
@@ -65,24 +66,28 @@ router.post("/", auth, async (req, res) => {
     if (Object.keys(files).length === 0)
       return res.status(400).json({ status: 400, msg: "Image required" });
 
-    if (!["image/jpeg", "image/png"].includes(files.file.type)) {
-      fs.unlinkSync(files.file.path);
-      return res.status(400).json({ status: 400, msg: "Invalid file type" });
+    if (!["image/jpeg", "image/png"].includes(files.imageFile.type)) {
+      return res
+        .status(400)
+        .json({ status: 400, msg: "Invalid image file type" });
+    }
+
+    if (files.videoFile && !["video/mp4"].includes(files.videoFile.type)) {
+      return res
+        .status(400)
+        .json({ status: 400, msg: "Invalid video file type" });
     }
 
     if (!fields.title) {
-      fs.unlinkSync(files.file.path);
       return res.status(400).json({ status: 400, msg: "Title required" });
     }
 
     if (!fields.title.trim().length > 0) {
-      fs.unlinkSync(files.file.path);
       return res.status(400).json({ status: 400, msg: "Title required" });
     }
 
     if (fields.description) {
       if (fields.description.trim().length > 1000) {
-        fs.unlinkSync(files.file.path);
         return res.status(400).json({
           status: 400,
           msg: "Description cannot exceed 1000 characters",
@@ -90,51 +95,65 @@ router.post("/", auth, async (req, res) => {
       }
     }
 
+    if (files.videoFile) isVideo = true;
+
     try {
-      const response = await cloudinary.uploader.upload(files.file.path, {
-        folder: "iflexhibit/uploads",
-        upload_preset: "iflexhibit",
-        allowed_formats: ["png", "jpg"],
-        transformation:
-          fields.watermark === "true"
-            ? [
-                { height: 720, quality: "auto", crop: "scale" },
-                {
-                  overlay: "iflexhibit_lettermark",
-                  gravity: "north",
-                  width: "1.0",
-                  flags: ["relative", "tiled"],
-                  opacity: 10,
-                },
-                {
-                  overlay: "black_bar",
-                  gravity: "south",
-                  width: "1.0",
-                  height: "0.0625",
-                  flags: "relative",
-                  opacity: 60,
-                },
-                {
-                  overlay: {
-                    font_family: "Rubik",
-                    font_size: 20,
-                    text: `Posted on iFlexhibit by ${req.user.username}`,
+      const imageResponse = await cloudinary.uploader.upload(
+        files.imageFile.path,
+        {
+          folder: "iflexhibit/uploads",
+          upload_preset: "iflexhibit",
+          allowed_formats: ["png", "jpg"],
+          transformation:
+            fields.watermark === "true"
+              ? [
+                  { height: 720, quality: "auto", crop: "scale" },
+                  {
+                    overlay: "iflexhibit_lettermark",
+                    gravity: "north",
+                    width: "1.0",
+                    flags: ["relative", "tiled"],
+                    opacity: 10,
                   },
-                  gravity: "south_west",
-                  y: 8,
-                  x: 10,
-                  color: "#eee",
-                },
-              ]
-            : null,
-      });
+                  {
+                    overlay: "black_bar",
+                    gravity: "south",
+                    width: "1.0",
+                    height: "0.0625",
+                    flags: "relative",
+                    opacity: 60,
+                  },
+                  {
+                    overlay: {
+                      font_family: "Rubik",
+                      font_size: 20,
+                      text: `Posted on iFlexhibit by ${req.user.username}`,
+                    },
+                    gravity: "south_west",
+                    y: 8,
+                    x: 10,
+                    color: "#eee",
+                  },
+                ]
+              : [{ height: 720, quality: "auto", crop: "scale" }],
+        }
+      );
+
+      let videoResponse;
+      if (isVideo)
+        videoResponse = await cloudinary.uploader.upload(files.videoFile.path, {
+          folder: "iflexhibit/uploads",
+          upload_preset: "iflexhibit",
+          allowed_formats: ["mp4"],
+          resource_type: "video",
+        });
 
       const post = await PostRepository.insertPost(
         req.user.id,
         fields.title.trim(),
         fields.description ? fields.description.trim() : null,
-        response.url,
-        null,
+        imageResponse.url,
+        isVideo ? videoResponse.url : null,
         fields.tags
       );
 
@@ -144,7 +163,8 @@ router.post("/", auth, async (req, res) => {
         .status(500)
         .json({ status: 500, msg: "Something went wrong", error });
     } finally {
-      fs.unlinkSync(files.file.path);
+      files.imageFile && fs.unlinkSync(files.imageFile.path);
+      files.videoFile && fs.unlinkSync(files.videoFile.path);
     }
   });
 });

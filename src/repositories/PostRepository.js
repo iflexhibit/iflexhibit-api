@@ -82,6 +82,7 @@ function fetchApprovedPost(postId) {
         },
         title: rows[0].post_title,
         image: rows[0].post_image,
+        video: rows[0].post_video,
         tags: rows[0].post_tags.split(","),
         body: rows[0].post_body,
         statistics: {

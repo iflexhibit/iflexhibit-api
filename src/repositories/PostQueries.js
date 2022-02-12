@@ -35,6 +35,7 @@ module.exports = {
         users.username,
         posts.post_title,
         posts.post_image,
+        posts.post_video,
         posts.post_tags,
         posts.post_body,
         users.avatar_image,
