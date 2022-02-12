@@ -51,10 +51,6 @@ router.get("/comments/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
-  if (!req.user.permissions.submitPost)
-    return res
-      .status(403)
-      .json({ status: 403, msg: "You are currently banned" });
   const form = new formidable.IncomingForm({
     multiples: false,
     uploadDir: "temp",
@@ -66,6 +62,11 @@ router.post("/", auth, async (req, res) => {
       return res
         .status(500)
         .json({ status: 500, msg: "Something went wrong", error: err });
+
+    if (!req.user.permissions.submitPost)
+      return res
+        .status(403)
+        .json({ status: 403, msg: "You are currently banned" });
 
     if (Object.keys(files).length === 0)
       return res.status(400).json({ status: 400, msg: "Image required" });
