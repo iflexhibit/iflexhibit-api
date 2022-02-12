@@ -45,6 +45,10 @@ router.post("/posts", auth, async (req, res) => {
 });
 
 router.post("/comment", auth, async (req, res) => {
+  if (!req.user.permissions.commentPost)
+    return res
+      .status(403)
+      .json({ status: 403, msg: "You are currently banned" });
   const { postId, commentBody } = req.body;
   if (!postId)
     return res.status(400).json({ status: 400, msg: "Invalid post" });
