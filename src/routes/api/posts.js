@@ -54,7 +54,7 @@ router.post("/", auth, async (req, res) => {
   if (!req.user.permissions.submitPost)
     return res
       .status(403)
-      .json({ status: 403, msg: "You are currently banned", error: err });
+      .json({ status: 403, msg: "You are currently banned" });
   const form = new formidable.IncomingForm({
     multiples: false,
     uploadDir: "temp",
