@@ -165,8 +165,8 @@ router.post("/", auth, async (req, res) => {
         req.user.id,
         fields.title.trim(),
         fields.description ? fields.description.trim() : null,
-        imageResponse.url,
-        isVideo ? videoResponse.url : null,
+        imageResponse.secure_url,
+        isVideo ? videoResponse.secure_url : null,
         fields.tags
       );
 
