@@ -98,6 +98,28 @@ router.post("/", auth, async (req, res) => {
     if (files.videoFile) isVideo = true;
 
     try {
+      if (isVideo && files.videoFile.size > 100000000) {
+        return res.status(400).json({
+          status: 400,
+          msg: "Video must not exceed 100 MB",
+        });
+      }
+
+      if (isVideo && files.imageFile.size > 1000000) {
+        return res.status(400).json({
+          status: 400,
+          msg: "Image must not exceed 1 MB",
+        });
+      }
+      let videoResponse;
+      if (isVideo)
+        videoResponse = await cloudinary.uploader.upload(files.videoFile.path, {
+          folder: "iflexhibit/uploads",
+          upload_preset: "iflexhibit",
+          allowed_formats: ["mp4"],
+          resource_type: "video",
+        });
+
       const imageResponse = await cloudinary.uploader.upload(
         files.imageFile.path,
         {
@@ -138,15 +160,6 @@ router.post("/", auth, async (req, res) => {
               : [{ height: 720, quality: "auto", crop: "scale" }],
         }
       );
-
-      let videoResponse;
-      if (isVideo)
-        videoResponse = await cloudinary.uploader.upload(files.videoFile.path, {
-          folder: "iflexhibit/uploads",
-          upload_preset: "iflexhibit",
-          allowed_formats: ["mp4"],
-          resource_type: "video",
-        });
 
       const post = await PostRepository.insertPost(
         req.user.id,
