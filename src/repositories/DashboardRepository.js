@@ -152,6 +152,7 @@ function fetchBannedUsers() {
         },
         note: r.ban_note,
         createdAt: r.created_at,
+        expiresAt: r.expires_at,
       }));
       return resolve(data);
     } catch (error) {
@@ -276,6 +277,30 @@ function disableComment(commentId) {
   });
 }
 
+function unbanUser(banId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.unbanUser, [banId]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function enableComment(commentId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.enableComment, [
+        commentId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -290,4 +315,6 @@ module.exports = {
   rejectPost,
   disablePost,
   disableComment,
+  unbanUser,
+  enableComment,
 };

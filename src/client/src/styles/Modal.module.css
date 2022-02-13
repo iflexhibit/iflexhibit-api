@@ -27,6 +27,10 @@ div.box.wide {
   width: 100ch;
 }
 
+div.box.narrow {
+  width: 50ch;
+}
+
 div.header {
   display: flex;
   align-items: center;

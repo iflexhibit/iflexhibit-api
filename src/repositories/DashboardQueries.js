@@ -13,4 +13,7 @@ module.exports = {
   disablePost: `UPDATE posts SET status_id = 'ps4' WHERE post_id = $1 RETURNING post_id;`,
   disableComment: `UPDATE comments SET is_disabled = TRUE WHERE comments.comment_id = $1 RETURNING comment_id;`,
   deleteReport: `UPDATE reports SET is_deleted=TRUE WHERE report_id=$1 RETURNING report_id;`,
+  unbanUser: `DELETE FROM bans WHERE ban_id = $1 RETURNING ban_id;`,
+  enableComment: `UPDATE comments SET is_disabled = FALSE WHERE comments.comment_id = $1 RETURNING comment_id;
+  `,
 };
