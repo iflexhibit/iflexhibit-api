@@ -136,6 +136,85 @@ function fetchReportedComments() {
   });
 }
 
+function fetchBannedUsers() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.fetchBannedUsers, []);
+      const data = rows.map((r) => ({
+        id: r.ban_id,
+        target: {
+          user: { id: r.target_id, username: decrypt(r.banned_user) },
+        },
+        reporter: { id: r.user_id, username: decrypt(r.complainee_username) },
+        offense: {
+          id: r.offense_id,
+          title: r.offense_title,
+        },
+        note: r.ban_note,
+        createdAt: r.created_at,
+        expiresAt: r.expires_at,
+      }));
+      return resolve(data);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function fetchDisabledPosts() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(
+        DashboardQueries.fetchDisabledPosts,
+        []
+      );
+
+      const data = rows.map((r) => ({
+        id: r.post_id,
+        title: r.post_title,
+        author: {
+          id: r.user_id,
+          username: decrypt(r.username),
+        },
+        body: r.post_body,
+        image: r.post_image,
+        video: r.post_video,
+        createdAt: r.created_at,
+      }));
+
+      return resolve(data);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function fetchDisabledComments() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(
+        DashboardQueries.fetchDisabledComments,
+        []
+      );
+
+      const data = rows.map((r) => ({
+        id: r.comment_id,
+        body: r.comment_body,
+        author: {
+          id: r.user_id,
+          username: decrypt(r.username),
+        },
+        post: r.post_id,
+        createdAt: r.created_at,
+      }));
+
+      return resolve(data);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 function banUser(reportId, userId, offenseId, banNote) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -198,15 +277,44 @@ function disableComment(commentId) {
   });
 }
 
+function unbanUser(banId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.unbanUser, [banId]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function enableComment(commentId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.enableComment, [
+        commentId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
   fetchReportedPosts,
   fetchReportedUsers,
   fetchReportedComments,
+  fetchBannedUsers,
+  fetchDisabledPosts,
+  fetchDisabledComments,
   banUser,
   approvePost,
   rejectPost,
   disablePost,
   disableComment,
+  unbanUser,
+  enableComment,
 };

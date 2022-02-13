@@ -50,4 +50,32 @@ router.get("/reports/:type", authModerator, async (req, res) => {
   }
 });
 
+router.get("/disabled/:type", authModerator, async (req, res) => {
+  const { type } = req.params;
+
+  if (!["posts", "users", "comments"].includes(type))
+    return res.status(200).json({ data: {} });
+
+  try {
+    let data;
+    switch (type) {
+      case "posts":
+        data = await DashboardRepository.fetchDisabledPosts();
+        break;
+      case "users":
+        data = await DashboardRepository.fetchBannedUsers();
+        break;
+      case "comments":
+        data = await DashboardRepository.fetchDisabledComments();
+        break;
+      default:
+        data = {};
+        break;
+    }
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
 module.exports = router;

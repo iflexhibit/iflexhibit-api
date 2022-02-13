@@ -73,4 +73,28 @@ router.post("/banuser", authModerator, async (req, res) => {
   }
 });
 
+router.post("/unbanuser/:banid", authModerator, async (req, res) => {
+  try {
+    const result = await DashboardRepository.unbanUser(req.params.banid);
+
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
+router.post("/enablecomment/:commentid", authModerator, async (req, res) => {
+  try {
+    const result = await DashboardRepository.enableComment(
+      req.params.commentid
+    );
+
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
 module.exports = router;

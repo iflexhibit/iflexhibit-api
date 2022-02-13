@@ -292,6 +292,7 @@ CREATE VIEW banned_users AS
         (SELECT username FROM users WHERE users.user_id = bans.user_id) AS complainee_username,
         bans.offense_id,
         offenses.offense_title,
+        bans.ban_note,
         bans.created_at,
         bans.expires_at
     FROM bans
