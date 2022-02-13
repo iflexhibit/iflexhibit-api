@@ -7,7 +7,7 @@ import axios from "axios";
 
 const DisabledPostDetails = ({ ctx }) => {
   const handleApprove = () => {
-    if (window.confirm("Approve this post?")) {
+    if (window.confirm("Enable this post?")) {
       axios
         .post(`/dashboard/actions/approvepost/${ctx.id}`)
         .finally(() => window.location.reload());

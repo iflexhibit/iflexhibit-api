@@ -10,7 +10,8 @@ const formatDate = (date) => {
 
 const BannedEntryDetails = ({ ctx }) => {
   const handleUnban = () => {
-    if (window.confirm("Unban this post?")) {
+    if (window.confirm("Unban this user?")) {
+      axios
         .post(`/dashboard/actions/unbanuser/${ctx.id}`)
         .finally(() => window.location.reload());
     }
