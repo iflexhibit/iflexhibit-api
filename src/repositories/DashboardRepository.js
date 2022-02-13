@@ -301,6 +301,19 @@ function enableComment(commentId) {
   });
 }
 
+function clearReport(reportId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.clearReport, [
+        reportId,
+      ]);
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -317,4 +330,5 @@ module.exports = {
   disableComment,
   unbanUser,
   enableComment,
+  clearReport,
 };

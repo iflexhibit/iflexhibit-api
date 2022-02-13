@@ -18,7 +18,7 @@ CREATE VIEW reported_comments AS
     FROM reports
     JOIN comments ON comments.comment_id = reports.target_comment_id
     JOIN offenses ON offenses.offense_id = reports.offense_id
-    WHERE offenses.offense_type = 'c'
+    WHERE offenses.offense_type = 'c' AND reports.is_deleted = FALSE
     ORDER BY reports.created_at ASC;
 
 SELECT * FROM reported_comments;

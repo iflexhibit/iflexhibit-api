@@ -97,4 +97,15 @@ router.post("/enablecomment/:commentid", authModerator, async (req, res) => {
   }
 });
 
+router.post("/clearreport/:id", authModerator, async (req, res) => {
+  try {
+    const result = await DashboardRepository.clearReport(req.params.id);
+
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
 module.exports = router;

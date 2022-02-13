@@ -24,6 +24,15 @@ const ReportedUserDetails = ({ ctx }) => {
           offenseId: ctx.offense.id,
           banNote,
         })
+        .then(() => window.alert(`${ctx.target.user.username} has been banned`))
+        .catch(() => window.alert("Refresh this page and try again"));
+    }
+  };
+
+  const handleClearReport = () => {
+    if (window.confirm("Clear this report?")) {
+      axios
+        .post(`/dashboard/actions/clearreport/${ctx.id}`)
         .finally(() => window.location.reload());
     }
   };
@@ -66,12 +75,6 @@ const ReportedUserDetails = ({ ctx }) => {
         />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
-        <Button
-          fullWidth
-          color="blue"
-          variant="outlined"
-          label="clear report"
-        />
       </div>
       <div className={styles.form}>
         <label htmlFor="useroffense">
@@ -107,6 +110,13 @@ const ReportedUserDetails = ({ ctx }) => {
             variant="contained"
             label={`ban ${ctx.target.user.username}`}
             onClick={handleBanUser}
+          />
+          <Button
+            fullWidth
+            color="blue"
+            variant="outlined"
+            label="clear report"
+            onClick={handleClearReport}
           />
         </div>
       </div>

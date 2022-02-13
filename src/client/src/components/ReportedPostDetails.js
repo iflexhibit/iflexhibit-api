@@ -36,7 +36,8 @@ const ReportedPostDetails = ({ ctx }) => {
           offenseId: ctx.offense.id,
           banNote,
         })
-        .finally(() => window.location.reload());
+        .then(() => window.alert(`${ctx.target.user.username} has been banned`))
+        .catch(() => window.alert("Refresh this page and try again"));
     }
   };
 
@@ -44,6 +45,15 @@ const ReportedPostDetails = ({ ctx }) => {
     if (window.confirm("Disable this post?")) {
       axios
         .post(`/dashboard/actions/disablepost/${ctx.target.post.id}`)
+        .then(() => window.alert("Post has been disabled"))
+        .catch(() => window.alert("Refresh this page and try again"));
+    }
+  };
+
+  const handleClearReport = () => {
+    if (window.confirm("Clear this report?")) {
+      axios
+        .post(`/dashboard/actions/clearreport/${ctx.id}`)
         .finally(() => window.location.reload());
     }
   };
@@ -84,12 +94,6 @@ const ReportedPostDetails = ({ ctx }) => {
         />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
-        <Button
-          fullWidth
-          color="blue"
-          variant="outlined"
-          label="clear report"
-        />
       </div>
       <div className={styles.form}>
         <label htmlFor="postoffense">
@@ -132,6 +136,13 @@ const ReportedPostDetails = ({ ctx }) => {
             variant="outlined"
             label="disable post"
             onClick={handleDisable}
+          />
+          <Button
+            fullWidth
+            color="blue"
+            variant="outlined"
+            label="clear report"
+            onClick={handleClearReport}
           />
         </div>
       </div>

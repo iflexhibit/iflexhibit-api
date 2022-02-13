@@ -24,7 +24,8 @@ const ReportedCommentDetails = ({ ctx }) => {
           offenseId: ctx.offense.id,
           banNote,
         })
-        .finally(() => window.location.reload());
+        .then(() => window.alert(`${ctx.target.user.username} has been banned`))
+        .catch(() => window.alert("Refresh this page and try again"));
     }
   };
 
@@ -32,6 +33,15 @@ const ReportedCommentDetails = ({ ctx }) => {
     if (window.confirm("Disable this comment?")) {
       axios
         .post(`/dashboard/actions/disablecomment/${ctx.target.comment.id}`)
+        .then(() => window.alert("Comment has been disabled"))
+        .catch(() => window.alert("Refresh this page and try again"));
+    }
+  };
+
+  const handleClearReport = () => {
+    if (window.confirm("Clear this report?")) {
+      axios
+        .post(`/dashboard/actions/clearreport/${ctx.id}`)
         .finally(() => window.location.reload());
     }
   };
@@ -83,12 +93,6 @@ const ReportedCommentDetails = ({ ctx }) => {
         />
         {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
-        <Button
-          fullWidth
-          color="blue"
-          variant="outlined"
-          label="clear report"
-        />
       </div>
       <div className={styles.form}>
         <label htmlFor="commentoffense">
@@ -131,6 +135,13 @@ const ReportedCommentDetails = ({ ctx }) => {
             variant="outlined"
             label="disable comment"
             onClick={handleDisableComment}
+          />
+          <Button
+            fullWidth
+            color="blue"
+            variant="outlined"
+            label="clear report"
+            onClick={handleClearReport}
           />
         </div>
       </div>

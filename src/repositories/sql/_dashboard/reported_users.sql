@@ -14,7 +14,7 @@ CREATE VIEW reported_users AS
         reports.created_at
     FROM reports
     JOIN offenses ON offenses.offense_id = reports.offense_id
-    WHERE offenses.offense_type = 'u'
+    WHERE offenses.offense_type = 'u' AND reports.is_deleted = FALSE
     ORDER BY reports.created_at ASC;
 
 SELECT * FROM reported_users;

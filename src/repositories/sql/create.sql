@@ -260,7 +260,7 @@ CREATE VIEW reported_posts AS
     FROM reports
     JOIN posts ON reports.target_post_id = posts.post_id
     JOIN offenses ON reports.offense_id = offenses.offense_id
-    WHERE offenses.offense_type = 'p'
+    WHERE offenses.offense_type = 'p' AND reports.is_deleted = FALSE
     ORDER BY reports.created_at ASC;
     
 -- reported_users
@@ -278,7 +278,7 @@ CREATE VIEW reported_users AS
         reports.created_at
     FROM reports
     JOIN offenses ON offenses.offense_id = reports.offense_id
-    WHERE offenses.offense_type = 'u'
+    WHERE offenses.offense_type = 'u' AND reports.is_deleted = FALSE
     ORDER BY reports.created_at ASC;
 
 
@@ -318,7 +318,7 @@ CREATE VIEW reported_comments AS
     FROM reports
     JOIN comments ON comments.comment_id = reports.target_comment_id
     JOIN offenses ON offenses.offense_id = reports.offense_id
-    WHERE offenses.offense_type = 'c'
+    WHERE offenses.offense_type = 'c' AND reports.is_deleted = FALSE
     ORDER BY reports.created_at ASC;
 
 -- disabled_comments
