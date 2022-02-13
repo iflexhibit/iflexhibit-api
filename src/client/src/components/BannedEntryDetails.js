@@ -12,7 +12,7 @@ const BannedEntryDetails = ({ ctx }) => {
   const handleUnban = () => {
     if (window.confirm("Unban this post?")) {
       axios
-        .post(`/dashboard/actions/unbanduser/${ctx.id}`)
+        .post(`/dashboard/actions/unbanuser/${ctx.id}`)
         .finally(() => window.location.reload());
     }
   };
