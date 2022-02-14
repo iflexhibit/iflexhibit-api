@@ -37,10 +37,30 @@ FROM users
 JOIN usertypes ON usertypes.usertype_id = users.usertype_id
 WHERE usertype_id = 'ut1' AND users.email = $1;
 
-
-
-
 -- Promote to moderator
+-- $1 user_id
+UPDATE users 
+SET usertype_id = 'ut2'
+WHERE user_id = $1 AND usertype_id = 'ut1'
+RETURNING user_id;
+
 -- Promote to administrator
+-- $1 user_id
+UPDATE users 
+SET usertype_id = 'ut3'
+WHERE user_id = $1 AND usertype_id = 'ut2'
+RETURNING user_id;
+
 -- Demote to a Moderator
+-- $1 user_id
+UPDATE users 
+SET usertype_id = 'ut2'
+WHERE user_id = $1 AND usertype_id = 'ut3'
+RETURNING user_id;
+
 -- Demote to member
+-- $1 user_id
+UPDATE users 
+SET usertype_id = 'ut1'
+WHERE user_id = $1 AND usertype_id = 'ut2'
+RETURNING user_id;
