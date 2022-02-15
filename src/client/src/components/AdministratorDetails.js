@@ -8,7 +8,9 @@ import axios from "axios";
 const AdministratorDetails = ({ ctx }) => {
   const handleDemote = () => {
     if (window.confirm("Reject this post?")) {
-      console.log(ctx);
+      axios
+        .post(`/dashboard/actions/demote/administrator/${ctx.id}`)
+        .finally(() => window.location.reload());
     }
   };
 

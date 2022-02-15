@@ -6,16 +6,18 @@ import DetailsGroup from "./DetailsGroup";
 import axios from "axios";
 
 const ModeratorDetails = ({ ctx }) => {
-  console.log(ctx);
   const handlePromote = () => {
-    if (window.confirm("Approve this post?")) {
-      console.log(ctx);
+    if (window.confirm("Reject this post?")) {
+      axios
+        .post(`/dashboard/actions/promote/moderator/${ctx.id}`)
+        .finally(() => window.location.reload());
     }
   };
-
   const handleDemote = () => {
     if (window.confirm("Reject this post?")) {
-      console.log(ctx);
+      axios
+        .post(`/dashboard/actions/demote/moderator/${ctx.id}`)
+        .finally(() => window.location.reload());
     }
   };
 
