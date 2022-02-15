@@ -1,5 +1,6 @@
 const express = require("express");
 const authModerator = require("../../middlware/authModerator");
+const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
 
 const router = express.Router();
@@ -78,7 +79,7 @@ router.get("/disabled/:type", authModerator, async (req, res) => {
   }
 });
 
-router.get("/users/:type", async (req, res) => {
+router.get("/users/:type", authAdmin, async (req, res) => {
   if (!["ut2", "ut3"].includes(req.params.type))
     return res.status(200).json({ users: [] });
   try {
@@ -90,7 +91,7 @@ router.get("/users/:type", async (req, res) => {
   }
 });
 
-router.get("/search/:email", async (req, res) => {
+router.get("/search/:email", authAdmin, async (req, res) => {
   if (!req.params.email) return res.status(200).json({ user: null });
   try {
     const user = await DashboardRepository.fetchMember(req.params.email);
