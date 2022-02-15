@@ -1,5 +1,6 @@
+const { response } = require("express");
 const { pool } = require("../configs/database");
-const { decrypt } = require("../utils/encrypt");
+const { decrypt, encrypt } = require("../utils/encrypt");
 const DashboardQueries = require("./DashboardQueries");
 
 function fetchGeneralOverView() {
@@ -314,6 +315,56 @@ function clearReport(reportId) {
   });
 }
 
+function fetchStaff(usertype, sort = "id") {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.fetchStaff, [
+        usertype,
+        sort,
+      ]);
+
+      const users = rows.map((r) => ({
+        id: r.user_id,
+        username: decrypt(r.username),
+        givenName: decrypt(r.given_name),
+        familyName: decrypt(r.family_name),
+        createdAt: r.created_at,
+      }));
+
+      return resolve(users);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function fetchMember(email) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.fetchMember, [
+        encrypt(email),
+      ]);
+
+      if (!rows.length > 0) return resolve(null);
+
+      const user = {
+        id: rows[0].user_id,
+        username: decrypt(rows[0].username),
+        givenName: decrypt(rows[0].given_name),
+        familyName: decrypt(rows[0].family_name),
+        usertype: rows[0].usertype_title,
+        email: decrypt(rows[0].email),
+        contact: decrypt(rows[0].contact),
+        createdAt: rows[0].created_at,
+      };
+
+      return resolve(user);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -331,4 +382,6 @@ module.exports = {
   unbanUser,
   enableComment,
   clearReport,
+  fetchStaff,
+  fetchMember,
 };

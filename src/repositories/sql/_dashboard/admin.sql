@@ -18,7 +18,7 @@ ORDER BY
     CASE WHEN ($2 = 'gname') THEN given_name END ASC,
     CASE WHEN ($2 = 'fname') THEN family_name END ASC,
     CASE WHEN ($2 = 'date') THEN created_at END ASC,
-user_id END ASC;
+    user_id ASC;
 
 -- Fetch a member by their email address
 -- Param
@@ -35,7 +35,7 @@ SELECT
     users.created_at
 FROM users
 JOIN usertypes ON usertypes.usertype_id = users.usertype_id
-WHERE usertype_id = 'ut1' AND users.email = $1;
+WHERE users.usertype_id = 'ut1' AND users.email = $1;
 
 -- Promote to moderator
 -- $1 user_id

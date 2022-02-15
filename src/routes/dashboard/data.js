@@ -78,4 +78,27 @@ router.get("/disabled/:type", authModerator, async (req, res) => {
   }
 });
 
+router.get("/users/:type", async (req, res) => {
+  if (!["ut2", "ut3"].includes(req.params.type))
+    return res.status(200).json({ users: [] });
+  try {
+    const users = await DashboardRepository.fetchStaff(req.params.type);
+
+    return res.status(200).json({ users: users || [] });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
+router.get("/search/:email", async (req, res) => {
+  if (!req.params.email) return res.status(200).json({ user: null });
+  try {
+    const user = await DashboardRepository.fetchMember(req.params.email);
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
 module.exports = router;
