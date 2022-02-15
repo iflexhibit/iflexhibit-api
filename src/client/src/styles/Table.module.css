@@ -2,6 +2,7 @@ div.table {
   width: 100%;
   max-width: 100%;
   overflow-x: scroll;
+  max-height: 60vh;
 
   box-shadow: 0 0.25rem 1rem 0 var(--color-shadow);
   border: solid 1px var(--color-shadow);

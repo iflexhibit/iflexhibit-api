@@ -22,6 +22,8 @@ module.exports = {
   username,
   given_name,
   family_name,
+  email,
+  contact,
   created_at
   FROM users
   WHERE usertype_id = $1

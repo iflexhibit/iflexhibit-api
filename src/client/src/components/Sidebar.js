@@ -5,6 +5,7 @@ import HomeIcon from "./icons/HomeIcon";
 import HourglassIcon from "./icons/HourglassIcon";
 import FlagIcon from "./icons/FlagIcon";
 import BanIcon from "./icons/BanIcon";
+import UsersIcon from "./icons/UsersIcon";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
@@ -46,6 +47,15 @@ const Sidebar = () => {
         >
           <BanIcon />
           Ban Entries
+        </NavLink>
+        <NavLink
+          to="/permissions"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <UsersIcon />
+          User Permissions
         </NavLink>
       </div>
       <Button />

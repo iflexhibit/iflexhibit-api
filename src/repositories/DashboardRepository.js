@@ -328,6 +328,8 @@ function fetchStaff(usertype, sort = "id") {
         username: decrypt(r.username),
         givenName: decrypt(r.given_name),
         familyName: decrypt(r.family_name),
+        email: decrypt(r.email),
+        contact: decrypt(r.contact),
         createdAt: r.created_at,
       }));
 
