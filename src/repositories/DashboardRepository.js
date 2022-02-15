@@ -367,6 +367,44 @@ function fetchMember(email) {
   });
 }
 
+function promoteUser(userId, type) {
+  let query;
+  switch (type) {
+    case "member":
+      query = DashboardQueries.promoteMember;
+    case "moderator":
+      query = DashboardQueries.promoteMod;
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      if (rows.length > 0) return resolve(true);
+      return resolve(false);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function demoteUser(userId, type) {
+  let query;
+  switch (type) {
+    case "moderator":
+      query = DashboardQueries.demoteMod;
+    case "administrator":
+      query = DashboardQueries.demoteAdmin;
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      if (rows.length > 0) return resolve(true);
+      return resolve(false);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -386,4 +424,6 @@ module.exports = {
   clearReport,
   fetchStaff,
   fetchMember,
+  promoteUser,
+  demoteUser,
 };

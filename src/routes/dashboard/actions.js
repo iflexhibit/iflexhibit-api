@@ -1,5 +1,6 @@
 const express = require("express");
 const authModerator = require("../../middlware/authModerator");
+const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
 
 const router = express.Router();
@@ -100,6 +101,34 @@ router.post("/enablecomment/:commentid", authModerator, async (req, res) => {
 router.post("/clearreport/:id", authModerator, async (req, res) => {
   try {
     const result = await DashboardRepository.clearReport(req.params.id);
+
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
+router.post("/promote/:type/:id", authAdmin, async (req, res) => {
+  try {
+    const result = await DashboardRepository.promoteUser(
+      req.params.id,
+      req.params.type
+    );
+
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
+router.post("/demote/:type/:id", authAdmin, async (req, res) => {
+  try {
+    const result = await DashboardRepository.demoteUser(
+      req.params.id,
+      req.params.type
+    );
 
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
