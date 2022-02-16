@@ -7,14 +7,14 @@ import axios from "axios";
 
 const ModeratorDetails = ({ ctx }) => {
   const handlePromote = () => {
-    if (window.confirm("Reject this post?")) {
+    if (window.confirm(`Promote ${ctx.username} to administrator?`)) {
       axios
         .post(`/dashboard/actions/promote/moderator/${ctx.id}`)
         .finally(() => window.location.reload());
     }
   };
   const handleDemote = () => {
-    if (window.confirm("Reject this post?")) {
+    if (window.confirm(`Demote ${ctx.username} to member?`)) {
       axios
         .post(`/dashboard/actions/demote/moderator/${ctx.id}`)
         .finally(() => window.location.reload());

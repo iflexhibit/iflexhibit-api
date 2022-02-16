@@ -10,7 +10,7 @@ const formatDate = (date) => {
 
 const BannedEntryDetails = ({ ctx }) => {
   const handleUnban = () => {
-    if (window.confirm("Unban this user?")) {
+    if (window.confirm("Clear this ban entry?")) {
       axios
         .post(`/dashboard/actions/unbanuser/${ctx.id}`)
         .finally(() => window.location.reload());
@@ -38,7 +38,7 @@ const BannedEntryDetails = ({ ctx }) => {
       <Button
         color="blue"
         fullWidth
-        label={`unban ${ctx.target.user.username}`}
+        label={`clear entry`}
         onClick={handleUnban}
         variant="contained"
       />

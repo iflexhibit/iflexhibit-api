@@ -7,7 +7,7 @@ import axios from "axios";
 
 const AdministratorDetails = ({ ctx }) => {
   const handleDemote = () => {
-    if (window.confirm("Reject this post?")) {
+    if (window.confirm(`Demote ${ctx.username} to moderator?`)) {
       axios
         .post(`/dashboard/actions/demote/administrator/${ctx.id}`)
         .finally(() => window.location.reload());
