@@ -6,10 +6,12 @@ const Login = () => {
       <div className="content">
         <div className="section">
           <div className="logo">
-            <img
-              src="/assets/logos/lettermark.svg"
-              alt="iflexhibit lettermark"
-            />
+            <a href="/">
+              <img
+                src="/assets/logos/lettermark.svg"
+                alt="iflexhibit lettermark"
+              />
+            </a>
             <div>
               <b>Dashboard</b>
             </div>
