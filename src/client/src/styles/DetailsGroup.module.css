@@ -14,6 +14,10 @@ div.value {
   overflow-wrap: break-word;
 }
 
+div.value > p {
+  margin-bottom: 0.5rem;
+}
+
 div.value > a {
   text-decoration: underline;
 }
