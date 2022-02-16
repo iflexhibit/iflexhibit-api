@@ -136,13 +136,6 @@ router.post("/", auth, async (req, res) => {
               ? [
                   { height: 720, quality: "auto", crop: "scale" },
                   {
-                    overlay: "iflexhibit_lettermark",
-                    gravity: "north",
-                    width: "1.0",
-                    flags: ["relative", "tiled"],
-                    opacity: 10,
-                  },
-                  {
                     overlay: "black_bar",
                     gravity: "south",
                     width: "1.0",
