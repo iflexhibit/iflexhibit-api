@@ -52,6 +52,7 @@ function fetchMe(userId) {
       if (!rows[0]) return resolve(null);
       if (rows[0].usertype_title === "banned")
         pool.query(UserQueries.updateUsertype, [userId]);
+      else pool.query(UserQueries.updateBan, [userId]);
 
       const user = {
         id: rows[0].user_id,
