@@ -19,14 +19,14 @@ const GeneralOverviewLayout = () => {
         label: "Total Reports",
         data: [data.reportedPosts, data.reportedUsers, data.reportedComments],
         backgroundColor: [
-          "rgba(45, 71, 128, 0.5)",
-          "rgba(34, 106, 180, 0.5)",
-          "rgba(1, 79, 179, 0.5)",
-        ],
-        borderColor: [
           "rgba(45, 71, 128, 1)",
           "rgba(34, 106, 180, 1)",
           "rgba(1, 79, 179, 1)",
+        ],
+        borderColor: [
+          "rgba(45, 71, 128, 0.5)",
+          "rgba(34, 106, 180, 0.5)",
+          "rgba(1, 79, 179, 0.5)",
         ],
         borderWidth: 2,
       },
