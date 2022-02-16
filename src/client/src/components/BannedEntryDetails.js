@@ -26,6 +26,7 @@ const BannedEntryDetails = ({ ctx }) => {
       <DetailsGroup label="banned by" value={`${ctx.reporter.username}`} />
       <DetailsGroup label="banned at" value={`${formatDate(ctx.createdAt)}`} />
       <DetailsGroup label="expires at" value={`${formatDate(ctx.expiresAt)}`} />
+      <DetailsGroup label="ban note" value={ctx.banNote} />
       <Button
         color="blue"
         fullWidth
