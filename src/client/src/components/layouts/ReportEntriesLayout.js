@@ -185,9 +185,7 @@ const ReportEntriesLayout = () => {
     }
   }, [reportType]);
 
-  return isLoading ? (
-    <span>LOADING</span>
-  ) : (
+  return (
     <React.Fragment>
       <h1>REPORT ENTRIES</h1>
       <Table

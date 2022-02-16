@@ -3,10 +3,12 @@ import Table from "../Table";
 import Modal from "../Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import BannedEntryDetails from "../BannedEntryDetails";
 import styles from "../../styles/layouts/UserPermissionsLayout.module.css";
 import ModeratorDetails from "../ModeratorDetails";
 import AdministratorDetails from "../AdministratorDetails";
+import Button from "../Button";
+import TextInput from "../TextInput";
+import DetailsGroup from "../DetailsGroup";
 
 const formatData = (data) => {
   const rows = data.map((d) => ({
@@ -102,6 +104,7 @@ const UserPermissionsLayout = () => {
     },
   ];
 
+  const [member, setMember] = useState({});
   const [moderators, setModerators] = useState([]);
   const [administrators, setAdministrators] = useState([]);
   const [modSort, setModSort] = useState(SORT_OPTIONS[0].value);
@@ -110,6 +113,7 @@ const UserPermissionsLayout = () => {
   const [modalContent, setModalContent] = useState({ label: "", body: "" });
   const [modLoading, setModLoading] = useState(false);
   const [adminLoading, setAdminLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   const fetchModerators = () => {
     setModLoading(true);
@@ -149,6 +153,36 @@ const UserPermissionsLayout = () => {
     fetchAdministrators();
   }, [adminSort]);
 
+  const handleEmailSearch = () => {
+    axios
+      .get(`/dashboard/data/search/${email}`)
+      .then((response) => setMember(response.data.user))
+      .catch((error) => {
+        if (error.response.status !== 401 && error.response.status !== 403) {
+          setMember({});
+          window.alert("User does not exist or is not a member");
+        } else {
+          window.location.reload();
+        }
+      });
+  };
+
+  const handlePromote = () => {
+    if (window.confirm(`Promote member ${member.username}?`)) {
+      axios
+        .post(`/dashboard/actions/promote/member/${member.id}`)
+        .then(() => {
+          window.alert("Member successfully promoted");
+          setMember({});
+          setEmail("");
+        })
+        .catch(() => {
+          window.alert("Refresh and try again");
+          setMember({});
+        });
+    }
+  };
+
   return (
     <React.Fragment>
       <h1>User Permissions</h1>
@@ -169,6 +203,46 @@ const UserPermissionsLayout = () => {
           value={adminSort}
           onChange={(e) => setAdminSort(e.target.value)}
         />
+      </div>
+      <h1>Promote a member</h1>
+      <div className={styles.promote}>
+        <div className={styles.search}>
+          <TextInput
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Search for a member by email"
+            onEnterKey={handleEmailSearch}
+          />
+          <Button
+            label="search"
+            variant="contained"
+            color="blue"
+            disabled={email === ""}
+            onClick={handleEmailSearch}
+          />
+        </div>
+        <div className={styles.member}>
+          <DetailsGroup label="Username" value={member?.username || "---"} />
+          <DetailsGroup label="First Name" value={member?.givenName || "---"} />
+          <DetailsGroup label="Last Name" value={member?.familyName || "---"} />
+          <DetailsGroup label="Status" value={member?.usertype || "---"} />
+          <DetailsGroup label="Email" value={member?.email || "---"} />
+          <DetailsGroup label="Contact" value={member?.contact || "---"} />
+          <DetailsGroup
+            label="Joined At"
+            value={member?.createdAt ? formatDate(member?.createdAt) : "---"}
+          />
+          <Button
+            color="green"
+            fullWidth
+            label="promote"
+            variant="contained"
+            disabled={Object.keys(member).length === 0}
+            onClick={handlePromote}
+          />
+        </div>
       </div>
       {isModalOpen && (
         <Modal

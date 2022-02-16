@@ -92,10 +92,11 @@ router.get("/users/:type", authAdmin, async (req, res) => {
 });
 
 router.get("/search/:email", authAdmin, async (req, res) => {
-  if (!req.params.email) return res.status(200).json({ user: null });
+  if (!req.params.email) return res.status(400).json({ user: null });
   try {
     const user = await DashboardRepository.fetchMember(req.params.email);
 
+    if (!user) return res.status(404).json({ user });
     return res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong" });

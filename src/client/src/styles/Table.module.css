@@ -3,6 +3,7 @@ div.table {
   max-width: 100%;
   overflow-x: scroll;
   max-height: 60vh;
+  min-height: 14rem;
 
   box-shadow: 0 0.25rem 1rem 0 var(--color-shadow);
   border: solid 1px var(--color-shadow);
@@ -48,7 +49,7 @@ div.row:hover {
 div.row > div.data {
   min-width: 7ch;
   width: 100%;
-  height: 2rem;
+  height: 2.25rem;
   display: flex;
   align-items: center;
   justify-content: center;

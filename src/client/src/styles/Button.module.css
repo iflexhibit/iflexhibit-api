@@ -3,7 +3,7 @@ button.button {
   --button-color: var(--color-black);
 
   width: min-content;
-  height: 2rem;
+  height: 2.25rem;
   padding: 0 1.5rem;
 
   background: none;

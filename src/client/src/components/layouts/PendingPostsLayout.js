@@ -101,9 +101,7 @@ const PendingPostsLayout = () => {
   };
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ label: "", body: "" });
-  return isLoading ? (
-    <span>LOADING</span>
-  ) : (
+  return (
     <React.Fragment>
       <h1>PENDING POSTS</h1>
       <Table columns={columns} rows={data} />

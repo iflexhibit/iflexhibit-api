@@ -372,10 +372,13 @@ function promoteUser(userId, type) {
   switch (type) {
     case "member":
       query = DashboardQueries.promoteMember;
+      break;
     case "moderator":
       query = DashboardQueries.promoteMod;
+      break;
   }
   return new Promise(async (resolve, reject) => {
+    console.log({ userId, type, query });
     try {
       const { rows } = await pool.query(query, [userId]);
       if (rows.length > 0) return resolve(true);

@@ -210,9 +210,7 @@ const BannedEntriesLayout = () => {
     }
   }, [entryType]);
 
-  return isLoading ? (
-    <span>LOADING</span>
-  ) : (
+  return (
     <React.Fragment>
       <h1>Banned Entries</h1>
       <Table
