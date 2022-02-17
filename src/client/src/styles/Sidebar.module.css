@@ -34,3 +34,8 @@ a.link:hover,
 a.link.active {
   border-color: var(--color-blue);
 }
+
+div.footer {
+  width: 100%;
+  padding: 0 1.25rem;
+}

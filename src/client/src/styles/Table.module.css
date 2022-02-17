@@ -21,12 +21,18 @@ div.table > div.header {
 }
 
 div.header > div.label {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+div.header > div.label,
+div.row > div.data {
   min-width: 7ch;
   width: 100%;
-  white-space: nowrap;
-
-  font-weight: 700;
-  text-align: center;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 div.table > div.body {
@@ -44,15 +50,6 @@ div.body > div.row {
 
 div.row:hover {
   background: var(--color-highlight);
-}
-
-div.row > div.data {
-  min-width: 7ch;
-  width: 100%;
-  height: 2.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 div.controls {
@@ -81,6 +78,19 @@ div.row > div.data.md {
   overflow-x: hidden;
 }
 
+div.header > div.label.left,
 div.row > div.data.left {
   justify-content: flex-start;
+}
+
+div.header > div.label.center,
+div.row > div.data.center {
+  justify-content: center;
+}
+
+div.row:last-of-type {
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.75rem;
+  opacity: 0.5;
 }

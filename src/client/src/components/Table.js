@@ -19,7 +19,9 @@ const Table = ({ columns, rows, controls, options, value, onChange }) => {
         {columns.map((c) => (
           <div
             key={c.field}
-            className={`${styles.label} ${c.size ? styles[c.size] : ""}`}
+            className={`${styles.label} ${c.size ? styles[c.size] : ""} ${
+              styles[c.align]
+            }`}
           >
             {c.label}
           </div>
@@ -32,7 +34,7 @@ const Table = ({ columns, rows, controls, options, value, onChange }) => {
               <div
                 key={i}
                 className={`${styles.data} ${c.size ? styles[c.size] : ""} ${
-                  styles[c.align]
+                  c.align ? styles[c.align] : ""
                 }`}
               >
                 {r[c.field] ? (
@@ -67,6 +69,7 @@ const Table = ({ columns, rows, controls, options, value, onChange }) => {
             ))}
           </div>
         ))}
+        <div className={styles.row}>---</div>
       </div>
     </div>
   );

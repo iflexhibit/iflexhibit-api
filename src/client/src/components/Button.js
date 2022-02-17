@@ -11,6 +11,7 @@ const Button = ({
   href,
   label,
   fullWidth,
+  newTab,
 }) => {
   return href ? (
     <a
@@ -21,7 +22,7 @@ const Button = ({
         disabled ? styles.disabled : ""
       }`}
       rel="noopener noreferrer"
-      target="_blank"
+      target={newTab ? "_blank" : ""}
     >
       {startIcon}
       <span>{label}</span>

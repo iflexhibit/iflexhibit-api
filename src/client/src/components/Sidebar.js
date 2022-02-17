@@ -58,7 +58,15 @@ const Sidebar = () => {
           User Permissions
         </NavLink>
       </div>
-      <Button />
+      <div className={styles.footer}>
+        <Button
+          href="/dashboard/auth/logout"
+          label="sign out"
+          color="white"
+          fullWidth
+          variant="outlined"
+        />
+      </div>
     </nav>
   );
 };

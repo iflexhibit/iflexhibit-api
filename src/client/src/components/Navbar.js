@@ -24,6 +24,7 @@ const Navbar = () => {
           label="Back to iflexhibit"
           startIcon={<ExternalIcon />}
           color="white"
+          newTab
         />
       </div>
     </nav>
