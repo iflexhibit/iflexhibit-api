@@ -57,6 +57,15 @@ const Sidebar = () => {
           <UsersIcon />
           User Permissions
         </NavLink>
+        <NavLink
+          to="/system"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <UsersIcon />
+          System Report
+        </NavLink>
       </div>
       <div className={styles.footer}>
         <Button

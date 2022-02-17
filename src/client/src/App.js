@@ -7,6 +7,7 @@ import BannedEntriesLayout from "./components/layouts/BannedEntriesLayout";
 import PendingPostsLayout from "./components/layouts/PendingPostsLayout";
 import ReportEntriesLayout from "./components/layouts/ReportEntriesLayout";
 import UserPermissionsLayout from "./components/layouts/UserPermissionsLayout";
+import SystemReportLayout from "./components/layouts/SystemReportLayout";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
         <Route
           path="/permissions"
           element={<Layout layoutContent={<UserPermissionsLayout />} />}
+        />
+        <Route
+          path="/system"
+          element={<Layout layoutContent={<SystemReportLayout />} />}
         />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
