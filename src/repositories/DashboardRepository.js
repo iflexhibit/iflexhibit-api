@@ -408,6 +408,19 @@ function demoteUser(userId, type) {
   });
 }
 
+function fetchTotalRows() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.totalRows, []);
+
+      if (!rows.length > 0) return resolve(0);
+      return resolve(parseInt(rows[0].total_rows));
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -417,6 +430,7 @@ module.exports = {
   fetchBannedUsers,
   fetchDisabledPosts,
   fetchDisabledComments,
+  fetchTotalRows,
   banUser,
   approvePost,
   rejectPost,

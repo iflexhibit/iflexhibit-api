@@ -62,4 +62,5 @@ module.exports = {
   SET usertype_id = 'ut1'
   WHERE user_id = $1 AND usertype_id = 'ut2'
   RETURNING user_id;`,
+  totalRows: `SELECT * FROM total_rows;`,
 };

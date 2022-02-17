@@ -2,6 +2,7 @@ const express = require("express");
 const authModerator = require("../../middlware/authModerator");
 const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
+const { cloudinary } = require("../../configs/cloudinary");
 
 const router = express.Router();
 
@@ -98,6 +99,33 @@ router.get("/search/:email", authAdmin, async (req, res) => {
 
     if (!user) return res.status(404).json({ user });
     return res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
+router.get("/system", authAdmin, async (req, res) => {
+  try {
+    const { resources } = await cloudinary.search
+      .expression("resource_type:image OR resource_type:video")
+      .max_results(null)
+      .execute();
+
+    const images = resources.filter((r) => r.resource_type === "image");
+    const imageBytes = images.reduce((total, curr) => total + curr.bytes, 0);
+
+    const videos = resources.filter((r) => r.resource_type === "video");
+    const videoBytes = videos.reduce((total, curr) => total + curr.bytes, 0);
+
+    const result = await DashboardRepository.fetchTotalRows();
+
+    res.status(200).json({
+      imageCount: images.length,
+      imageBytes,
+      videoCount: videos.length,
+      videoBytes,
+      rows: result,
+    });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong" });
   }

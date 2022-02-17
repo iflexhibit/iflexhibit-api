@@ -2,6 +2,7 @@ const express = require("express");
 const authModerator = require("../../middlware/authModerator");
 const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
+const { cloudinary } = require("../../configs/config");
 
 const router = express.Router();
 

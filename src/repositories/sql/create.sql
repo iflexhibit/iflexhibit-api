@@ -212,7 +212,26 @@ CREATE OR REPLACE RULE reset_usertype AS
 		FROM bans 
 		WHERE ban_id = old.ban_id) = users.user_id;
 
+
+
 -- Create View
+-- total rows
+CREATE VIEW total_rows AS 
+    SELECT
+    (
+        (SELECT COUNT(*) FROM bans) +
+        (SELECT COUNT(*) FROM comments) +
+        (SELECT COUNT(*) FROM offenses) +
+        (SELECT COUNT(*) FROM permissions) +
+        (SELECT COUNT(*) FROM posts) +
+        (SELECT COUNT(*) FROM poststatus) +
+        (SELECT COUNT(*) FROM reports) +
+        (SELECT COUNT(*) FROM session) +
+        (SELECT COUNT(*) FROM userpost) +
+        (SELECT COUNT(*) FROM users) +
+        (SELECT COUNT(*) FROM usertypes)
+    ) as total_rows;
+
 -- general_overview
 CREATE VIEW general_overview AS
     SELECT 
