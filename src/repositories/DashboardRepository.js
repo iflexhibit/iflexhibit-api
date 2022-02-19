@@ -394,8 +394,10 @@ function demoteUser(userId, type) {
   switch (type) {
     case "moderator":
       query = DashboardQueries.demoteMod;
+      break;
     case "administrator":
       query = DashboardQueries.demoteAdmin;
+      break;
   }
   return new Promise(async (resolve, reject) => {
     try {
