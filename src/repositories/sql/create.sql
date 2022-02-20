@@ -235,9 +235,9 @@ CREATE VIEW total_rows AS
 -- general_overview
 CREATE VIEW general_overview AS
     SELECT 
-        (SELECT COUNT (DISTINCT target_user_id) FROM reports WHERE reports.offense_id LIKE 'U%') AS reported_users,
-        (SELECT COUNT (DISTINCT target_post_id) FROM reports WHERE reports.offense_id LIKE 'P%') AS reported_posts,
-        (SELECT COUNT (DISTINCT target_comment_id) FROM reports WHERE reports.offense_id LIKE 'C%') AS reported_comments,
+        (SELECT COUNT (DISTINCT target_user_id) FROM reports WHERE reports.offense_id LIKE 'U%' AND is_deleted=FALSE) AS reported_users,
+        (SELECT COUNT (DISTINCT target_post_id) FROM reports WHERE reports.offense_id LIKE 'P%' AND is_deleted=FALSE) AS reported_posts,
+        (SELECT COUNT (DISTINCT target_comment_id) FROM reports WHERE reports.offense_id LIKE 'C%' AND is_deleted=FALSE) AS reported_comments,
         (SELECT COUNT (target_id) FROM bans WHERE bans.expires_at > now()) AS banned_users,
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps1') AS pending_posts,
         (SELECT COUNT (post_id) FROM posts WHERE posts.status_id = 'ps4') AS disabled_posts,
