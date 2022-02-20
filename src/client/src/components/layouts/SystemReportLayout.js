@@ -64,14 +64,14 @@ const SystemReportLayout = () => {
     let startY = pageMargin + 5;
 
     doc.text(
-      `Logs: ${LOG_TYPES.find((log) => log.value == logType).label} Lines: ${
+      `Logs: ${LOG_TYPES.find((log) => log.value == logType).label} | Lines: ${
         logs.length
-      } Date: ${new Date().toISOString()}\n`,
+      } | Date: ${new Date().toISOString()}\n`,
       pageMargin,
       pageMargin
     );
 
-    function createText(timestamp, level, message) {
+    function createText(timestamp, level, message, line) {
       let splitMessage = doc.splitTextToSize(
         message,
         pageWidth - pageMargin - startX
@@ -80,13 +80,13 @@ const SystemReportLayout = () => {
         doc.addPage();
         startY = pageMargin; // Restart height position
       }
-      doc.text(`${timestamp} --- ${level}`, startX, startY);
+      doc.text(`Line: ${line} - ${timestamp} --- ${level}`, startX, startY);
       doc.text(splitMessage, startX + 5, startY + lineHeight / 2.5);
       startY += (lineHeight + (lineHeight * splitMessage.length) / 1.75) / 1.5;
     }
 
-    logs.forEach((log) => {
-      createText(log.timestamp, log.level, log.message);
+    logs.forEach((log, index) => {
+      createText(log.timestamp, log.level, log.message, index + 1);
     });
 
     doc.save(`logs-${new Date().toISOString()}.pdf`);
