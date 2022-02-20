@@ -17,6 +17,7 @@ const CLIENT_URL =
     ? "https://iflexhibit.com"
     : "http://localhost:3000";
 
+app.use(morgan("dev"));
 app.use(successHandler);
 app.use(errorHandler);
 app.use(express.json());

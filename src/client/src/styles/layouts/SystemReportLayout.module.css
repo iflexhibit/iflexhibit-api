@@ -11,3 +11,9 @@ div.cards {
   grid-template-columns: repeat(2, auto);
   gap: 1rem;
 }
+
+div.log {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
