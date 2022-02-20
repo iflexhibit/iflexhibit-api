@@ -3,6 +3,9 @@ const authModerator = require("../../middlware/authModerator");
 const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
 const { cloudinary } = require("../../configs/cloudinary");
+const { connectDB } = require("../../configs/database");
+const Log = require("../../models/Log");
+const { decrypt } = require("../../utils/encrypt");
 
 const router = express.Router();
 
@@ -125,6 +128,30 @@ router.get("/system", authAdmin, async (req, res) => {
       videoCount: videos.length,
       videoBytes,
       rows: result,
+    });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
+router.get("/logs/:days", authAdmin, async (req, res) => {
+  const { days } = req.params;
+
+  const query =
+    days == 0 || isNaN(parseInt(days))
+      ? {}
+      : {
+          timestamp: {
+            $gte: new Date(Date.now() - parseInt(days) * 24 * 60 * 60 * 1000),
+          },
+        };
+
+  try {
+    await connectDB();
+    const logs = await Log.find(query);
+
+    res.status(200).json({
+      logs: logs.map((l) => ({ ...l._doc, message: decrypt(l._doc.message) })),
     });
   } catch (error) {
     res.status(500).json({ msg: "Something went wrong" });
