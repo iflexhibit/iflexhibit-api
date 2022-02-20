@@ -1,6 +1,7 @@
 const { pool } = require("../configs/database");
 const { decrypt } = require("../utils/encrypt");
 const PostQueries = require("./PostQueries");
+const { logger } = require("../configs/logger");
 
 function fetchApprovedPosts(title = "%", tags = "%", sort = "date", page = 1) {
   const paramsA = {
@@ -247,11 +248,14 @@ function insertPost(
       postTags,
     };
     try {
-      const { rows, rowCount } = await pool.query(PostQueries.insertPost, [
+      const { rows, command } = await pool.query(PostQueries.insertPost, [
         ...Object.values(newPost),
       ]);
       if (!rows[0]) return resolve(null);
       const post = { id: rows[0].post_id };
+      logger.info(
+        `DB-${command} - user#${userId} created post#${rows[0].post_id}`
+      );
       return resolve(post);
     } catch (error) {
       return reject(error);
@@ -262,8 +266,13 @@ function insertPost(
 function viewPost(userId, postId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(PostQueries.viewPost, [userId, postId]);
-      return resolve(true);
+      const { rows, command } = await pool.query(PostQueries.viewPost, [
+        userId,
+        postId,
+      ]);
+      if (rows.length > 0)
+        logger.info(`DB-${command} - user#${userId} viewed post#${postId}`);
+      return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
     }
@@ -273,8 +282,13 @@ function viewPost(userId, postId) {
 function likePost(userId, postId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(PostQueries.likePost, [userId, postId]);
-      return resolve(true);
+      const { rows, command } = await pool.query(PostQueries.likePost, [
+        userId,
+        postId,
+      ]);
+      if (rows.length > 0)
+        logger.info(`DB-${command} - user#${userId} liked post#${postId}`);
+      return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
     }
@@ -300,12 +314,15 @@ function deletePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
       if (isNaN(parseInt(postId))) throw "Invalid post id";
-      const { rows } = await pool.query(PostQueries.deletePost, [
+      const { rows, command } = await pool.query(PostQueries.deletePost, [
         postId,
         userId,
       ]);
-      if (!rows[0]) return resolve(false);
-      return resolve(true);
+
+      if (rows.length > 0)
+        logger.info(`DB-${command} - user#${userId} deleted post#${postId}`);
+
+      return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
     }
