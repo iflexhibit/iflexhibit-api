@@ -1,5 +1,5 @@
 const { pool } = require("../configs/database");
-const { decrypt } = require("../utils/encrypt");
+const { decrypt, encrypt } = require("../utils/encrypt");
 const PostQueries = require("./PostQueries");
 const { logger } = require("../configs/logger");
 
@@ -254,7 +254,9 @@ function insertPost(
       if (!rows[0]) return resolve(null);
       const post = { id: rows[0].post_id };
       logger.info(
-        `DB-${command} - user#${userId} created post#${rows[0].post_id}`
+        encrypt(
+          `DB-${command} - user#${userId} created post#${rows[0].post_id}`
+        )
       );
       return resolve(post);
     } catch (error) {
@@ -271,7 +273,9 @@ function viewPost(userId, postId) {
         postId,
       ]);
       if (rows.length > 0)
-        logger.info(`DB-${command} - user#${userId} viewed post#${postId}`);
+        logger.info(
+          encrypt(`DB-${command} - user#${userId} viewed post#${postId}`)
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -287,7 +291,9 @@ function likePost(userId, postId) {
         postId,
       ]);
       if (rows.length > 0)
-        logger.info(`DB-${command} - user#${userId} liked post#${postId}`);
+        logger.info(
+          encrypt(`DB-${command} - user#${userId} liked post#${postId}`)
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -320,7 +326,9 @@ function deletePost(postId, userId) {
       ]);
 
       if (rows.length > 0)
-        logger.info(`DB-${command} - user#${userId} deleted post#${postId}`);
+        logger.info(
+          encrypt(`DB-${command} - user#${userId} deleted post#${postId}`)
+        );
 
       return resolve(rows.length > 0);
     } catch (error) {
