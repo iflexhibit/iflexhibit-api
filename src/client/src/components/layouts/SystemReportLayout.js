@@ -82,7 +82,7 @@ const SystemReportLayout = () => {
       }
       doc
         .setFont(undefined, "bold")
-        .text(`Line ${line}: - ${timestamp} --- ${level}`, startX, startY);
+        .text(`Line ${line} --- ${timestamp} --- ${level}`, startX, startY);
       doc
         .setFont(undefined, "normal")
         .text(splitMessage, startX + 5, startY + lineHeight / 2.5);
