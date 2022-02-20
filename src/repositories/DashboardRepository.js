@@ -219,14 +219,18 @@ function fetchDisabledComments() {
 function banUser(reportId, userId, offenseId, banNote) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.banUser, [
+      const { rows, command } = await pool.query(DashboardQueries.banUser, [
         reportId,
         userId,
         offenseId,
         banNote,
       ]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} created ban#${rows[0].ban_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} created ban#${rows[0].ban_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -237,9 +241,15 @@ function banUser(reportId, userId, offenseId, banNote) {
 function approvePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.approvePost, [postId]);
+      const { rows, command } = await pool.query(DashboardQueries.approvePost, [
+        postId,
+      ]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} approved post#${rows[0].post_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} approved post#${rows[0].post_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -250,9 +260,15 @@ function approvePost(postId, userId) {
 function rejectPost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.rejectPost, [postId]);
+      const { rows, command } = await pool.query(DashboardQueries.rejectPost, [
+        postId,
+      ]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} rejected post#${rows[0].post_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} rejected post#${rows[0].post_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -263,9 +279,15 @@ function rejectPost(postId, userId) {
 function disablePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.disablePost, [postId]);
+      const { rows, command } = await pool.query(DashboardQueries.disablePost, [
+        postId,
+      ]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} disabled post#${rows[0].post_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} disabled post#${rows[0].post_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -276,12 +298,15 @@ function disablePost(postId, userId) {
 function disableComment(commentId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.disableComment, [
-        commentId,
-      ]);
+      const { rows, command } = await pool.query(
+        DashboardQueries.disableComment,
+        [commentId]
+      );
       if (rows.length > 0)
         logger.info(
-          encrypt(`user#${userId} disabled comment#${rows[0].comment_id}`)
+          encrypt(
+            `DB-${command} - user#${userId} disabled comment#${rows[0].comment_id}`
+          )
         );
       return resolve(rows.length > 0);
     } catch (error) {
@@ -293,9 +318,15 @@ function disableComment(commentId, userId) {
 function unbanUser(banId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.unbanUser, [banId]);
+      const { rows, command } = await pool.query(DashboardQueries.unbanUser, [
+        banId,
+      ]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} deleted ban#${rows[0].ban_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} deleted ban#${rows[0].ban_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -306,12 +337,15 @@ function unbanUser(banId, userId) {
 function enableComment(commentId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.enableComment, [
-        commentId,
-      ]);
+      const { rows, command } = await pool.query(
+        DashboardQueries.enableComment,
+        [commentId]
+      );
       if (rows.length > 0)
         logger.info(
-          encrypt(`user#${userId} enabled comment#${rows[0].comment_id}`)
+          encrypt(
+            `DB-${command} - user#${userId} enabled comment#${rows[0].comment_id}`
+          )
         );
       return resolve(rows.length > 0);
     } catch (error) {
@@ -323,12 +357,14 @@ function enableComment(commentId, userId) {
 function clearReport(reportId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.clearReport, [
+      const { rows, command } = await pool.query(DashboardQueries.clearReport, [
         reportId,
       ]);
       if (rows.length > 0)
         logger.info(
-          encrypt(`user#${userId} cleared report#${rows[0].report_id}`)
+          encrypt(
+            `DB-${command} - user#${userId} cleared report#${rows[0].report_id}`
+          )
         );
       return resolve(rows.length > 0);
     } catch (error) {
@@ -401,9 +437,13 @@ function promoteUser(targetId, type, userId) {
   }
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(query, [targetId]);
+      const { rows, command } = await pool.query(query, [targetId]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} promoted user#${rows[0].user_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} promoted user#${rows[0].user_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -421,9 +461,13 @@ function demoteUser(targetId, type, userId) {
   }
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(query, [targetId]);
+      const { rows, command } = await pool.query(query, [targetId]);
       if (rows.length > 0)
-        logger.info(encrypt(`user#${userId} demoted user#${rows[0].user_id}`));
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} demoted user#${rows[0].user_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
