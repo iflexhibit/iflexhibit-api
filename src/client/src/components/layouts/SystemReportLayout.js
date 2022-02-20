@@ -64,7 +64,7 @@ const SystemReportLayout = () => {
     let startY = pageMargin + 5;
 
     doc.text(
-      `Logs: ${LOG_TYPES.find((log) => log.value === logType).label} Lines: ${
+      `Logs: ${LOG_TYPES.find((log) => log.value == logType).label} Lines: ${
         logs.length
       } Date: ${new Date().toISOString()}\n`,
       pageMargin,
@@ -99,7 +99,7 @@ const SystemReportLayout = () => {
       .then((response) => {
         generatePDF(response.data.logs);
       })
-      .catch((error) => {
+      .catch(() => {
         window.alert("Something went wrong.");
         window.location.reload();
       })
