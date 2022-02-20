@@ -37,7 +37,9 @@
     "nodemon": "^2.0.12",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "winston": "^3.6.0",
+    "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
     "concurrently": "^7.0.0"
