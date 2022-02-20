@@ -123,6 +123,12 @@ function fetchProfile(userId) {
         createdAt: rows[0].created_at,
       };
 
+      if (user.usertype === "banned") {
+        const bans = await pool.query(UserQueries.fetchUserBans, [userId]);
+        user.bans = bans.rows.map((r) => r.offense_title);
+        user.banExpire = bans.rows[0].expires_at;
+      }
+
       return resolve(user);
     } catch (error) {
       return reject(error);
