@@ -80,8 +80,12 @@ const SystemReportLayout = () => {
         doc.addPage();
         startY = pageMargin; // Restart height position
       }
-      doc.text(`Line: ${line} - ${timestamp} --- ${level}`, startX, startY);
-      doc.text(splitMessage, startX + 5, startY + lineHeight / 2.5);
+      doc
+        .setFont(undefined, "bold")
+        .text(`Line ${line} --- ${timestamp} --- ${level}`, startX, startY);
+      doc
+        .setFont(undefined, "normal")
+        .text(splitMessage, startX + 5, startY + lineHeight / 2.5);
       startY += (lineHeight + (lineHeight * splitMessage.length) / 1.75) / 1.5;
     }
 

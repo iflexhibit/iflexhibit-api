@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/approvepost/:postId", authModerator, async (req, res) => {
   const { postId } = req.params;
   try {
-    const result = await DashboardRepository.approvePost(postId);
+    const result = await DashboardRepository.approvePost(postId, req.user.id);
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
@@ -20,7 +20,7 @@ router.post("/approvepost/:postId", authModerator, async (req, res) => {
 router.post("/rejectpost/:postId", authModerator, async (req, res) => {
   const { postId } = req.params;
   try {
-    const result = await DashboardRepository.rejectPost(postId);
+    const result = await DashboardRepository.rejectPost(postId, req.user.id);
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
@@ -31,7 +31,7 @@ router.post("/rejectpost/:postId", authModerator, async (req, res) => {
 router.post("/disablepost/:postId", authModerator, async (req, res) => {
   const { postId } = req.params;
   try {
-    const result = await DashboardRepository.disablePost(postId);
+    const result = await DashboardRepository.disablePost(postId, req.user.id);
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
@@ -42,7 +42,7 @@ router.post("/disablepost/:postId", authModerator, async (req, res) => {
 router.post("/disablecomment/:commentId", authModerator, async (req, res) => {
   const { commentId } = req.params;
   try {
-    const result = await DashboardRepository.disableComment(commentId);
+    const result = await DashboardRepository.disableComment(commentId, userId);
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
@@ -77,7 +77,10 @@ router.post("/banuser", authModerator, async (req, res) => {
 
 router.post("/unbanuser/:banid", authModerator, async (req, res) => {
   try {
-    const result = await DashboardRepository.unbanUser(req.params.banid);
+    const result = await DashboardRepository.unbanUser(
+      req.params.banid,
+      req.user.id
+    );
 
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
@@ -89,7 +92,8 @@ router.post("/unbanuser/:banid", authModerator, async (req, res) => {
 router.post("/enablecomment/:commentid", authModerator, async (req, res) => {
   try {
     const result = await DashboardRepository.enableComment(
-      req.params.commentid
+      req.params.commentid,
+      req.user.id
     );
 
     if (result) return res.sendStatus(200);
@@ -101,7 +105,10 @@ router.post("/enablecomment/:commentid", authModerator, async (req, res) => {
 
 router.post("/clearreport/:id", authModerator, async (req, res) => {
   try {
-    const result = await DashboardRepository.clearReport(req.params.id);
+    const result = await DashboardRepository.clearReport(
+      req.params.id,
+      req.user.id
+    );
 
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
@@ -114,7 +121,8 @@ router.post("/promote/:type/:id", authAdmin, async (req, res) => {
   try {
     const result = await DashboardRepository.promoteUser(
       req.params.id,
-      req.params.type
+      req.params.type,
+      req.user.id
     );
 
     if (result) return res.sendStatus(200);
@@ -128,7 +136,8 @@ router.post("/demote/:type/:id", authAdmin, async (req, res) => {
   try {
     const result = await DashboardRepository.demoteUser(
       req.params.id,
-      req.params.type
+      req.params.type,
+      req.user.id
     );
 
     if (result) return res.sendStatus(200);

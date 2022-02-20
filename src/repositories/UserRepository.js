@@ -1,4 +1,5 @@
 const { pool } = require("../configs/database");
+const { logger } = require("../configs/logger");
 const { encrypt, decrypt } = require("../utils/encrypt");
 const UserQueries = require("./UserQueries");
 
@@ -11,13 +12,14 @@ function create(profile) {
   };
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.create, [
+      const { rows, command } = await pool.query(UserQueries.create, [
         ...Object.values(newUser),
       ]);
       if (!rows[0]) return resolve(null);
       const user = {
         id: rows[0].user_id,
       };
+      logger.info(encrypt(`DB-${command} - user#${rows[0].user_id} created`));
       return resolve(user);
     } catch (error) {
       return reject(error);
@@ -28,7 +30,7 @@ function create(profile) {
 function findByEmail(email) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.fetchEmailOne, [
+      const { rows } = await pool.query(UserQueries.fetchEmailOne, [
         encrypt(email),
       ]);
       if (!rows[0]) return resolve(null);
@@ -45,9 +47,7 @@ function findByEmail(email) {
 function fetchMe(userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.fetchMe, [
-        userId,
-      ]);
+      const { rows } = await pool.query(UserQueries.fetchMe, [userId]);
 
       if (!rows[0]) return resolve(null);
       if (rows[0].usertype_title === "banned")
@@ -92,9 +92,7 @@ function fetchMe(userId) {
 function fetchProfile(userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.fetchProfile, [
-        userId,
-      ]);
+      const { rows } = await pool.query(UserQueries.fetchProfile, [userId]);
 
       if (!rows[0]) return resolve(null);
 
@@ -139,13 +137,18 @@ function fetchProfile(userId) {
 function insertComment(userId, postId, commentBody) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.insertComment, [
+      const { rows, command } = await pool.query(UserQueries.insertComment, [
         userId,
         postId,
         commentBody,
       ]);
       if (!rows[0]) return resolve(null);
       const comment = { id: rows[0].comment_id };
+      logger.info(
+        encrypt(
+          `DB-${command} - user#${userId} created comment#${rows[0].comment_id}`
+        )
+      );
       return resolve(comment);
     } catch (error) {
       return reject(error);
@@ -156,13 +159,18 @@ function insertComment(userId, postId, commentBody) {
 function updatePreferences(userId, showName, showContact, showEmail) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(
+      const { rows, command } = await pool.query(
         UserQueries.updatePreferences,
         [showName, showContact, showEmail, userId]
       );
       const user = {
         userId: rows[0].user_id,
       };
+
+      if (rows.length > 0)
+        logger.info(
+          encrypt(`DB-${command} - user#${userId} updated preferences`)
+        );
       return resolve(user);
     } catch (error) {
       return reject(error);
@@ -173,13 +181,16 @@ function updatePreferences(userId, showName, showContact, showEmail) {
 function updateProfile(userId, username, contact, bio) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows, rowCount } = await pool.query(UserQueries.updateProfile, [
+      const { rows, command } = await pool.query(UserQueries.updateProfile, [
         encrypt(username),
         encrypt(contact),
         bio,
         userId,
       ]);
       const user = { userId: rows[0].user_id };
+
+      if (rows.length > 0)
+        logger.info(encrypt(`DB-${command} - user#${userId} updated profile`));
       return resolve(user);
     } catch (error) {
       return reject(error);
@@ -190,10 +201,13 @@ function updateProfile(userId, username, contact, bio) {
 function updateAvatar(userId, image) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(UserQueries.updateAvatar, [
+      const { rows, command } = await pool.query(UserQueries.updateAvatar, [
         encrypt(image),
         userId,
       ]);
+
+      if (rows.length > 0)
+        logger.info(encrypt(`DB-${command} - user#${userId} updated avatar`));
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -204,10 +218,14 @@ function updateAvatar(userId, image) {
 function updateBackground(userId, image) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(UserQueries.updateBackground, [
+      const { rows, command } = await pool.query(UserQueries.updateBackground, [
         encrypt(image),
         userId,
       ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(`DB-${command} - user#${userId} updated background`)
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -224,6 +242,11 @@ function deleteComment(commentId, userId) {
         userId,
       ]);
       if (!rows[0]) return resolve(false);
+      logger.info(
+        encrypt(
+          `DB-${command} - user#${userId} deleted comment#${rows[0].comment_id}`
+        )
+      );
       return resolve(true);
     } catch (error) {
       return reject(error);

@@ -137,12 +137,12 @@ module.exports = {
     WHERE posts.status_id = 'ps2' AND posts.is_deleted = FALSE AND posts.user_id = $1;
 `,
   viewPost: `
-    INSERT INTO userpost (user_id, post_id) VALUES ($1, $2);
+    INSERT INTO userpost (user_id, post_id) VALUES ($1, $2) RETURNING userpost_id;
 `,
   likePost: `
     UPDATE userpost 
     SET is_liked = TRUE 
-    WHERE userpost.user_id = $1 AND userpost.post_id = $2;
+    WHERE userpost.user_id = $1 AND userpost.post_id = $2 RETURNING userpost_id;
 `,
   fetchUserPostInteraction: `
     SELECT * 

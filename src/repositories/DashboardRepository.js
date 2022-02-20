@@ -1,7 +1,7 @@
-const { response } = require("express");
 const { pool } = require("../configs/database");
 const { decrypt, encrypt } = require("../utils/encrypt");
 const DashboardQueries = require("./DashboardQueries");
+const { logger } = require("../configs/logger");
 
 function fetchGeneralOverView() {
   return new Promise(async (resolve, reject) => {
@@ -219,12 +219,18 @@ function fetchDisabledComments() {
 function banUser(reportId, userId, offenseId, banNote) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.banUser, [
+      const { rows, command } = await pool.query(DashboardQueries.banUser, [
         reportId,
         userId,
         offenseId,
         banNote,
       ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} created ban#${rows[0].ban_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -232,45 +238,18 @@ function banUser(reportId, userId, offenseId, banNote) {
   });
 }
 
-function approvePost(postId) {
+function approvePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.approvePost, [postId]);
-      return resolve(rows.length > 0);
-    } catch (error) {
-      return reject(error);
-    }
-  });
-}
-
-function rejectPost(postId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { rows } = await pool.query(DashboardQueries.rejectPost, [postId]);
-      return resolve(rows.length > 0);
-    } catch (error) {
-      return reject(error);
-    }
-  });
-}
-
-function disablePost(postId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { rows } = await pool.query(DashboardQueries.disablePost, [postId]);
-      return resolve(rows.length > 0);
-    } catch (error) {
-      return reject(error);
-    }
-  });
-}
-
-function disableComment(commentId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { rows } = await pool.query(DashboardQueries.disableComment, [
-        commentId,
+      const { rows, command } = await pool.query(DashboardQueries.approvePost, [
+        postId,
       ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} approved post#${rows[0].post_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -278,23 +257,18 @@ function disableComment(commentId) {
   });
 }
 
-function unbanUser(banId) {
+function rejectPost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.unbanUser, [banId]);
-      return resolve(rows.length > 0);
-    } catch (error) {
-      return reject(error);
-    }
-  });
-}
-
-function enableComment(commentId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { rows } = await pool.query(DashboardQueries.enableComment, [
-        commentId,
+      const { rows, command } = await pool.query(DashboardQueries.rejectPost, [
+        postId,
       ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} rejected post#${rows[0].post_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -302,12 +276,96 @@ function enableComment(commentId) {
   });
 }
 
-function clearReport(reportId) {
+function disablePost(postId, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(DashboardQueries.clearReport, [
+      const { rows, command } = await pool.query(DashboardQueries.disablePost, [
+        postId,
+      ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} disabled post#${rows[0].post_id}`
+          )
+        );
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function disableComment(commentId, userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, command } = await pool.query(
+        DashboardQueries.disableComment,
+        [commentId]
+      );
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} disabled comment#${rows[0].comment_id}`
+          )
+        );
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function unbanUser(banId, userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, command } = await pool.query(DashboardQueries.unbanUser, [
+        banId,
+      ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} deleted ban#${rows[0].ban_id}`
+          )
+        );
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function enableComment(commentId, userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, command } = await pool.query(
+        DashboardQueries.enableComment,
+        [commentId]
+      );
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} enabled comment#${rows[0].comment_id}`
+          )
+        );
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function clearReport(reportId, userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows, command } = await pool.query(DashboardQueries.clearReport, [
         reportId,
       ]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} cleared report#${rows[0].report_id}`
+          )
+        );
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -367,7 +425,7 @@ function fetchMember(email) {
   });
 }
 
-function promoteUser(userId, type) {
+function promoteUser(targetId, type, userId) {
   let query;
   switch (type) {
     case "member":
@@ -378,18 +436,22 @@ function promoteUser(userId, type) {
       break;
   }
   return new Promise(async (resolve, reject) => {
-    console.log({ userId, type, query });
     try {
-      const { rows } = await pool.query(query, [userId]);
-      if (rows.length > 0) return resolve(true);
-      return resolve(false);
+      const { rows, command } = await pool.query(query, [targetId]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} promoted user#${rows[0].user_id}`
+          )
+        );
+      return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
     }
   });
 }
 
-function demoteUser(userId, type) {
+function demoteUser(targetId, type, userId) {
   let query;
   switch (type) {
     case "moderator":
@@ -401,9 +463,14 @@ function demoteUser(userId, type) {
   }
   return new Promise(async (resolve, reject) => {
     try {
-      const { rows } = await pool.query(query, [userId]);
-      if (rows.length > 0) return resolve(true);
-      return resolve(false);
+      const { rows, command } = await pool.query(query, [targetId]);
+      if (rows.length > 0)
+        logger.info(
+          encrypt(
+            `DB-${command} - user#${userId} demoted user#${rows[0].user_id}`
+          )
+        );
+      return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
     }
