@@ -7,6 +7,7 @@ const PGStore = require("connect-pg-simple");
 const path = require("path");
 const session = require("express-session");
 const { pool } = require("./configs/database");
+const { successHandler, errorHandler } = require("./configs/logger");
 
 require("./configs/passport")(passport);
 
@@ -16,7 +17,8 @@ const CLIENT_URL =
     ? "https://iflexhibit.com"
     : "http://localhost:3000";
 
-app.use(morgan("dev"));
+app.use(successHandler);
+app.use(errorHandler);
 app.use(express.json());
 app.use(
   session({

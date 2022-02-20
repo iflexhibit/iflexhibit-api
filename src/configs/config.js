@@ -9,6 +9,7 @@ module.exports = {
     CONNECTION_STRING: decrypt(process.env.CONNECTION_STRING),
     COOKIE_MAXAGE: 1000 * 60 * 15,
     SESSION_SECRET: process.env.SESSION_SECRET,
+    MONGO_STRING: decrypt(process.env.MONGO_STRING),
   },
   google: {
     CLIENT_ID: decrypt(process.env.CLIENT_ID),
