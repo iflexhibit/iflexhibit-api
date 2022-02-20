@@ -154,7 +154,6 @@ router.get("/logs/:days", authAdmin, async (req, res) => {
       logs: logs.map((l) => ({ ...l._doc, message: decrypt(l._doc.message) })),
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ msg: "Something went wrong" });
   }
 });
