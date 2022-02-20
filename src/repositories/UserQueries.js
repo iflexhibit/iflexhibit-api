@@ -105,4 +105,5 @@ module.exports = {
   WHERE users.user_id = $1 
   AND EXISTS(SELECT ban_id FROM bans WHERE bans.target_id = $1 AND 
   (SELECT expires_at FROM bans WHERE bans.target_id = $1 ORDER BY expires_at DESC LIMIT 1) > now());`,
+  fetchUserBans: `SELECT offense_title, bans.expires_at FROM bans JOIN offenses ON bans.offense_id = offenses.offense_id WHERE target_id=$1 ORDER BY bans.expires_at DESC;`,
 };
