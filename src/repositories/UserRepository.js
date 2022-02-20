@@ -237,7 +237,7 @@ function deleteComment(commentId, userId) {
   return new Promise(async (resolve, reject) => {
     if (isNaN(parseInt(commentId))) throw "Invalid comment id";
     try {
-      const { rows } = await pool.query(UserQueries.deleteComment, [
+      const { rows, command } = await pool.query(UserQueries.deleteComment, [
         commentId,
         userId,
       ]);
