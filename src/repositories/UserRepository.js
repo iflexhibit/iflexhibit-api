@@ -95,6 +95,9 @@ function fetchProfile(userId) {
       const { rows } = await pool.query(UserQueries.fetchProfile, [userId]);
 
       if (!rows[0]) return resolve(null);
+      if (rows[0].usertype_title === "banned")
+        pool.query(UserQueries.updateUsertype, [userId]);
+      else pool.query(UserQueries.updateBan, [userId]);
 
       const user = {
         id: rows[0].user_id,
@@ -123,8 +126,10 @@ function fetchProfile(userId) {
 
       if (user.usertype === "banned") {
         const bans = await pool.query(UserQueries.fetchUserBans, [userId]);
-        user.bans = bans.rows.map((r) => r.offense_title);
-        user.banExpire = bans.rows[0].expires_at;
+        if (bans.rows.length > 0) {
+          user.bans = bans.rows.map((r) => r.offense_title);
+          user.banExpire = bans.rows[0].expires_at;
+        }
       }
 
       return resolve(user);
