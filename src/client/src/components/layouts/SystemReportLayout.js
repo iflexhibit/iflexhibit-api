@@ -105,11 +105,11 @@ const SystemReportLayout = () => {
       })
       .catch(() => {
         window.alert("Something went wrong.");
-        window.location.reload();
       })
       .finally(() => {
         setLogLoading(false);
         setModalOpen(false);
+        window.location.reload();
       });
   };
 
