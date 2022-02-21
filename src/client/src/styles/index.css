@@ -106,3 +106,11 @@ main.login div.logo {
   border-right: solid 1px var(--color-white);
   padding: 0 2rem;
 }
+
+div.footer-partner {
+  position: fixed;
+  bottom: 1rem;
+  margin: 0 auto;
+  font-size: 0.75rem;
+  color: var(--color-white);
+}

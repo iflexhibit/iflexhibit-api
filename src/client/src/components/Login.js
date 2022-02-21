@@ -40,6 +40,9 @@ const Login = () => {
           .
         </p>
       </div>
+      <div className="footer-partner">
+        In partnership with <b>iACADEMY</b>
+      </div>
     </main>
   );
 };
