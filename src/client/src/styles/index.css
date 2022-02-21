@@ -110,9 +110,7 @@ main.login div.logo {
 div.footer-partner {
   position: fixed;
   bottom: 1rem;
-  left: 0;
-  right: 0;
-  text-align: center;
+  margin: 0 auto;
   font-size: 0.75rem;
   color: var(--color-white);
 }
