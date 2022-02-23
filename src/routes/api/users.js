@@ -132,7 +132,6 @@ router.post("/preferences", auth, async (req, res) => {
 router.post("/profile", auth, async (req, res) => {
   const { username, contact, bio } = req.body;
   const usernameRegex = /^[a-zA-Z0-9]+$/;
-  const contactRegex = /^(09|\+639)\d{9}$/;
 
   if (
     (!username && !contact && !bio) ||
@@ -154,7 +153,12 @@ router.post("/profile", auth, async (req, res) => {
       msg: "Username must contain only alphanumeric characters",
     });
 
-  if (contact && !contactRegex.test(contact))
+  if (
+    contact &&
+    (contact.length < 8 ||
+      contact.length > 12 ||
+      isNaN(parseInt(contact.length)))
+  )
     return res.status(400).json({ status: 400, msg: "Invalid contact number" });
 
   const newProfile = {
