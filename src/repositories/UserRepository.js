@@ -44,6 +44,20 @@ function findByEmail(email) {
   });
 }
 
+function findByUsername(username) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(UserQueries.fetchUsername, [
+        encrypt(username),
+      ]);
+      if (!rows[0]) return resolve(null);
+      return resolve(rows[0].user_id);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 function fetchMe(userId) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -262,6 +276,7 @@ function deleteComment(commentId, userId) {
 module.exports = {
   create,
   findByEmail,
+  findByUsername,
   fetchMe,
   fetchProfile,
   insertComment,

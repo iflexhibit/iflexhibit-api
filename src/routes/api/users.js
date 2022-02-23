@@ -11,14 +11,17 @@ router.get("/user", auth, async (req, res) => {
   return res.status(200).json({ status: 200, user: req.user });
 });
 
-router.get("/user/:id", async (req, res) => {
-  if (isNaN(req.params.id))
-    return res.status(400).json({ status: 400, msg: "Bad request" });
-
-  const { sort, page } = req.query;
+router.get("/user/:search", async (req, res) => {
+  const { sort, page, type } = req.query;
+  let userId = req.params.search;
   try {
-    const user = await UserRepository.fetchProfile(req.params.id);
+    if (type === "username")
+      userId = await UserRepository.findByUsername(req.params.search);
+    if (!userId) return res.status(404).json({ status: 404, msg: "Not found" });
+
+    const user = await UserRepository.fetchProfile(userId);
     if (!user) return res.status(404).json({ status: 404, msg: "Not found" });
+
     const { posts, count } = await PostRepository.fetchUserPosts(
       user.id,
       sort,
@@ -26,6 +29,7 @@ router.get("/user/:id", async (req, res) => {
     );
     return res.status(200).json({ status: 200, user, results: count, posts });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ status: 500, msg: "Something went wrong" });
   }
 });
