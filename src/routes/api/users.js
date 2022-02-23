@@ -155,9 +155,7 @@ router.post("/profile", auth, async (req, res) => {
 
   if (
     contact &&
-    (contact.length < 8 ||
-      contact.length > 12 ||
-      isNaN(parseInt(contact.length)))
+    (contact.length < 8 || contact.length > 12 || isNaN(parseInt(contact)))
   )
     return res.status(400).json({ status: 400, msg: "Invalid contact number" });
 
