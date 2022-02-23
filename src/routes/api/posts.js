@@ -187,9 +187,7 @@ router.post("/view/:id", auth, async (req, res) => {
     await PostRepository.viewPost(req.user.id, req.params.id);
     return res.sendStatus(200);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ status: 500, msg: "Something went wrong", error });
+    return res.status(400).json({ status: 400, msg: "Something went wrong" });
   }
 });
 
