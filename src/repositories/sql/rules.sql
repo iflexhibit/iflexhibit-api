@@ -33,16 +33,16 @@ CREATE OR REPLACE RULE count_comments AS
         FROM comments)
 		WHERE new.post_id = posts.post_id;
 
--- count comments on delete
-		
-CREATE OR REPLACE RULE count_comments_del AS
-	ON DELETE TO comments
+-- count comments on update
+
+CREATE OR REPLACE RULE count_comments_update AS
+	ON INSERT TO comments
 	DO ALSO
 		UPDATE posts SET comments_count = (
         SELECT COUNT(*)
         FILTER (WHERE posts.post_id = comments.post_id AND comments.is_disabled = FALSE AND comments.is_deleted = FALSE)
         FROM comments)
-		WHERE old.post_id = posts.post_id;
+		WHERE new.post_id = posts.post_id;
 
 -- update usertypes
 CREATE OR REPLACE RULE update_usertype_to_ban AS
