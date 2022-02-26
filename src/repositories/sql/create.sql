@@ -147,21 +147,6 @@ CREATE TABLE bans(
 
 -- Rules
 
--- check userpost
-CREATE OR REPLACE RULE check_userpost AS 
-	ON INSERT TO userpost
-	WHERE 
-		EXISTS ( 
-			SELECT 
-				userpost.post_id,
-				userpost.user_id
-			FROM 
-				userpost
-			WHERE
-				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
-		)
-	DO INSTEAD NOTHING;
-
 -- count like
 
 CREATE OR REPLACE RULE count_likes AS

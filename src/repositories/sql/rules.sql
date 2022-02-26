@@ -1,22 +1,5 @@
 -- Rules
 
--- check userpost
-CREATE OR REPLACE RULE check_userpost AS 
-	ON INSERT TO userpost
-	WHERE 
-		EXISTS ( 
-			SELECT 
-				userpost.post_id,
-				userpost.user_id
-			FROM 
-				userpost
-			WHERE
-				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
-		)
-	DO INSTEAD INSERT INTO userpost_view (post_id, user_id) values (new.post_id+1, new.user_id+1) RETURNING userpost_view.*
-
-create view userpost_view as select * from userpost;
-
 -- count like
 
 CREATE OR REPLACE RULE count_likes AS
