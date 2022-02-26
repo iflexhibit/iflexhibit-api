@@ -13,7 +13,9 @@ CREATE OR REPLACE RULE check_userpost AS
 			WHERE
 				userpost.post_id = new.post_id AND userpost.user_id = new.user_id
 		)
-	DO INSTEAD NOTHING;
+	DO INSTEAD INSERT INTO userpost_view (post_id, user_id) values (new.post_id+1, new.user_id+1) RETURNING userpost_view.*
+
+create view userpost_view as select * from userpost;
 
 -- count like
 

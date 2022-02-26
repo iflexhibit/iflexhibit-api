@@ -268,6 +268,11 @@ function insertPost(
 function viewPost(userId, postId) {
   return new Promise(async (resolve, reject) => {
     try {
+      const { rows: userpost } = await pool.query(
+        PostQueries.fetchUserPostInteraction,
+        [userId, postId]
+      );
+      if (userpost.length > 0) return resolve(false);
       const { rows, command } = await pool.query(PostQueries.viewPost, [
         userId,
         postId,
