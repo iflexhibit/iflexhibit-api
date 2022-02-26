@@ -182,7 +182,7 @@ CREATE OR REPLACE RULE count_comments AS
 -- count comments on update
 
 CREATE OR REPLACE RULE count_comments_update AS
-	ON INSERT TO comments
+	ON UPDATE TO comments
 	DO ALSO
 		UPDATE posts SET comments_count = (
         SELECT COUNT(*)
