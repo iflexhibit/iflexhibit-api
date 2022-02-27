@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { decrypt } = require("../utils/encrypt");
 
 const auth = async (req, res, next) => {
-  const token = req.header("x-auth-token") || req.query.token;
+  const token = req.headers["x-auth-token"] || req.query.token;
   if (!token) {
     return res.status(401).json({ msg: "Missing token", status: 401 });
   } else {
