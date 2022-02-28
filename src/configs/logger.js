@@ -22,12 +22,14 @@ const successResponseFormat = `${getIpFormat()}:method :status :url - :response-
 const errorResponseFormat = `${getIpFormat()}:method :status :url - :response-time ms`;
 
 const successHandler = morgan(successResponseFormat, {
-  skip: (req, res) => res.statusCode >= 400 || req.method == "GET",
+  skip: (req, res) =>
+    res.statusCode >= 400 || ["GET", "OPTIONS"].includes(req.method),
   stream: { write: (message) => logger.info(encrypt(message.trim())) },
 });
 
 const errorHandler = morgan(errorResponseFormat, {
-  skip: (req, res) => res.statusCode < 400 || req.method == "GET",
+  skip: (req, res) =>
+    res.statusCode < 400 || ["GET", "OPTIONS"].includes(req.method),
   stream: { write: (message) => logger.error(encrypt(message.trim())) },
 });
 
