@@ -155,9 +155,11 @@ router.post("/profile", auth, async (req, res) => {
 
   if (
     contact &&
-    (contact.length < 8 || contact.length > 12 || isNaN(parseInt(contact)))
+    (contact.length < 7 || contact.length > 12 || isNaN(parseInt(contact)))
   )
-    return res.status(400).json({ status: 400, msg: "Invalid contact number" });
+    return res
+      .status(400)
+      .json({ status: 400, msg: "Contact must contain 7-12 digits" });
 
   const newProfile = {
     username: username || req.user.username,
