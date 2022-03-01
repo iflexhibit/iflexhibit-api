@@ -161,10 +161,15 @@ router.post("/profile", auth, async (req, res) => {
       .status(400)
       .json({ status: 400, msg: "Contact must contain 7-12 digits" });
 
+  if (bio && bio.trim().length > 1000)
+    return res
+      .status(400)
+      .json({ status: 400, msg: "Bio must not exceed 2000 characters" });
+
   const newProfile = {
     username: username || req.user.username,
     contact: contact ?? req.user.contact,
-    bio: bio ?? req.user.bio,
+    bio: bio ? bio.trim() : req.user.bio,
   };
 
   try {
