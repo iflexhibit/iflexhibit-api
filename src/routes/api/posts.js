@@ -110,7 +110,7 @@ router.post("/", auth, async (req, res) => {
         });
       }
 
-      if (isVideo && files.imageFile.size > 10000000) {
+      if (files.imageFile.size > 10000000) {
         return res.status(400).json({
           status: 400,
           msg: "Image must not exceed 10 MB",
