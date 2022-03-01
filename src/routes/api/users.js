@@ -201,14 +201,26 @@ router.post("/avatar", auth, async (req, res) => {
 
     if (!["image/jpeg", "image/png"].includes(files.file.type)) {
       fs.unlinkSync(files.file.path);
-      return res.status(400).json({ status: 400, msg: "Invalid file type" });
+      return res
+        .status(400)
+        .json({ status: 400, msg: "Invalid image file type" });
     }
 
     try {
+      if (files.file.size > 5000000) {
+        return res.status(400).json({
+          status: 400,
+          msg: "Avatar image must not exceed 5 MB",
+        });
+      }
+
       const response = await cloudinary.uploader.upload(files.file.path, {
         folder: "iflexhibit/uploads",
         upload_preset: "iflexhibit",
         allowed_formats: ["png", "jpg"],
+        transformation: [
+          { quality: 60, width: 160, height: 160, crop: "fill" },
+        ],
       });
 
       const result = await UserRepository.updateAvatar(
@@ -256,10 +268,18 @@ router.post("/background", auth, async (req, res) => {
     }
 
     try {
+      if (files.file.size > 5000000) {
+        return res.status(400).json({
+          status: 400,
+          msg: "Background image must not exceed 5 MB",
+        });
+      }
+
       const response = await cloudinary.uploader.upload(files.file.path, {
         folder: "iflexhibit/uploads",
         upload_preset: "iflexhibit",
         allowed_formats: ["png", "jpg"],
+        transformation: [{ quality: 60 }],
       });
 
       const result = await UserRepository.updateBackground(
