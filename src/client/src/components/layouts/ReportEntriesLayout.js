@@ -35,7 +35,7 @@ const formatData = (data, type) => {
     case "comments": {
       const rows = data.map((d) => ({
         id: d.id,
-        comment: d.target.comment.body,
+        comment: d.target.comment.body.substring(0, 20) + "...",
         reportedBy: d.reporter.username,
         link: `https://iflexhibit.com/post/${d.target.post.id}/title?tab=Comments#${d.target.comment.id}`,
         reportedAt: formatDate(d.createdAt),

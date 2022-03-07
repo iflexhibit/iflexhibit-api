@@ -8,6 +8,8 @@ div.details {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 div.actions {
