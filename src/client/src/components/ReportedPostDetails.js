@@ -92,7 +92,14 @@ const ReportedPostDetails = ({ ctx }) => {
           label="offenses"
           value={`${ctx.offense.id}: ${ctx.offense.title}`}
         />
-        {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
+        {ctx.note && (
+          <DetailsGroup
+            label="Report Note"
+            value={ctx.note.split("\n").map((p, index) => (
+              <p key={index}>{p}</p>
+            ))}
+          />
+        )}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
       </div>
       <div className={styles.form}>
