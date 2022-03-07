@@ -64,11 +64,14 @@ const ReportedCommentDetails = ({ ctx }) => {
           label="reported comment"
           value={
             <LinkValue
-              label={ctx.target.comment.body}
+              label={tx.target.comment.body.split("\n").map((p, index) => (
+                <p key={index}>{p}</p>
+              ))}
               link={`https://iflexhibit.com/post/${ctx.target.post.id}/title?tab=Comment#${ctx.target.comment.id}`}
             />
           }
         />
+
         <DetailsGroup
           label="comment by"
           value={
@@ -91,7 +94,14 @@ const ReportedCommentDetails = ({ ctx }) => {
           label="offenses"
           value={`${ctx.offense.id}: ${ctx.offense.title}`}
         />
-        {ctx.note && <DetailsGroup label="Report Note" value={ctx.note} />}
+        {ctx.note && (
+          <DetailsGroup
+            label="Report Note"
+            value={ctx.note.split("\n").map((p, index) => (
+              <p key={index}>{p}</p>
+            ))}
+          />
+        )}
         <DetailsGroup label="reported at" value={formatDate(ctx.createdAt)} />
       </div>
       <div className={styles.form}>
