@@ -42,7 +42,9 @@ const PendingPostsLayout = () => {
       buttonClick: (ctx) => {
         setModalContent({
           label: <h1>{ctx.title}</h1>,
-          body: <p>{ctx.body}</p>,
+          body: ctx.body
+            ? ctx.body.split("\n").map((p, index) => <p key={index}>{p}</p>)
+            : "[none]",
         });
         setModalOpen(true);
       },
@@ -110,11 +112,7 @@ const PendingPostsLayout = () => {
           label={modalContent.label}
           closeModal={() => setModalOpen(false)}
         >
-          {modalContent.body
-            ? modalContent.body
-                .split("\n")
-                .map((p, index) => <p key={index}>{p}</p>)
-            : "[none]"}
+          {modalContent.body}
         </Modal>
       )}
     </React.Fragment>
