@@ -310,7 +310,6 @@ function disableComment(commentId, userId) {
         );
       return resolve(rows.length > 0);
     } catch (error) {
-      console.log("db error" + error);
       return reject(error);
     }
   });

@@ -41,11 +41,13 @@ router.post("/disablepost/:postId", authModerator, async (req, res) => {
 router.post("/disablecomment/:commentId", authModerator, async (req, res) => {
   const { commentId } = req.params;
   try {
-    const result = await DashboardRepository.disableComment(commentId, userId);
+    const result = await DashboardRepository.disableComment(
+      commentId,
+      req.user.id
+    );
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
-    console.log("http error" + error);
     return res.status(500).json({ msg: "Something went wrong", status: 500 });
   }
 });
