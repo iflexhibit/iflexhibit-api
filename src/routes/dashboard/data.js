@@ -111,8 +111,10 @@ router.get("/system", authAdmin, async (req, res) => {
   try {
     const { resources } = await cloudinary.search
       .expression("resource_type:image OR resource_type:video")
-      .max_results(null)
+      .max_results(999999)
       .execute();
+
+    console.log(resources.length);
 
     const images = resources.filter((r) => r.resource_type === "image");
     const imageBytes = images.reduce((total, curr) => total + curr.bytes, 0);
