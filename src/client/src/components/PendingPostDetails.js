@@ -26,7 +26,14 @@ const PendingPostDetails = ({ ctx }) => {
     <div className={styles.details}>
       <DetailsGroup label="user" value={ctx.author.username} />
       <DetailsGroup label="title" value={ctx.title} />
-      <DetailsGroup label="body" value={ctx.body || "[none]"} />
+      <DetailsGroup
+        label="body"
+        value={
+          ctx.body
+            ? ctx.body.split("\n").map((p, index) => <p key={index}>{p}</p>)
+            : "[none]"
+        }
+      />
       <DetailsGroup
         label="image"
         value={

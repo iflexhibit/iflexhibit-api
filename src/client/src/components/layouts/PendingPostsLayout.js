@@ -110,7 +110,11 @@ const PendingPostsLayout = () => {
           label={modalContent.label}
           closeModal={() => setModalOpen(false)}
         >
-          {modalContent.body}
+          {modalContent.body
+            ? modalContent.body
+                .split("\n")
+                .map((p, index) => <p key={index}>{p}</p>)
+            : "[none]"}
         </Modal>
       )}
     </React.Fragment>
