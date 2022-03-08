@@ -2,7 +2,6 @@ const express = require("express");
 const authModerator = require("../../middlware/authModerator");
 const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
-const { cloudinary } = require("../../configs/config");
 
 const router = express.Router();
 
@@ -46,6 +45,7 @@ router.post("/disablecomment/:commentId", authModerator, async (req, res) => {
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
+    console.log("http error" + error);
     return res.status(500).json({ msg: "Something went wrong", status: 500 });
   }
 });
