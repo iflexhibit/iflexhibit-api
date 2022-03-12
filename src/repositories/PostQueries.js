@@ -165,6 +165,7 @@ module.exports = {
         posts.post_title,
         posts.post_tags,
         posts.post_image,
+        posts.post_video,
         posts.created_at,
         posts.updated_at
     FROM posts

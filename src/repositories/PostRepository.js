@@ -179,6 +179,7 @@ function fetchMyPosts(userId, sort = "date", page = 1) {
         title: post.post_title,
         status: post.status_title,
         image: post.post_image,
+        video: post.post_video,
         tags: post.post_tags.split(","),
         statistics: {
           views: parseInt(post.views_count),
