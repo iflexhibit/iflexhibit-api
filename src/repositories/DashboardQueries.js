@@ -63,4 +63,19 @@ module.exports = {
   WHERE user_id = $1 AND usertype_id = 'ut2'
   RETURNING user_id;`,
   totalRows: `SELECT * FROM total_rows;`,
+  validateReport: `UPDATE reports SET is_valid = TRUE WHERE report_id = $1 RETURNING report_id;`,
+  fetchValidReports: `
+  SELECT
+    reports.report_id,
+    reports.user_id,
+    (SELECT username FROM users WHERE users.user_id = reports.user_id) AS reportee_username, 
+    reports.target_user_id,
+    (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username, 
+    reports.created_at,
+    reports.offense_id,
+    offenses.offense_title
+  FROM reports
+      JOIN offenses ON offenses.offense_id = reports.offense_id
+  WHERE reports.is_valid = TRUE and target_user_id = $1;
+  `,
 };
