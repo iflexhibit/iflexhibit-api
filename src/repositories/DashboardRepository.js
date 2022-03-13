@@ -225,12 +225,14 @@ function banUser(reportId, userId, offenseId, banNote) {
         offenseId,
         banNote,
       ]);
-      if (rows.length > 0)
+      if (rows.length > 0) {
         logger.info(
           encrypt(
             `DB-${command} - user#${userId} created ban#${rows[0].ban_id}`
           )
         );
+        await pool.query(DashboardQueries.validateReport, [reportId]);
+      }
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -276,18 +278,20 @@ function rejectPost(postId, userId) {
   });
 }
 
-function disablePost(postId, userId) {
+function disablePost(postId, userId, reportId) {
   return new Promise(async (resolve, reject) => {
     try {
       const { rows, command } = await pool.query(DashboardQueries.disablePost, [
         postId,
       ]);
-      if (rows.length > 0)
+      if (rows.length > 0) {
         logger.info(
           encrypt(
             `DB-${command} - user#${userId} disabled post#${rows[0].post_id}`
           )
         );
+        await pool.query(DashboardQueries.validateReport, [reportId]);
+      }
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -295,19 +299,21 @@ function disablePost(postId, userId) {
   });
 }
 
-function disableComment(commentId, userId) {
+function disableComment(commentId, userId, reportId) {
   return new Promise(async (resolve, reject) => {
     try {
       const { rows, command } = await pool.query(
         DashboardQueries.disableComment,
         [commentId]
       );
-      if (rows.length > 0)
+      if (rows.length > 0) {
         logger.info(
           encrypt(
             `DB-${command} - user#${userId} disabled comment#${rows[0].comment_id}`
           )
         );
+        await pool.query(DashboardQueries.validateReport, [reportId]);
+      }
       return resolve(rows.length > 0);
     } catch (error) {
       return reject(error);
@@ -487,6 +493,16 @@ function fetchTotalRows() {
     } catch (error) {
       return reject(error);
     }
+  });
+}
+
+function fetchValidReports(userId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.fetchValidReports, [
+        userId,
+      ]);
+    } catch (error) {}
   });
 }
 

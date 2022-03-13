@@ -32,7 +32,10 @@ const ReportedCommentDetails = ({ ctx }) => {
   const handleDisableComment = () => {
     if (window.confirm("Disable this comment?")) {
       axios
-        .post(`/dashboard/actions/disablecomment/${ctx.target.comment.id}`)
+        .post(`/dashboard/actions/disablecomment`, {
+          commentId: ctx.target.comment.id,
+          reportId: ctx.id,
+        })
         .then(() => window.alert("Comment has been disabled"))
         .catch(() => window.alert("Refresh this page and try again"));
     }

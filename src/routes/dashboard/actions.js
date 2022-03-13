@@ -27,10 +27,14 @@ router.post("/rejectpost/:postId", authModerator, async (req, res) => {
   }
 });
 
-router.post("/disablepost/:postId", authModerator, async (req, res) => {
-  const { postId } = req.params;
+router.post("/disablepost", authModerator, async (req, res) => {
+  const { postId, reportId } = req.body;
   try {
-    const result = await DashboardRepository.disablePost(postId, req.user.id);
+    const result = await DashboardRepository.disablePost(
+      postId,
+      req.user.id,
+      reportId
+    );
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {
@@ -38,12 +42,13 @@ router.post("/disablepost/:postId", authModerator, async (req, res) => {
   }
 });
 
-router.post("/disablecomment/:commentId", authModerator, async (req, res) => {
-  const { commentId } = req.params;
+router.post("/disablecomment", authModerator, async (req, res) => {
+  const { commentId, reportId } = req.body;
   try {
     const result = await DashboardRepository.disableComment(
       commentId,
-      req.user.id
+      req.user.id,
+      reportId
     );
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);

@@ -44,7 +44,10 @@ const ReportedPostDetails = ({ ctx }) => {
   const handleDisable = () => {
     if (window.confirm("Disable this post?")) {
       axios
-        .post(`/dashboard/actions/disablepost/${ctx.target.post.id}`)
+        .post(`/dashboard/actions/disablepost`, {
+          postId: ctx.target.post.id,
+          reportId: ctx.id,
+        })
         .then(() => window.alert("Post has been disabled"))
         .catch(() => window.alert("Refresh this page and try again"));
     }
