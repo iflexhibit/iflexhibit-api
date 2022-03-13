@@ -49,6 +49,15 @@ const Sidebar = () => {
           Ban Entries
         </NavLink>
         <NavLink
+          to="/violations"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <FlagIcon />
+          User Violations
+        </NavLink>
+        <NavLink
           to="/permissions"
           className={({ isActive }) =>
             isActive ? `${styles.link} ${styles.active}` : styles.link

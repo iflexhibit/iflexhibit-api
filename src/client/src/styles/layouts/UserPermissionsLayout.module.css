@@ -8,11 +8,15 @@ div.promote {
   width: 50ch;
 }
 
-div.promote > div.search {
+div.search {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+div.search.violations {
+  max-width: 70ch;
 }
 
 div.promote > div.member {
