@@ -496,13 +496,22 @@ function fetchTotalRows() {
   });
 }
 
-function fetchValidReports(userId) {
+function fetchValidReports(username) {
   return new Promise(async (resolve, reject) => {
     try {
       const { rows } = await pool.query(DashboardQueries.fetchValidReports, [
-        userId,
+        encrypt(username),
       ]);
-    } catch (error) {}
+      const reports = rows.map((r) => ({
+        id: r.report_id,
+        reportee: decrypt(r.reportee_username),
+        offense: r.offense_title,
+        reportedAt: r.created_at,
+      }));
+      return resolve(reports);
+    } catch (error) {
+      return reject(error);
+    }
   });
 }
 
@@ -528,4 +537,5 @@ module.exports = {
   fetchMember,
   promoteUser,
   demoteUser,
+  fetchValidReports,
 };

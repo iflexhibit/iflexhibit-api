@@ -68,14 +68,16 @@ module.exports = {
   SELECT
     reports.report_id,
     reports.user_id,
-    (SELECT username FROM users WHERE users.user_id = reports.user_id) AS reportee_username, 
+    A.username as reportee_username, 
     reports.target_user_id,
-    (SELECT username FROM users WHERE users.user_id = reports.target_user_id) AS target_username, 
+    B.username as target_username, 
     reports.created_at,
     reports.offense_id,
     offenses.offense_title
   FROM reports
       JOIN offenses ON offenses.offense_id = reports.offense_id
-  WHERE reports.is_valid = TRUE and target_user_id = $1;
+      JOIN users A ON A.user_id = reports.user_id
+      JOIN users B ON B.user_id = reports.target_user_id
+  WHERE reports.is_valid = TRUE and B.username = $1;
   `,
 };

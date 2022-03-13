@@ -55,6 +55,18 @@ router.get("/reports/:type", authModerator, async (req, res) => {
   }
 });
 
+router.get("/reports/valid/:username", authAdmin, async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const reports = await DashboardRepository.fetchValidReports(username);
+
+    res.status(200).json({ reports });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
 router.get("/disabled/:type", authModerator, async (req, res) => {
   const { type } = req.params;
 
