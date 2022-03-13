@@ -43,6 +43,10 @@ const UserViolationsLayout = () => {
       .then((response) => {
         setLoading(false);
         setData(formatData(response.data.reports));
+        if (response.data.reports.length === 0)
+          window.alert(
+            "User either does not exist or does not have any violations"
+          );
       })
       .catch(() => {
         setLoading(false);
