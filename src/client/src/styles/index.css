@@ -16,6 +16,7 @@
   --color-blue: #014fb3;
   --color-shadow: #22273040;
   --color-highlight: #dae0f5;
+  --color-highlight-green: hsl(122, 58%, 75%);
   --color-none: #00000000;
 }
 

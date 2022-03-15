@@ -181,7 +181,14 @@ const SystemConfigurationsLayout = () => {
                   />
                 </div>
                 {editablePrograms.map((program, i) => (
-                  <div className={styles.program} key={i}>
+                  <div
+                    className={`${styles.program} ${
+                      Object.is(editablePrograms[i], programs[i])
+                        ? ""
+                        : styles.modified
+                    }`}
+                    key={i}
+                  >
                     <IconButton
                       icon={<TimesIcon />}
                       variant="contained"

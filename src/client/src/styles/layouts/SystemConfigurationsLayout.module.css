@@ -21,6 +21,10 @@ div.program {
   transition: 125ms;
 }
 
+div.program.modified {
+  background: var(--color-highlight-green);
+}
+
 div.program:hover {
   background: var(--color-highlight);
 }
