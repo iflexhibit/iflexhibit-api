@@ -84,7 +84,7 @@ function fetchApprovedPost(postId) {
         title: rows[0].post_title,
         image: rows[0].post_image,
         video: rows[0].post_video,
-        tags: rows[0].post_tags.split(","),
+        tags: rows[0].post_tags.split(",").map((t) => decodeURIComponent(t)),
         body: rows[0].post_body,
         statistics: {
           views: parseInt(rows[0].views_count),
@@ -97,7 +97,6 @@ function fetchApprovedPost(postId) {
 
       return resolve(post);
     } catch (error) {
-      console.log(error);
       return reject(error);
     }
   });
@@ -128,7 +127,7 @@ function fetchUserPosts(userId, sort = "date", page = 1) {
         },
         title: post.post_title,
         image: post.post_image,
-        tags: post.post_tags.split(","),
+        tags: post.post_tags.split(",").map((t) => decodeURIComponent(t)),
         statistics: {
           views: parseInt(post.views_count),
           likes: parseInt(post.likes_count),
@@ -180,7 +179,7 @@ function fetchMyPosts(userId, sort = "date", page = 1) {
         status: post.status_title,
         image: post.post_image,
         video: post.post_video,
-        tags: post.post_tags.split(","),
+        tags: post.post_tags.split(",").map((t) => decodeURIComponent(t)),
         statistics: {
           views: parseInt(post.views_count),
           likes: parseInt(post.likes_count),

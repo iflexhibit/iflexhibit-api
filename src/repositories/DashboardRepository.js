@@ -521,10 +521,13 @@ function fetchPrograms() {
       const { rows } = await pool.query(DashboardQueries.fetchPrograms, []);
 
       return resolve({
-        degreePrograms: rows[0].degree_programs,
+        degreePrograms: rows[0].degree_programs.map((r) =>
+          decodeURIComponent(r)
+        ),
         updatedAt: rows[0].updated_at,
       });
     } catch (error) {
+      console.log(error);
       return reject(error);
     }
   });

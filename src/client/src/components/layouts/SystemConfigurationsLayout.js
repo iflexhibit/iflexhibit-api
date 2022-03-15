@@ -78,7 +78,7 @@ const SystemConfigurationsLayout = () => {
     setEditing(false);
     axios
       .post("/dashboard/actions/programs", {
-        programs: editablePrograms.map((p) => p.value),
+        programs: editablePrograms.map((p) => encodeURIComponent(p.value)),
       })
       .then(() => {
         fetchPrograms();
