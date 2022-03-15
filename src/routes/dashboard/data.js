@@ -170,4 +170,14 @@ router.get("/logs/:days", authAdmin, async (req, res) => {
   }
 });
 
+router.get("/configs/programs", authAdmin, async (req, res) => {
+  try {
+    const { degreePrograms, updatedAt } =
+      await DashboardRepository.fetchPrograms();
+    res.status(200).json({ degreePrograms, updatedAt });
+  } catch (error) {
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
 module.exports = router;

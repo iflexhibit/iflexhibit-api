@@ -80,4 +80,6 @@ module.exports = {
       JOIN users B ON B.user_id = reports.target_user_id
   WHERE reports.is_valid = TRUE and B.username = $1;
   `,
+  fetchPrograms: `SELECT degree_programs, updated_at FROM configs WHERE config_id  = 'cfg01';`,
+  updatePrograms: `UPDATE configs SET degree_programs = $1, updated_at = NOW() WHERE config_id = 'cfg01' RETURNING config_id;`,
 };

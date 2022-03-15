@@ -515,6 +515,35 @@ function fetchValidReports(username) {
   });
 }
 
+function fetchPrograms() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.fetchPrograms, []);
+
+      return resolve({
+        degreePrograms: rows[0].degree_programs,
+        updatedAt: rows[0].updated_at,
+      });
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
+function updatePrograms(programs) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { rows } = await pool.query(DashboardQueries.updatePrograms, [
+        programs,
+      ]);
+
+      return resolve(rows.length > 0);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+}
+
 module.exports = {
   fetchGeneralOverView,
   fetchPendingPosts,
@@ -538,4 +567,6 @@ module.exports = {
   promoteUser,
   demoteUser,
   fetchValidReports,
+  fetchPrograms,
+  updatePrograms,
 };

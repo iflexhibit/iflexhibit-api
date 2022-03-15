@@ -2,6 +2,8 @@ a.button,
 button.button {
   --button-color: var(--color-black);
 
+  min-width: 2rem;
+  min-height: 2rem;
   width: 2rem;
   height: 2rem;
 
@@ -38,7 +40,7 @@ button.outlined:hover {
 
 a.outlined,
 button.outlined {
-  background: var(--color-none);
+  background: var(--color-white);
   border: solid 1px var(--button-color);
   color: var(--button-color);
 }
@@ -71,4 +73,10 @@ button.white {
 a.button:hover,
 button.button:hover {
   --button-color: var(--color-black);
+}
+
+button.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }

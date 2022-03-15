@@ -2,6 +2,7 @@ const express = require("express");
 const authModerator = require("../../middlware/authModerator");
 const authAdmin = require("../../middlware/authAdmin");
 const DashboardRepository = require("../../repositories/DashboardRepository");
+const { updatePrograms } = require("../../repositories/DashboardQueries");
 
 const router = express.Router();
 
@@ -147,6 +148,18 @@ router.post("/demote/:type/:id", authAdmin, async (req, res) => {
       req.user.id
     );
 
+    if (result) return res.sendStatus(200);
+    return res.sendStatus(400);
+  } catch (error) {
+    return res.status(500).json({ msg: "Something went wrong", status: 500 });
+  }
+});
+
+router.post("/programs", authAdmin, async (req, res) => {
+  try {
+    const { programs } = req.body;
+
+    const result = await DashboardRepository.updatePrograms(programs);
     if (result) return res.sendStatus(200);
     return res.sendStatus(400);
   } catch (error) {

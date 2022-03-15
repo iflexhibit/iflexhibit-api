@@ -1,0 +1,1 @@
+SELECT degree_programs FROM configs WHERE config_id  = 'cfg01';

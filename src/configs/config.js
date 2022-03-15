@@ -7,7 +7,7 @@ module.exports = {
   JWT_SECRET: decrypt(process.env.JWT_SECRET),
   db: {
     CONNECTION_STRING: decrypt(process.env.CONNECTION_STRING),
-    COOKIE_MAXAGE: 1000 * 60 * 15,
+    COOKIE_MAXAGE: 1000 * 60 * 60,
     SESSION_SECRET: process.env.SESSION_SECRET,
     MONGO_STRING: decrypt(process.env.MONGO_STRING),
   },

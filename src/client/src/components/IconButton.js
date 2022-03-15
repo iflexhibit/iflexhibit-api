@@ -17,7 +17,7 @@ const IconButton = ({ icon, variant, color, onClick, disabled, href }) => {
     <button
       className={`${styles.button} ${variant ? styles[variant] : ""} ${
         color ? styles[color] : ""
-      }`}
+      } ${disabled ? styles.disabled : ""}`}
       onClick={onClick}
       disabled={disabled}
     >

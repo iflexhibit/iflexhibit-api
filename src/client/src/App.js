@@ -9,6 +9,7 @@ import ReportEntriesLayout from "./components/layouts/ReportEntriesLayout";
 import UserPermissionsLayout from "./components/layouts/UserPermissionsLayout";
 import SystemReportLayout from "./components/layouts/SystemReportLayout";
 import UserViolationsLayout from "./components/layouts/UserViolationsLayout";
+import SystemConfigurationsLayout from "./components/layouts/SystemConfigurationsLayout";
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
         <Route
           path="/permissions"
           element={<Layout layoutContent={<UserPermissionsLayout />} />}
+        />
+        <Route
+          path="/configs"
+          element={<Layout layoutContent={<SystemConfigurationsLayout />} />}
         />
         <Route
           path="/system"

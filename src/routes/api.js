@@ -15,5 +15,6 @@ router.use("/users", basicLimiter, require("./api/users"));
 router.use("/posts", basicLimiter, require("./api/posts"));
 router.use("/auth", basicLimiter, require("./api/auth"));
 router.use("/reports", basicLimiter, require("./api/reports"));
+router.use("/configs", basicLimiter, require("./api/configs"));
 
 module.exports = router;

@@ -1,0 +1,50 @@
+div.container {
+  display: flex;
+  gap: 1rem;
+  flex-flow: column nowrap;
+}
+
+div.programs {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.25rem;
+}
+
+div.program {
+  min-height: 2rem;
+  padding: 0.25rem;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  align-items: center;
+  border-radius: 5px;
+  transition: 125ms;
+}
+
+div.program:hover {
+  background: var(--color-highlight);
+}
+
+div.sort {
+  display: flex;
+  gap: 0.25rem;
+}
+
+section.degreePrograms {
+  display: flex;
+  gap: 1rem;
+  flex-flow: column nowrap;
+}
+
+div.new {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+div.controls {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}

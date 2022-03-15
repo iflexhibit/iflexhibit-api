@@ -66,6 +66,16 @@ const Sidebar = () => {
           <UsersIcon />
           User Permissions
         </NavLink>
+
+        <NavLink
+          to="/configs"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          <FlagIcon />
+          System Configurations
+        </NavLink>
         <NavLink
           to="/system"
           className={({ isActive }) =>
