@@ -22,7 +22,7 @@ const AdministratorDetails = ({ ctx }) => {
         label="username"
         value={
           <a
-            href={`https://iflexhibit.com/profile/${ctx.id}`}
+            href={`https://iflexhibit.vercel.app/profile/${ctx.id}`}
             target="_blank"
             rel="noopener noreferrer"
           >

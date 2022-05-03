@@ -56,7 +56,7 @@ const ReportedUserDetails = ({ ctx }) => {
           value={
             <LinkValue
               label={ctx.target.user.username}
-              link={`https://iflexhibit.com/profile/${ctx.target.user.id}`}
+              link={`https://iflexhibit.vercel.app/profile/${ctx.target.user.id}`}
             />
           }
         />
@@ -65,7 +65,7 @@ const ReportedUserDetails = ({ ctx }) => {
           value={
             <LinkValue
               label={ctx.reporter.username}
-              link={`https://iflexhibit.com/profile/${ctx.reporter.id}`}
+              link={`https://iflexhibit.vercel.app/profile/${ctx.reporter.id}`}
             />
           }
         />
@@ -130,7 +130,7 @@ const ReportedUserDetails = ({ ctx }) => {
       <small>
         Learn more about our{" "}
         <a
-          href="https://iflexhibit.com/legal"
+          href="https://iflexhibit.vercel.app/legal"
           rel="noopener noreferrer"
           target="_blank"
         >

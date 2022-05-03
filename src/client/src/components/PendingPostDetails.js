@@ -56,7 +56,7 @@ const PendingPostDetails = ({ ctx }) => {
       <small>
         Learn more about our{" "}
         <a
-          href="https://iflexhibit.com/legal"
+          href="https://iflexhibit.vercel.app/legal"
           rel="noopener noreferrer"
           target="_blank"
         >

@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className={styles.info}>
         <div>{date.toLocaleString()}</div>
         <Button
-          href="https://iflexhibit.com"
+          href="https://iflexhibit.vercel.app"
           variant="outlined"
           label="Back to iflexhibit"
           startIcon={<ExternalIcon />}

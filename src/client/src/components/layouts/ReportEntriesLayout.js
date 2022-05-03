@@ -15,7 +15,7 @@ const formatData = (data, type) => {
         id: d.id,
         postTitle: d.target.post.title,
         reportedBy: d.reporter.username,
-        link: `https://iflexhibit.com/post/${d.target.post.id}`,
+        link: `https://iflexhibit.vercel.app/post/${d.target.post.id}`,
         reportedAt: formatDate(d.createdAt),
         actions: d,
       }));
@@ -26,7 +26,7 @@ const formatData = (data, type) => {
         id: d.id,
         reportedUser: d.target.user.username,
         reportedBy: d.reporter.username,
-        link: `https://iflexhibit.com/profile/${d.target.user.id}`,
+        link: `https://iflexhibit.vercel.app/profile/${d.target.user.id}`,
         reportedAt: formatDate(d.createdAt),
         actions: d,
       }));
@@ -37,7 +37,7 @@ const formatData = (data, type) => {
         id: d.id,
         comment: d.target.comment.body.substring(0, 20) + "...",
         reportedBy: d.reporter.username,
-        link: `https://iflexhibit.com/post/${d.target.post.id}/title?tab=Comments#${d.target.comment.id}`,
+        link: `https://iflexhibit.vercel.app/post/${d.target.post.id}/title?tab=Comments#${d.target.comment.id}`,
         reportedAt: formatDate(d.createdAt),
         actions: d,
       }));

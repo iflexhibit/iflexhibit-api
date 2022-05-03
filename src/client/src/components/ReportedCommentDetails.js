@@ -70,7 +70,7 @@ const ReportedCommentDetails = ({ ctx }) => {
               label={ctx.target.comment.body.split("\n").map((p, index) => (
                 <p key={index}>{p}</p>
               ))}
-              link={`https://iflexhibit.com/post/${ctx.target.post.id}/title?tab=Comment#${ctx.target.comment.id}`}
+              link={`https://iflexhibit.vercel.app/post/${ctx.target.post.id}/title?tab=Comment#${ctx.target.comment.id}`}
             />
           }
         />
@@ -80,7 +80,7 @@ const ReportedCommentDetails = ({ ctx }) => {
           value={
             <LinkValue
               label={ctx.target.user.username}
-              link={`https://iflexhibit.com/profile/${ctx.target.user.id}`}
+              link={`https://iflexhibit.vercel.app/profile/${ctx.target.user.id}`}
             />
           }
         />
@@ -89,7 +89,7 @@ const ReportedCommentDetails = ({ ctx }) => {
           value={
             <LinkValue
               label={ctx.reporter.username}
-              link={`https://iflexhibit.com/profile/${ctx.reporter.id}`}
+              link={`https://iflexhibit.vercel.app/profile/${ctx.reporter.id}`}
             />
           }
         />
@@ -161,7 +161,7 @@ const ReportedCommentDetails = ({ ctx }) => {
       <small>
         Learn more about our{" "}
         <a
-          href="https://iflexhibit.com/legal"
+          href="https://iflexhibit.vercel.app/legal"
           rel="noopener noreferrer"
           target="_blank"
         >

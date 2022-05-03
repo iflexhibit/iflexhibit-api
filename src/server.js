@@ -14,7 +14,7 @@ require("./configs/passport")(passport);
 const app = express();
 const CLIENT_URL =
   NODE_ENV === "production"
-    ? "https://iflexhibit.com"
+    ? "https://iflexhibit.vercel.app"
     : "http://localhost:3000";
 
 app.enable("trust proxy");

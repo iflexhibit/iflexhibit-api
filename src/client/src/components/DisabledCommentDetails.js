@@ -21,7 +21,7 @@ const DisabledCommentDetails = ({ ctx }) => {
         label="link"
         value={
           <a
-            href={`https://iflexhibit.com/post/${ctx.post}/title?tab=Comments#${ctx.id}`}
+            href={`https://iflexhibit.vercel.app/post/${ctx.post}/title?tab=Comments#${ctx.id}`}
             target="_blank"
             rel="noopener noreferrer"
           >

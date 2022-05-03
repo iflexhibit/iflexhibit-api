@@ -23,7 +23,7 @@ const Login = () => {
         <p>
           By continuing, you agree to iFlexhibit's{" "}
           <a
-            href="https://iflexhibit.com/legal"
+            href="https://iflexhibit.vercel.app/legal"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -31,7 +31,7 @@ const Login = () => {
           </a>{" "}
           and acknowledge you've read our{" "}
           <a
-            href="https://iflexhibit.com/legal"
+            href="https://iflexhibit.vercel.app/legal"
             rel="noopener noreferrer"
             target="_blank"
           >

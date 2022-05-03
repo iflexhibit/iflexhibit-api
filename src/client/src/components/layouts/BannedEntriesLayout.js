@@ -14,7 +14,7 @@ const formatData = (data, type) => {
         id: d.id,
         bannedUser: d.target.user.username,
         bannedBy: d.reporter.username,
-        link: `https://iflexhibit.com/profile/${d.target.user.id}`,
+        link: `https://iflexhibit.vercel.app/profile/${d.target.user.id}`,
         bannedAt: formatDate(d.createdAt),
         expiresAt: formatDate(d.expiresAt),
         actions: d,
@@ -39,7 +39,7 @@ const formatData = (data, type) => {
         id: d.id,
         author: d.author.username,
         comment: d.body,
-        link: `https://iflexhibit.com/post/${d.post}/title?tab=Comments#${d.id}`,
+        link: `https://iflexhibit.vercel.app/post/${d.post}/title?tab=Comments#${d.id}`,
         createdAt: formatDate(d.createdAt),
         actions: d,
       }));

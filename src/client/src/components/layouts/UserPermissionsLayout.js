@@ -16,7 +16,7 @@ const formatData = (data) => {
     username: d.username,
     givenName: d.givenName,
     familyName: d.familyName,
-    link: `https://iflexhibit.com/profile/${d.id}`,
+    link: `https://iflexhibit.vercel.app/profile/${d.id}`,
     createdAt: formatDate(d.createdAt),
     actions: d,
   }));
