@@ -33,7 +33,7 @@
     "formidable": "^1.2.2",
     "googleapis": "^84.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.2",
+    "mongoose": "^6.4.6",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
     "passport": "^0.4.1",
